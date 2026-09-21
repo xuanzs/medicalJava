@@ -55,7 +55,7 @@ public class Login {
         HashMap<String, User> db = new HashMap<>();
         
         try {
-            FileReader fr = new FileReader("User.txt");
+            FileReader fr = new FileReader("data/User.txt");
             BufferedReader br = new BufferedReader(fr);
 
             String line;
