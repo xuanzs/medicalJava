@@ -1,0 +1,2 @@
+Email|UserId|password|name|phone|gender
+admin@gmail.com,UID001,123,Jake,0123456789,male
