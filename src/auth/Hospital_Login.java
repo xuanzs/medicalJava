@@ -1,3 +1,5 @@
+package auth;
+
 
 import javax.swing.JOptionPane;
 
@@ -42,7 +44,6 @@ public class Hospital_Login extends javax.swing.JFrame {
         loginBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(800, 500));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));

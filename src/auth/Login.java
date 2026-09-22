@@ -1,15 +1,17 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
+package auth;
+
 
 import java.io.*;
 import java.util.HashMap;
-import java.util.Scanner;
+
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 
 class User {
     protected String userId, password, name, phone, gender;
-
+    
     public User(String userId, String password, String name, String phone, String gender) {
         this.userId = userId;
         this.password = password;
@@ -17,31 +19,51 @@ class User {
         this.phone = phone;
         this.gender = gender;
     }
-
+    
     public String getUserId() {return userId;}
     public String getPassword() {return password;}
     public String getName() {return name;}
     public String getPhone() {return phone;}
     public String getGender() {return gender;}
-
+    
 }
 
-public class test {   
+public class Login {
+    protected String email, password;
     
-    public static void main(String[] args) throws IOException{
+    public Login() {
+        this.email = "";
+        this.password = "";
+    }
+    
+    public String getEmail() {
+        return email;
+    }
+    
+    public String getPassword() {
+        return password;
+    }
+    
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    
+    public boolean LoginValidation(String email, String password) {
         
-        String email,password;
         HashMap<String, User> db = new HashMap<>();
         
         try {
-            FileReader fr = new FileReader("User.txt");
+            FileReader fr = new FileReader("data/User.txt");
             BufferedReader br = new BufferedReader(fr);
-            
-            String line = null;
+
+            String line;
             br.readLine();
             while((line = br.readLine()) != null) {
                 String[] parts = line.split(",");
-                System.out.println(parts);
                 
                 String e = parts[0];
                 String u = parts[1];
@@ -51,36 +73,23 @@ public class test {
                 String g = parts[5];
                 
                 db.put(e, new User(u,p,n,ph,g));
-
-            }
-            
-            Scanner sc = new Scanner(System.in);
-            System.out.println("Please enter email");
-            email = sc.next();
-            System.out.println("Please enter password");
-            password = sc.next();
-            
-            if (db.containsKey(email)) {
-                User user = db.get(email);
                 
-                if (user.getPassword().equals(password)) {
-                    System.out.println("WelcomeBack");
-                } else {
-                    System.out.println("Password Invalid");
-                }
-            } else {
-                System.out.println("Email Invalid");
             }
-            
             br.close();
             fr.close();
-            System.out.println(db.get(email));
             
-            
-            
-        } catch (IOException e) {
+        } catch(IOException e) {
             System.out.println(e);
         }
+        
+        if (db.containsKey(email)) {
+            User user = db.get(email);
+            
+            if (user.getPassword().equals(password)) {return true;}
+        }
+        
+        return false;
+        
     }
     
 }
