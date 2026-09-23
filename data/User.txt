@@ -1,2 +1,2 @@
-Email|UserId|password|name|phone|gender
-admin@gmail.com,UID001,123,Jake,0123456789,male
+UserId|Name|Email|Password|Phone|Gender|Role
+Uid001,Dr. Jake,jake@gmail.com,123,0123456789,Male,DOCTOR

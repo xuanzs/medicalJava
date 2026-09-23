@@ -1,24 +1,26 @@
-package auth;
+package frontend;
 
 
 import javax.swing.JOptionPane;
+import repo.FileUserRepo;
+import service.AuthService;
+import model.User;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 
-/**
- *
- * @author xuanchen
- */
+
 public class Hospital_Login extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Hospital_Login
-     */
+    private final AuthService as;
+    
     public Hospital_Login() {
         initComponents();
+        
+        FileUserRepo userRepo = new FileUserRepo();
+        as = new AuthService(userRepo);
         
         passwordPF.addActionListener(e -> {
             loginBtn.doClick();
@@ -155,17 +157,30 @@ public class Hospital_Login extends javax.swing.JFrame {
         String email = emailTF.getText();
         String password = String.valueOf(passwordPF.getPassword());
         
-        Login login = new Login();
+        User result = as.login(email, password);
+        String name;
         
-        boolean result = login.LoginValidation(email, password);
-        
-        if (result){JOptionPane.showMessageDialog(
-                null, "Welcome Back!", "Successful", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(null, "Email or Password invalid", "Error", JOptionPane.ERROR_MESSAGE);
+        if (result != null) {
+            name = result.getName();
+            JOptionPane.showMessageDialog(null, "Welcome back " + name, "Successful", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else {
+            JOptionPane.showMessageDialog(null, "Email or Password Invalid, Try again.", "Error", JOptionPane.ERROR_MESSAGE);
             emailTF.setText("");
             passwordPF.setText("");
         }
+        
+//        Login login = new Login();
+//        
+//        boolean result = login.LoginValidation(email, password);
+//        
+//        if (result){JOptionPane.showMessageDialog(
+//                null, "Welcome Back!", "Successful", JOptionPane.INFORMATION_MESSAGE);
+//        } else {
+//            JOptionPane.showMessageDialog(null, "Email or Password invalid", "Error", JOptionPane.ERROR_MESSAGE);
+//            emailTF.setText("");
+//            passwordPF.setText("");
+//        }
         
     }//GEN-LAST:event_loginBtnActionPerformed
 
