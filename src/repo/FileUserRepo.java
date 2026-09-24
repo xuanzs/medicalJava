@@ -58,9 +58,9 @@ public class FileUserRepo {
                 } else {
                     System.out.println("Row invalid");
                 }
-                br.close();
-                fr.close();
             }
+            br.close();
+            fr.close();
         } catch(IOException e) {
             System.out.println(e);
         }

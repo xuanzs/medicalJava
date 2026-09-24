@@ -1,0 +1,3 @@
+patientId|userId|dateOfBirth|bloodType|address
+P001|U002|2001-04-15|O+|Kuala Lumpur
+P002|U003|2001-10-15|A+|Selangor
