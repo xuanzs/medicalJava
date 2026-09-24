@@ -6,10 +6,10 @@ package model;
 
 /**
  *
- * @author xuanchen
+ * @author wongkingsen
  */
-public class Doctor extends User {
-    public Doctor(String userId, String name, String email, String password, String phone, String gender, String role) {
+public class MedicalManager extends User {
+    public MedicalManager(String userId, String name, String email, String password, String phone, String gender, String role) {
         super(userId, name, email, password, phone, gender, role);
     }
 }

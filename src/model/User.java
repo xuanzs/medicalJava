@@ -21,8 +21,8 @@ public abstract class User {
         this.role = role;
     }
     
-    public String getPassword() {
-        return password;
+    public String getUserId() {
+        return userId;
     }
     
     public String getName() {
@@ -31,5 +31,21 @@ public abstract class User {
     
     public String getEmail() {
         return email;
+    }
+    
+    public String getPassword() {
+        return password;
+    }
+    
+    public String getPhone() {
+        return phone;
+    }
+    
+    public String getGender() {
+        return gender;
+    }
+    
+    public String getRole() {
+        return role;
     }
 }
