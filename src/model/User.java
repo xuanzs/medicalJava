@@ -8,7 +8,7 @@ package model;
  *
  * @author xuanchen
  */
-public abstract class User {
+public class User {
     private String userId, name, email, password, phone, gender, role;
     
     public User(String userId, String name, String email, String password, String phone, String gender, String role) {
@@ -21,6 +21,13 @@ public abstract class User {
         this.role = role;
     }
     
+<<<<<<< HEAD
+=======
+    public User(String userId) {
+        this.userId = userId;
+    }
+    
+>>>>>>> origin/kaixuan
     public String getUserId() {
         return userId;
     }

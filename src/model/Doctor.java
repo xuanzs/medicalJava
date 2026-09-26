@@ -4,6 +4,7 @@
  */
 package model;
 
+<<<<<<< HEAD
 /**
  *
  * @author xuanchen
@@ -11,5 +12,15 @@ package model;
 public class Doctor extends User {
     public Doctor(String userId, String name, String email, String password, String phone, String gender, String role) {
         super(userId, name, email, password, phone, gender, role);
+=======
+public class Doctor {
+    private String doctorId, userId, specialization, medicalManagerId;
+    
+    public Doctor(String doctorId, String userId, String specialization, String medicalManagerId) {
+        this.doctorId = doctorId;
+        this.userId = userId;
+        this.specialization = specialization;
+        this.medicalManagerId = medicalManagerId;
+>>>>>>> origin/kaixuan
     }
 }

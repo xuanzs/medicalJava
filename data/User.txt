@@ -2,3 +2,4 @@ UserId|Name|Email|Password|Phone|Gender|Role
 Uid001,Dr. Jake,jake@gmail.com,123,0123456789,Male,DOCTOR
 Uid002,John,john@gmail.com,999,0123456789,Male,PATIENT
 Uid003,Clark,clark@gmail.com,999,0123456789,Male,PATIENT
+Uid004,Dr. Chen,chen@gmail.com,123,0123456789,Female,DOCTOR

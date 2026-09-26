@@ -1,0 +1,3 @@
+DoctorId|UserId|Specialization|MedicalManagerId
+D001,Uid001,Cardiology,M001
+D002,Uid004,Neurology,M002
