@@ -51,6 +51,15 @@ public class FileUserRepo {
         return map.get(email.trim().toLowerCase());
     }
     
+    public User findByUserId(String userId) {
+        for (User user : map.values()) {
+            if (user.getUserId().equalsIgnoreCase(userId)) {
+                return user;
+            }
+        }
+        return null;
+    }
+    
     // Check duplicate email
     public boolean emailExists(String email) {
         return map.containsKey(email.trim().toLowerCase());
@@ -125,7 +134,26 @@ public class FileUserRepo {
     }
     
     // Delete user
-    
+    public void deleteUser(String email) {
+        if (map.containsKey(email.trim().toLowerCase())) {
+            map.remove(email.trim().toLowerCase());
+        
+            try (BufferedWriter bw = writer("User.txt");) {
+                bw.write("UserId|Name|Email|Password|Phone|Gender|Role\n");
+
+                for (User user : map.values()) {
+                    String userData = user.getUserId() + "," + user.getName() + "," + user.getEmail() + "," + user.getPassword() + "," + user.getPhone() + "," + user.getGender() + "," + user.getRole() + "\n";
+
+                    bw.write(userData);
+                    
+                    JOptionPane.showMessageDialog(null, "User deleted successfully.");
+                    return;
+                }
+            } catch (IOException e) {
+                System.out.println(e);
+            } 
+        }
+    }
     
     // Create user object
     public User createUserObject(String userId, String name, String email, String password, String phone, String gender, String role) {

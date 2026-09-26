@@ -1,0 +1,2 @@
+prescriptionId|consultationId|patientId|doctorId|medication|dosage|frequency|duration|instructions|issuedAt
+PR001|C001|P001|D001|Paracetamol|500mg|Twice daily|5 days|After food|2026-09-23

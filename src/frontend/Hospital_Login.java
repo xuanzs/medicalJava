@@ -46,6 +46,7 @@ public class Hospital_Login extends javax.swing.JFrame {
         loginBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -88,6 +89,7 @@ public class Hospital_Login extends javax.swing.JFrame {
         loginBtn.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
         loginBtn.setForeground(new java.awt.Color(255, 255, 255));
         loginBtn.setText("LOGIN");
+        loginBtn.setBorderPainted(false);
         loginBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 loginBtnActionPerformed(evt);
@@ -158,11 +160,12 @@ public class Hospital_Login extends javax.swing.JFrame {
         String password = String.valueOf(passwordPF.getPassword());
         
         User result = as.login(email, password);
-        String name;
         
         if (result != null) {
-            name = result.getName();
-            JOptionPane.showMessageDialog(null, "Welcome back " + name, "Successful", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Welcome back " + result.getName(), "Successful", JOptionPane.INFORMATION_MESSAGE);
+            Doctor_Dashboard dd = new Doctor_Dashboard(result);
+            dd.setVisible(true);
+            this.dispose();
         }
         else {
             JOptionPane.showMessageDialog(null, "Email or Password Invalid, Try again.", "Error", JOptionPane.ERROR_MESSAGE);

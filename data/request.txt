@@ -1,0 +1,2 @@
+requestId|consultationId|patientId|doctorId|type|reason|status|requestedAt
+R001,C002,P002,D001,X_RAY,Suspected fracture,PENDING,2026-09-24

@@ -6,8 +6,11 @@ package service;
 
 import javax.swing.JOptionPane;
 import repo.FileUserRepo;
+import model.User;
 
 public class ValidationService {
+    FileUserRepo userRepo = new FileUserRepo();
+    
     public boolean createValidation(String name, String email, String password, String phone) {
         FileUserRepo userRepo = new FileUserRepo();
         
@@ -22,6 +25,15 @@ public class ValidationService {
             return false;
         } else if (userRepo.emailExists(email)) {
             JOptionPane.showMessageDialog(null, "Email already exists.");
+            return false;
+        }
+        
+        return true;
+    }
+    
+    public boolean assignmentValidation(String doctorId, String managerId) {
+        if (doctorId.isEmpty() || managerId.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Please select a doctor and a manager.");
             return false;
         }
         
