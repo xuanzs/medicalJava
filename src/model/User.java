@@ -8,7 +8,7 @@ package model;
  *
  * @author xuanchen
  */
-public abstract class User {
+public class User {
     private String userId, name, email, password, phone, gender, role;
     
     public User(String userId, String name, String email, String password, String phone, String gender, String role) {
@@ -21,8 +21,12 @@ public abstract class User {
         this.role = role;
     }
     
-    public String getPassword() {
-        return password;
+    public User(String userId) {
+        this.userId = userId;
+    }
+    
+    public String getUserId() {
+        return userId;
     }
     
     public String getName() {
@@ -31,5 +35,21 @@ public abstract class User {
     
     public String getEmail() {
         return email;
+    }
+    
+    public String getPassword() {
+        return password;
+    }
+    
+    public String getPhone() {
+        return phone;
+    }
+    
+    public String getGender() {
+        return gender;
+    }
+    
+    public String getRole() {
+        return role;
     }
 }

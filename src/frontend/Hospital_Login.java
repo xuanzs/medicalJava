@@ -2,9 +2,11 @@ package frontend;
 
 
 import javax.swing.JOptionPane;
+import model.Doctor;
 import repo.FileUserRepo;
 import service.AuthService;
 import model.User;
+import repo.FileDoctorRepo;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -15,11 +17,14 @@ import model.User;
 public class Hospital_Login extends javax.swing.JFrame {
 
     private final AuthService as;
+    FileUserRepo userRepo = new FileUserRepo();
+    FileDoctorRepo doctorRepo = new FileDoctorRepo();
     
     public Hospital_Login() {
         initComponents();
         
-        FileUserRepo userRepo = new FileUserRepo();
+        
+        
         as = new AuthService(userRepo);
         
         passwordPF.addActionListener(e -> {
@@ -159,12 +164,23 @@ public class Hospital_Login extends javax.swing.JFrame {
         String email = emailTF.getText();
         String password = String.valueOf(passwordPF.getPassword());
         
-        User result = as.login(email, password);
+        User user = as.login(email, password);
         
-        if (result != null) {
-            JOptionPane.showMessageDialog(null, "Welcome back " + result.getName(), "Successful", JOptionPane.INFORMATION_MESSAGE);
-            Doctor_Dashboard dd = new Doctor_Dashboard(result);
-            dd.setVisible(true);
+        if (user != null) {
+            
+            if (user.getRole().toLowerCase().equals("doctor")) {
+                
+                Doctor doctor = doctorRepo.findByUserId(user.getUserId());
+                
+                if (doctor != null) {
+                    JOptionPane.showMessageDialog(null, "Welcome back " + user.getName(), "Successful", JOptionPane.INFORMATION_MESSAGE);
+                    Doctor_Dashboard dd = new Doctor_Dashboard(user, doctor);
+                    dd.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Doctor Profile not found", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+            
             this.dispose();
         }
         else {

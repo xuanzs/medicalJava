@@ -36,24 +36,26 @@ public class FileUserRepo {
                     String g = parts[5].trim();
                     String r = parts[6].trim();
                     
-                    User user = null;
+                    User user = new User(id, n, e, p, ph, g, r);
+                    map.put(e, user);
+//                    FileDoctorRepo doctorRepo = null;
+//                    
+//                    switch(r.toLowerCase()) {
+////                        case "admin":
+////                            user = new Admin(id, n, e, p, ph, g, r);
+////                            break;
+////                        case "medicalmanager":
+////                            user = new MedicalManager(id, n, e, p, ph, g, r);
+////                            break;
+//                        case "doctor":
+//                            doctorRepo = new FileDoctorRepo(id);
+//                            break;
+////                        case "patient":
+////                            user = new Patient(id, n, e, p, ph, g, r);
+////                            break;
+//                    }
                     
-                    switch(r.toLowerCase()) {
-//                        case "admin":
-//                            user = new Admin(id, n, e, p, ph, g, r);
-//                            break;
-//                        case "medicalmanager":
-//                            user = new MedicalManager(id, n, e, p, ph, g, r);
-//                            break;
-                        case "doctor":
-                            user = new Doctor(id, n, e, p, ph, g, r);
-                            break;
-//                        case "patient":
-//                            user = new Patient(id, n, e, p, ph, g, r);
-//                            break;
-                    }
-                    
-                    if (user != null) {map.put(e, user);}
+//                    if (user != null) {map.put(e, user);}
                     
                 } else {
                     System.out.println("Row invalid");

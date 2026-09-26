@@ -3,9 +3,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/Users/xuanchen/Desktop/Hospital/src/repo/FileUserRepo.java</file>
             <file>file:/Users/xuanchen/Desktop/Hospital/src/auth/Login.java</file>
+            <file>file:/Users/xuanchen/Desktop/Hospital/src/frontend/Hospital_Login.java</file>
+            <file>file:/Users/xuanchen/Desktop/Hospital/src/model/User.java</file>
+            <file>file:/Users/xuanchen/Desktop/Hospital/data/request.txt</file>
+            <file>file:/Users/xuanchen/Desktop/Hospital/src/service/AuthService.java</file>
+            <file>file:/Users/xuanchen/Desktop/Hospital/src/frontend/Doctor_Dashboard.java</file>
+            <file>file:/Users/xuanchen/Desktop/Hospital/src/model/Doctor.java</file>
             <file>file:/Users/xuanchen/Desktop/Hospital/data/User.txt</file>
-            <file>file:/Users/xuanchen/Desktop/Hospital/src/auth/Hospital_Login.java</file>
+            <file>file:/Users/xuanchen/Desktop/Hospital/data/consultation.txt</file>
+            <file>file:/Users/xuanchen/Desktop/Hospital/src/frontend/ChangePasswordDialog.java</file>
         </group>
     </open-files>
 </project-private>

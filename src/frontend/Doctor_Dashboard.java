@@ -16,9 +16,10 @@ import model.User;
 public class Doctor_Dashboard extends javax.swing.JFrame {
 
     private User user;
+    private Doctor doctor;
     CardLayout cardLayout;
     
-    public Doctor_Dashboard(User user) {
+    public Doctor_Dashboard(User user, Doctor doctor) {
         initComponents();
         
         this.user = user;
@@ -62,6 +63,20 @@ public class Doctor_Dashboard extends javax.swing.JFrame {
         prescriptionsPage = new javax.swing.JPanel();
         requestsPage = new javax.swing.JPanel();
         profilePage = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        userIdTF = new javax.swing.JTextField();
+        editBtn = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        nameTF = new javax.swing.JTextField();
+        emailTF = new javax.swing.JTextField();
+        phoneTF = new javax.swing.JTextField();
+        genderTF = new javax.swing.JTextField();
+        saveBtn = new javax.swing.JButton();
+        cancelBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1000, 700));
@@ -371,15 +386,188 @@ public class Doctor_Dashboard extends javax.swing.JFrame {
 
         profilePage.setBackground(new java.awt.Color(255, 255, 255));
 
+        jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel2.setText("Name:");
+
+        jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel3.setText("User ID:");
+
+        jLabel4.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel4.setText("Email:");
+
+        jLabel5.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel5.setText("Phone:");
+
+        jLabel6.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel6.setText("Gender:");
+
+        userIdTF.setBackground(new java.awt.Color(255, 255, 255));
+        userIdTF.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        userIdTF.setForeground(new java.awt.Color(0, 0, 0));
+        userIdTF.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 3, 0, new java.awt.Color(51, 153, 255)));
+        userIdTF.setEnabled(false);
+
+        editBtn.setBackground(new java.awt.Color(0, 153, 255));
+        editBtn.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        editBtn.setForeground(new java.awt.Color(255, 255, 255));
+        editBtn.setText("Edit Profile");
+        editBtn.setBorderPainted(false);
+        editBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        editBtn.setFocusPainted(false);
+        editBtn.setPreferredSize(new java.awt.Dimension(140, 40));
+        editBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editBtnActionPerformed(evt);
+            }
+        });
+
+        jButton2.setBackground(new java.awt.Color(0, 153, 255));
+        jButton2.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
+        jButton2.setText("Change Password");
+        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton2.setPreferredSize(new java.awt.Dimension(160, 40));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        nameTF.setBackground(new java.awt.Color(255, 255, 255));
+        nameTF.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        nameTF.setForeground(new java.awt.Color(0, 0, 0));
+        nameTF.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 3, 0, new java.awt.Color(51, 153, 255)));
+        nameTF.setEnabled(false);
+
+        emailTF.setBackground(new java.awt.Color(255, 255, 255));
+        emailTF.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        emailTF.setForeground(new java.awt.Color(0, 0, 0));
+        emailTF.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 3, 0, new java.awt.Color(51, 153, 255)));
+        emailTF.setEnabled(false);
+
+        phoneTF.setBackground(new java.awt.Color(255, 255, 255));
+        phoneTF.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        phoneTF.setForeground(new java.awt.Color(0, 0, 0));
+        phoneTF.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 3, 0, new java.awt.Color(51, 153, 255)));
+        phoneTF.setEnabled(false);
+
+        genderTF.setBackground(new java.awt.Color(255, 255, 255));
+        genderTF.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        genderTF.setForeground(new java.awt.Color(0, 0, 0));
+        genderTF.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 3, 0, new java.awt.Color(51, 153, 255)));
+        genderTF.setEnabled(false);
+
+        saveBtn.setBackground(new java.awt.Color(0, 204, 0));
+        saveBtn.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        saveBtn.setForeground(new java.awt.Color(255, 255, 255));
+        saveBtn.setText("SAVE");
+        saveBtn.setBorderPainted(false);
+        saveBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        saveBtn.setFocusPainted(false);
+        saveBtn.setPreferredSize(new java.awt.Dimension(140, 40));
+        saveBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveBtnActionPerformed(evt);
+            }
+        });
+
+        cancelBtn.setBackground(new java.awt.Color(204, 0, 51));
+        cancelBtn.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        cancelBtn.setForeground(new java.awt.Color(255, 255, 255));
+        cancelBtn.setText("CANCEL");
+        cancelBtn.setBorderPainted(false);
+        cancelBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cancelBtn.setFocusPainted(false);
+        cancelBtn.setPreferredSize(new java.awt.Dimension(140, 40));
+        cancelBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout profilePageLayout = new javax.swing.GroupLayout(profilePage);
         profilePage.setLayout(profilePageLayout);
         profilePageLayout.setHorizontalGroup(
             profilePageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 836, Short.MAX_VALUE)
+            .addGroup(profilePageLayout.createSequentialGroup()
+                .addGroup(profilePageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(profilePageLayout.createSequentialGroup()
+                        .addGap(255, 255, 255)
+                        .addGroup(profilePageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(profilePageLayout.createSequentialGroup()
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(phoneTF, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(profilePageLayout.createSequentialGroup()
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(emailTF, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(profilePageLayout.createSequentialGroup()
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(userIdTF, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(profilePageLayout.createSequentialGroup()
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(nameTF, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(profilePageLayout.createSequentialGroup()
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(genderTF, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(profilePageLayout.createSequentialGroup()
+                        .addGap(199, 199, 199)
+                        .addComponent(editBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(169, 169, 169)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(profilePageLayout.createSequentialGroup()
+                        .addGap(263, 263, 263)
+                        .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33)
+                        .addComponent(saveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(173, Short.MAX_VALUE))
         );
         profilePageLayout.setVerticalGroup(
             profilePageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1083, Short.MAX_VALUE)
+            .addGroup(profilePageLayout.createSequentialGroup()
+                .addGap(149, 149, 149)
+                .addGroup(profilePageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(userIdTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(profilePageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(nameTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(profilePageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(emailTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(profilePageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(phoneTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(profilePageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(genderTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(41, 41, 41)
+                .addGroup(profilePageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(saveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(profilePageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(editBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(620, Short.MAX_VALUE))
         );
 
         pages.add(profilePage, "profilePage");
@@ -424,6 +612,28 @@ public class Doctor_Dashboard extends javax.swing.JFrame {
         activeButton.setForeground(Color.black);
     }
     
+    private void setProfile() {
+        userIdTF.setText(user.getUserId());
+        nameTF.setText(user.getName());
+        emailTF.setText(user.getEmail());
+        phoneTF.setText(user.getPhone());
+        genderTF.setText(user.getGender());
+    }
+    
+    private void enableTextField(boolean b) {
+        if (b) {
+            nameTF.setEnabled(true);
+            emailTF.setEnabled(true);
+            phoneTF.setEnabled(true);
+            genderTF.setEnabled(true);
+        } else {
+            nameTF.setEnabled(false);
+            emailTF.setEnabled(false);
+            phoneTF.setEnabled(false);
+            genderTF.setEnabled(false);
+        }
+    }
+    
     private void dashboardBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dashboardBtnActionPerformed
         cardLayout.show(pages, "dashboardPage");
         setActiveButton(dashboardBtn);
@@ -453,6 +663,9 @@ public class Doctor_Dashboard extends javax.swing.JFrame {
     private void profileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileBtnActionPerformed
         cardLayout.show(pages, "profilePage");
         setActiveButton(profileBtn);
+        
+        setProfile();
+        
 //        ChangePasswordDialog cpd = new ChangePasswordDialog(this,true);
 //        cpd.setLocationRelativeTo(this);
 //        cpd.setVisible(true);
@@ -461,6 +674,23 @@ public class Doctor_Dashboard extends javax.swing.JFrame {
     private void logoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBtnActionPerformed
         setActiveButton(logoutBtn);
     }//GEN-LAST:event_logoutBtnActionPerformed
+
+    private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
+        enableTextField(true);
+    }//GEN-LAST:event_editBtnActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_saveBtnActionPerformed
+
+    private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
+        setProfile();
+        enableTextField(false);
+    }//GEN-LAST:event_cancelBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -493,19 +723,30 @@ public class Doctor_Dashboard extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 
-                Doctor testDoctor = new Doctor("Uid001", "Test Doctor", "doctor@gmail.com", "123", "01234556", "Male", "doctor");
+                User testUser = new User("Uid001", "Test Doctor", "doctor@gmail.com", "123", "01234556", "Male", "doctor");
+                Doctor testDoctor = new Doctor("D001", "Uid001", "ciroprator", "MM001");
                 
-                new Doctor_Dashboard(testDoctor).setVisible(true);
+                new Doctor_Dashboard(testUser, testDoctor).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton cancelBtn;
     private javax.swing.JButton consultationsBtn;
     private javax.swing.JPanel consultationsPage;
     private javax.swing.JButton dashboardBtn;
     private javax.swing.JPanel dashboardPage;
+    private javax.swing.JButton editBtn;
+    private javax.swing.JTextField emailTF;
+    private javax.swing.JTextField genderTF;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -514,16 +755,20 @@ public class Doctor_Dashboard extends javax.swing.JFrame {
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JButton logoutBtn;
     private javax.swing.JPanel menuPanel;
+    private javax.swing.JTextField nameTF;
     private javax.swing.JPanel pages;
     private javax.swing.JButton patientsBtn;
     private javax.swing.JPanel patientsPage;
+    private javax.swing.JTextField phoneTF;
     private javax.swing.JButton prescriptionsBtn;
     private javax.swing.JPanel prescriptionsPage;
     private javax.swing.JButton profileBtn;
     private javax.swing.JPanel profilePage;
     private javax.swing.JButton requestsBtn;
     private javax.swing.JPanel requestsPage;
+    private javax.swing.JButton saveBtn;
     private javax.swing.JPanel sidebar;
+    private javax.swing.JTextField userIdTF;
     private javax.swing.JLabel welcomeLbl;
     // End of variables declaration//GEN-END:variables
 }
