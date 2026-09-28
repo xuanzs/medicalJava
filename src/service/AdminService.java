@@ -30,8 +30,18 @@ public class AdminService {
         return userRepo.createUser(name, email, password, phone, gender, role);
     }
     
-//    public boolean updateUser(String userId, String name, String email, String password, String phone,)
-    
+    public boolean updateUser(String userId, String name, String email, String phone, String gender) {
+        User existingUser = userRepo.findByUserId(userId);
+
+        if (existingUser == null) {
+            throw new IllegalArgumentException("User not found.");
+        }
+
+        validationService.updateValidation(userId, name, email, existingUser.getPassword(), phone);
+
+        return userRepo.updateUser(userId, name, email, phone, gender);
+    }
+
     public boolean deleteUser(String userId) {
         if (userId == null || userId.isEmpty()) {
             throw new IllegalArgumentException("Please select a user.");

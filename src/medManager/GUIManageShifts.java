@@ -25,7 +25,7 @@ public class GUIManageShifts extends javax.swing.JFrame {
     private String[] column = {"Shift ID", "Shift Date", "Start Time", "End Time", "Doctor ID", "Doctor Name"};
     int row = -1;
     // replace with the txt file name storing doctor name
-    String docFile = "data/doctors.txt";
+    String docFile = "data/Doctor.txt";
     // replace with the index of doctorId in the above file
     int idIndex = 0;
     // replace with the index of doctorName in the above file

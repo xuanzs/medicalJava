@@ -136,15 +136,6 @@ public class FileUserRepo {
             return false;
         }
     }
-            
-//    public User findByUserId(String userId) {
-//        for (User user : map.values()) {
-//            if (user.getUserId().equalsIgnoreCase(userId)) {
-//                return user;
-//            }
-//        }
-//        return null;
-//    }
     
     // FileReader
     public BufferedReader reader() throws IOException {
@@ -189,20 +180,24 @@ public class FileUserRepo {
     
     // Create user
     public boolean createUser(String name, String email, String password, String phone, String gender, String role) {       
-        if (map.containsKey(email)) {
+        String emailKey = email.trim().toLowerCase();
+        
+        if (loginMap.containsKey(emailKey)) {
             return false;
         }
         
         String userId = generateUserId();
         User user = new User(userId, name, email, password, phone, gender, role);
 
-        map.put(email, user);
+        map.put(userId, user);
+        loginMap.put(emailKey, user);
         
         try {
             saveUsers();
             return true;
         } catch (IOException e) {
-            map.remove(email);
+            map.remove(userId);
+            loginMap.remove(emailKey);
             System.out.println(e);
             return false;
         }
@@ -216,7 +211,8 @@ public class FileUserRepo {
             return false;
         }
         
-        map.remove(user.getEmail().trim().toLowerCase());
+        map.remove(userId);
+        loginMap.remove(user.getEmail().trim().toLowerCase());
         
         try {
             saveUsers();

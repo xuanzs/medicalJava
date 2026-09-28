@@ -6,6 +6,7 @@ package repo;
 
 import java.io.*;
 import java.util.ArrayList;
+import model.MedicalRequestInfo;
 
 /**
  *
@@ -79,5 +80,61 @@ public class FileMedicalRequestRepo extends FileRepo {
             }
         }
         return false;
+    }
+    
+    public boolean approveMedicalRequest(String requestId) {
+        boolean found = false;
+        
+        for (String[] request : al) {
+            if(request[0].trim().equalsIgnoreCase(requestId)) {
+                request[7] = "Approved";
+                found = true;
+                break;
+            }
+        }
+        
+        if (!found) {
+            return false;
+        }
+        
+        try {
+            saveAllMedicalRequests();
+            return true;
+        } catch (IOException e) {
+            System.out.println(e);
+            return false;
+        }
+    }
+    
+    public void saveAllMedicalRequests() throws IOException {
+        try (BufferedWriter bw = writer()) {
+            bw.write("Request ID|Consultation ID|Patient ID|Doctor ID|RequestType|Request Date|Reason|Status");
+            bw.newLine();
+            
+            for (String[] request : al) {
+                bw.write(request[0] + "|" + request[1] + "|" + request[2] + "|" + request[3] + "|" + request[4] + "|" + request[5] + "|" + request[6] + "|" + request[7]);
+                bw.newLine();
+            }
+        }
+    }
+        
+    // FileReader
+    public BufferedReader reader() throws IOException {
+        FileReader fr = new FileReader("data/Requests.txt");
+        
+        return new BufferedReader(fr);
+    }
+    
+    // FileWriter
+    public BufferedWriter writer() throws IOException {
+        FileWriter fw = new FileWriter("data/Requests.txt");
+        
+        return new BufferedWriter(fw);
+    }
+    
+    public BufferedWriter writer(boolean append) throws IOException {
+        FileWriter fw = new FileWriter("data/Requests.txt", append);
+
+        return new BufferedWriter(fw);
     }
 }
