@@ -179,6 +179,10 @@ public class Hospital_Login extends javax.swing.JFrame {
                 } else {
                     JOptionPane.showMessageDialog(null, "Doctor Profile not found", "Error", JOptionPane.ERROR_MESSAGE);
                 }
+            } else if (user.getRole().toLowerCase().equals("admin")) {
+                JOptionPane.showMessageDialog(null, "Welcome back " + user.getName(), "Successful", JOptionPane.INFORMATION_MESSAGE);
+                Admin_Dashboard ad = new Admin_Dashboard();
+                ad.setVisible(true);
             }
             
             this.dispose();

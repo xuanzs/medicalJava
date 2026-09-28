@@ -44,6 +44,7 @@ public class Admin_Dashboard extends javax.swing.JFrame {
         
         loadDashboardDetails();
         setupAssetFilter();
+        setupAssignmentFilter();
     }
 
     /**
@@ -69,6 +70,7 @@ public class Admin_Dashboard extends javax.swing.JFrame {
         assetsBtn = new javax.swing.JButton();
         ratesBtn = new javax.swing.JButton();
         insuranceBtn = new javax.swing.JButton();
+        insuranceBtn1 = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         profileBtn = new javax.swing.JButton();
         logoutBtn = new javax.swing.JButton();
@@ -108,7 +110,7 @@ public class Admin_Dashboard extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         doctorTable = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
-        doctorNameTf1 = new javax.swing.JTextField();
+        managerNameTf = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         managerTable = new javax.swing.JTable();
         assignBtn = new javax.swing.JButton();
@@ -178,7 +180,7 @@ public class Admin_Dashboard extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 530, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 533, Short.MAX_VALUE)
                 .addComponent(welcomeLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16))
         );
@@ -331,6 +333,23 @@ public class Admin_Dashboard extends javax.swing.JFrame {
         });
         menuPanel.add(insuranceBtn);
 
+        insuranceBtn1.setFont(new java.awt.Font("Menlo", 0, 14)); // NOI18N
+        insuranceBtn1.setForeground(new java.awt.Color(0, 0, 0));
+        insuranceBtn1.setText("Insurance Networks");
+        insuranceBtn1.setAutoscrolls(true);
+        insuranceBtn1.setBorder(null);
+        insuranceBtn1.setBorderPainted(false);
+        insuranceBtn1.setContentAreaFilled(false);
+        insuranceBtn1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        insuranceBtn1.setFocusPainted(false);
+        insuranceBtn1.setPreferredSize(new java.awt.Dimension(170, 40));
+        insuranceBtn1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                insuranceBtn1ActionPerformed(evt);
+            }
+        });
+        menuPanel.add(insuranceBtn1);
+
         jPanel7.setBackground(new java.awt.Color(102, 204, 255));
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
@@ -449,7 +468,7 @@ public class Admin_Dashboard extends javax.swing.JFrame {
                     .addGroup(dashboardPageLayout.createSequentialGroup()
                         .addGap(252, 252, 252)
                         .addComponent(jLabel19)))
-                .addContainerGap(398, Short.MAX_VALUE))
+                .addContainerGap(257, Short.MAX_VALUE))
         );
         dashboardPageLayout.setVerticalGroup(
             dashboardPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -622,7 +641,7 @@ public class Admin_Dashboard extends javax.swing.JFrame {
                                 .addComponent(phoneTf, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(userIdLbl)))
                     .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 610, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(238, Short.MAX_VALUE))
+                .addContainerGap(97, Short.MAX_VALUE))
         );
         usersPageLayout.setVerticalGroup(
             usersPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -709,11 +728,11 @@ public class Admin_Dashboard extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Search:");
 
-        doctorNameTf1.setBackground(new java.awt.Color(204, 204, 204));
-        doctorNameTf1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        doctorNameTf1.setForeground(new java.awt.Color(0, 0, 0));
-        doctorNameTf1.setText("Name");
-        doctorNameTf1.setToolTipText("");
+        managerNameTf.setBackground(new java.awt.Color(204, 204, 204));
+        managerNameTf.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        managerNameTf.setForeground(new java.awt.Color(0, 0, 0));
+        managerNameTf.setText("Name");
+        managerNameTf.setToolTipText("");
 
         managerTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -773,12 +792,12 @@ public class Admin_Dashboard extends javax.swing.JFrame {
                                 .addGap(8, 8, 8)
                                 .addComponent(jLabel3)
                                 .addGap(18, 18, 18)
-                                .addComponent(doctorNameTf1, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(managerNameTf, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(assignmentsPageLayout.createSequentialGroup()
                         .addGap(285, 285, 285)
                         .addComponent(assignBtn)))
-                .addContainerGap(147, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         assignmentsPageLayout.setVerticalGroup(
             assignmentsPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -787,7 +806,7 @@ public class Admin_Dashboard extends javax.swing.JFrame {
                 .addGroup(assignmentsPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(assignmentsPageLayout.createSequentialGroup()
                         .addGroup(assignmentsPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(doctorNameTf1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(managerNameTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -940,7 +959,7 @@ public class Admin_Dashboard extends javax.swing.JFrame {
                                         .addGap(3, 3, 3))))
                             .addComponent(updateBtn)
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(335, Short.MAX_VALUE))
+                .addContainerGap(194, Short.MAX_VALUE))
         );
         assetsPageLayout.setVerticalGroup(
             assetsPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1069,7 +1088,7 @@ public class Admin_Dashboard extends javax.swing.JFrame {
                             .addComponent(consultationLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(updateRateBtn)
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(328, Short.MAX_VALUE))
+                .addContainerGap(187, Short.MAX_VALUE))
         );
         ratesPageLayout.setVerticalGroup(
             ratesPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1180,7 +1199,7 @@ public class Admin_Dashboard extends javax.swing.JFrame {
                             .addComponent(insuranceStatusCb, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(updateInsuranceBtn)
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(328, Short.MAX_VALUE))
+                .addContainerGap(187, Short.MAX_VALUE))
         );
         insurancePageLayout.setVerticalGroup(
             insurancePageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1210,7 +1229,7 @@ public class Admin_Dashboard extends javax.swing.JFrame {
         profilePage.setLayout(profilePageLayout);
         profilePageLayout.setHorizontalGroup(
             profilePageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 887, Short.MAX_VALUE)
+            .addGap(0, 746, Short.MAX_VALUE)
         );
         profilePageLayout.setVerticalGroup(
             profilePageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1227,7 +1246,7 @@ public class Admin_Dashboard extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1031, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1034, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1276,6 +1295,8 @@ public class Admin_Dashboard extends javax.swing.JFrame {
     private void assignmentsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_assignmentsBtnActionPerformed
         cardLayout.show(pages, "assignmentsPage");
         setActiveButton(assignmentsBtn);
+        
+        loadAssignmentTables();
     }//GEN-LAST:event_assignmentsBtnActionPerformed
 
     private void assetsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_assetsBtnActionPerformed
@@ -1346,6 +1367,22 @@ public class Admin_Dashboard extends javax.swing.JFrame {
         
         for (User user : adminService.getAllUsers()) {
             model.addRow(new Object[]{user.getUserId(), user.getName(), user.getEmail(), user.getPhone(), user.getGender(), user.getRole()});
+        }
+    }
+    
+    private void loadAssignmentTables() {
+        DefaultTableModel doctorModel = (DefaultTableModel)doctorTable.getModel();
+        DefaultTableModel managerModel = (DefaultTableModel)managerTable.getModel();
+        
+        doctorModel.setRowCount(0);
+        managerModel.setRowCount(0);
+        
+        for (User user : adminService.getAllUsers()) {
+            if (user.getRole().equalsIgnoreCase("Doctor")) {
+                doctorModel.addRow(new Object[]{user.getUserId(), user.getName()});
+            } else if (user.getRole().equalsIgnoreCase("MedicalManager")) {
+                managerModel.addRow(new Object[]{user.getUserId(), user.getName()});
+            }
         }
     }
     
@@ -1615,10 +1652,6 @@ public class Admin_Dashboard extends javax.swing.JFrame {
         clearUserForm();
     }//GEN-LAST:event_clearBtnActionPerformed
 
-    private void assignBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_assignBtnActionPerformed
-        // TODO add your handling code here
-    }//GEN-LAST:event_assignBtnActionPerformed
-    
     private void clearUserForm() {
         selectedUserId = null;
         
@@ -1630,6 +1663,109 @@ public class Admin_Dashboard extends javax.swing.JFrame {
         roleCb.setSelectedIndex(0);
         
         userTable.clearSelection();
+    }
+    
+    private void assignBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_assignBtnActionPerformed
+        int doctorRow = doctorTable.getSelectedRow();
+        int managerRow = managerTable.getSelectedRow();
+
+        if (doctorRow == -1 || managerRow == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a doctor and a Medical Manager.");
+            return;
+        }
+
+        int doctorModelRow = doctorTable.convertRowIndexToModel(doctorRow);
+        int managerModelRow = managerTable.convertRowIndexToModel(managerRow);
+
+        String doctorUserId = doctorTable.getModel().getValueAt(doctorModelRow, 0).toString();
+        String managerUserId = managerTable.getModel().getValueAt(managerModelRow, 0).toString();
+
+        try {
+            boolean assigned = adminService.assignDoctor(doctorUserId, managerUserId);
+            
+            if (assigned) {
+                JOptionPane.showMessageDialog(this, "Doctor assigned successfully.");
+            }
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }//GEN-LAST:event_assignBtnActionPerformed
+
+    private void insuranceBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insuranceBtn1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_insuranceBtn1ActionPerformed
+    
+    private TableRowSorter<DefaultTableModel>doctorSorter;
+    private TableRowSorter<DefaultTableModel>managerSorter;
+    
+    private void setupAssignmentFilter() {
+
+        DefaultTableModel doctorModel = (DefaultTableModel) doctorTable.getModel();
+        DefaultTableModel managerModel = (DefaultTableModel)managerTable.getModel();
+        
+        doctorSorter = new TableRowSorter<>(doctorModel);
+        managerSorter = new TableRowSorter<>(managerModel);
+
+        doctorTable.setRowSorter(doctorSorter);
+        managerTable.setRowSorter(managerSorter);
+
+        doctorNameTf.setText("");
+        managerNameTf.setText("");
+
+        doctorNameTf.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                filterDoctors();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                filterDoctors();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                filterDoctors();
+            }
+        });
+
+
+        managerNameTf.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                filterManagers();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                filterManagers();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                filterManagers();
+            }
+        });
+    }
+    
+    private void filterDoctors() {
+        String text = doctorNameTf.getText().trim();
+        
+        if (text.isEmpty()) {
+            doctorSorter.setRowFilter(null);
+        } else {
+            doctorSorter.setRowFilter(RowFilter.regexFilter("(?i)" + Pattern.quote(text), 1));
+        }
+    }
+    
+    private void filterManagers() {
+        String text = managerNameTf.getText().trim();
+
+        if (text.isEmpty()) {
+            managerSorter.setRowFilter(null);
+        } else {
+            managerSorter.setRowFilter(RowFilter.regexFilter("(?i)" + Pattern.quote(text), 1));
+        }
     }
     
     /**
@@ -1750,11 +1886,11 @@ public class Admin_Dashboard extends javax.swing.JFrame {
     private javax.swing.JButton deleteUserBtn;
     private javax.swing.JComboBox<String> departmentCb;
     private javax.swing.JTextField doctorNameTf;
-    private javax.swing.JTextField doctorNameTf1;
     private javax.swing.JTable doctorTable;
     private javax.swing.JTextField emailTf;
     private javax.swing.JComboBox<String> genderCb;
     private javax.swing.JButton insuranceBtn;
+    private javax.swing.JButton insuranceBtn1;
     private javax.swing.JLabel insuranceLbl;
     private javax.swing.JPanel insurancePage;
     private javax.swing.JComboBox<String> insuranceStatusCb;
@@ -1799,6 +1935,7 @@ public class Admin_Dashboard extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JButton logoutBtn;
+    private javax.swing.JTextField managerNameTf;
     private javax.swing.JTable managerTable;
     private javax.swing.JPanel menuPanel;
     private javax.swing.JTextField openingTf;
