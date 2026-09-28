@@ -38,7 +38,7 @@ public class FileAppointmentRepo extends FileRepo {
             boolean found = false;
             
             for (int i = 1; i < lines.size(); i++) {
-                String[] parts = lines.get(i).split("\\|", -1);
+                String[] parts = lines.get(i).split("\\|");
                 
                 if (parts.length == 6 && parts[0].trim().equals(appointmentId.trim())) {
                     parts[5] = newStatus;

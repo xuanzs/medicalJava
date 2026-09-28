@@ -56,4 +56,13 @@ public class PatientService {
         return null;
     }
     
+    public PatientInfo findPatientInfoByUserId(String userId) {
+        for (PatientInfo p : patientInfo) {
+            if (p.getUserId().equals(userId)) {
+                return p;
+            }
+        }
+        return null;
+    }
+    
 }

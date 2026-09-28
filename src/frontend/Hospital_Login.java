@@ -3,10 +3,12 @@ package frontend;
 
 import javax.swing.JOptionPane;
 import model.Doctor;
+import model.PatientInfo;
 import repo.FileUserRepo;
 import service.AuthService;
 import model.User;
 import repo.FileDoctorRepo;
+import service.PatientService;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -17,8 +19,9 @@ import repo.FileDoctorRepo;
 public class Hospital_Login extends javax.swing.JFrame {
 
     private final AuthService as;
-    FileUserRepo userRepo = new FileUserRepo();
-    FileDoctorRepo doctorRepo = new FileDoctorRepo();
+    private FileUserRepo userRepo = new FileUserRepo();
+    private FileDoctorRepo doctorRepo = new FileDoctorRepo();
+    private PatientService patientService = new PatientService();
     
     public Hospital_Login() {
         initComponents();
@@ -177,6 +180,21 @@ public class Hospital_Login extends javax.swing.JFrame {
                     this.dispose();
                 } else {
                     JOptionPane.showMessageDialog(null, "Doctor Profile not found", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } else if (user.getRole().toLowerCase().equals("patient")) {
+                PatientInfo patientInfo = patientService.findPatientInfoByUserId(user.getUserId());
+                
+                if (patientInfo != null) {
+                    hms.Patient patient = new hms.Patient(user.getUserId(), user.getName(), user.getEmail(), user.getPassword(), user.getPhone(), user.getGender(), patientInfo.getPatientId(), patientInfo.getAddress());
+                    
+                    JOptionPane.showMessageDialog(null, "Welcome back " + user.getName(), "Successful", JOptionPane.INFORMATION_MESSAGE);
+                    
+                    hms.PatientDashboard pd = new hms.PatientDashboard(patient);
+                    
+                    pd.setVisible(true);
+                    this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Patient Profile not found", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         }
