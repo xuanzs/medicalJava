@@ -79,11 +79,7 @@ public class Admin_Dashboard extends javax.swing.JFrame {
         assetsBtn = new javax.swing.JButton();
         ratesBtn = new javax.swing.JButton();
         insuranceBtn = new javax.swing.JButton();
-<<<<<<< HEAD
-        insuranceBtn1 = new javax.swing.JButton();
-=======
         requestBtn = new javax.swing.JButton();
->>>>>>> kingsen
         jPanel7 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         profileBtn = new javax.swing.JButton();
@@ -232,11 +228,7 @@ public class Admin_Dashboard extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
-<<<<<<< HEAD
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 533, Short.MAX_VALUE)
-=======
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 491, Short.MAX_VALUE)
->>>>>>> kingsen
                 .addComponent(welcomeLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(58, 58, 58))
         );
@@ -389,24 +381,6 @@ public class Admin_Dashboard extends javax.swing.JFrame {
         });
         menuPanel.add(insuranceBtn);
 
-<<<<<<< HEAD
-        insuranceBtn1.setFont(new java.awt.Font("Menlo", 0, 14)); // NOI18N
-        insuranceBtn1.setForeground(new java.awt.Color(0, 0, 0));
-        insuranceBtn1.setText("Insurance Networks");
-        insuranceBtn1.setAutoscrolls(true);
-        insuranceBtn1.setBorder(null);
-        insuranceBtn1.setBorderPainted(false);
-        insuranceBtn1.setContentAreaFilled(false);
-        insuranceBtn1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        insuranceBtn1.setFocusPainted(false);
-        insuranceBtn1.setPreferredSize(new java.awt.Dimension(170, 40));
-        insuranceBtn1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                insuranceBtn1ActionPerformed(evt);
-            }
-        });
-        menuPanel.add(insuranceBtn1);
-=======
         requestBtn.setFont(new java.awt.Font("Menlo", 0, 14)); // NOI18N
         requestBtn.setForeground(new java.awt.Color(0, 0, 0));
         requestBtn.setText("Requests");
@@ -423,7 +397,6 @@ public class Admin_Dashboard extends javax.swing.JFrame {
             }
         });
         menuPanel.add(requestBtn);
->>>>>>> kingsen
 
         jPanel7.setBackground(new java.awt.Color(102, 204, 255));
 
@@ -558,11 +531,7 @@ public class Admin_Dashboard extends javax.swing.JFrame {
                     .addGroup(dashboardPageLayout.createSequentialGroup()
                         .addGap(233, 233, 233)
                         .addComponent(jLabel19)))
-<<<<<<< HEAD
-                .addContainerGap(257, Short.MAX_VALUE))
-=======
                 .addContainerGap(350, Short.MAX_VALUE))
->>>>>>> kingsen
         );
         dashboardPageLayout.setVerticalGroup(
             dashboardPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1319,13 +1288,6 @@ public class Admin_Dashboard extends javax.swing.JFrame {
 
         requestPage.setBackground(new java.awt.Color(255, 255, 255));
 
-<<<<<<< HEAD
-        javax.swing.GroupLayout profilePageLayout = new javax.swing.GroupLayout(profilePage);
-        profilePage.setLayout(profilePageLayout);
-        profilePageLayout.setHorizontalGroup(
-            profilePageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 746, Short.MAX_VALUE)
-=======
         requestTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -1443,7 +1405,6 @@ public class Admin_Dashboard extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(assetCb, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(280, Short.MAX_VALUE))
->>>>>>> kingsen
         );
         requestPageLayout.setVerticalGroup(
             requestPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2272,11 +2233,6 @@ public class Admin_Dashboard extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_assignBtnActionPerformed
 
-
-    private void insuranceBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insuranceBtn1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_insuranceBtn1ActionPerformed
-
     private void requestBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_requestBtnActionPerformed
         cardLayout.show(pages, "requestPage");
         setActiveButton(requestBtn);
@@ -2414,7 +2370,6 @@ public class Admin_Dashboard extends javax.swing.JFrame {
             newPassPF.setEchoChar('*');
         }
     }//GEN-LAST:event_showPassCBActionPerformed
-
     
     private TableRowSorter<DefaultTableModel>doctorSorter;
     private TableRowSorter<DefaultTableModel>managerSorter;
@@ -2561,6 +2516,7 @@ public class Admin_Dashboard extends javax.swing.JFrame {
     }
     
     
+    
     /**
      * @param args the command line arguments
      */
@@ -2693,7 +2649,6 @@ public class Admin_Dashboard extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> genderCb;
     private javax.swing.JTextField genderTF;
     private javax.swing.JButton insuranceBtn;
-    private javax.swing.JButton insuranceBtn1;
     private javax.swing.JLabel insuranceLbl;
     private javax.swing.JPanel insurancePage;
     private javax.swing.JComboBox<String> insuranceStatusCb;
