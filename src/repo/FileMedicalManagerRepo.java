@@ -4,6 +4,7 @@
  */
 package repo;
 
+import java.io.*;
 import java.util.ArrayList;
 import medManager.MedicalManager;
 
@@ -31,5 +32,65 @@ public class FileMedicalManagerRepo extends FileRepo {
     
     public ArrayList<String[]> returnAllMedicalManager() {
         return al;
+    }
+    
+    public String generateMedicalManagerId() {
+        int maxId = 0;
+        for (String[] manager : al) {
+            try {
+                int number = Integer.parseInt(manager[0].trim().substring(1));
+                if (number > maxId) maxId = number;
+            } catch (Exception e) {
+                System.out.println("Invalid Medical Manager ID: " + manager[0]);
+            }
+        }
+        return String.format("M%03d", maxId + 1);
+    }
+
+    public boolean createMedicalManager(String userId) {
+        for (String[] manager : al) {
+            if (manager[1].trim().equalsIgnoreCase(userId)) return false;
+        }
+        String[] newManager = new String[]{generateMedicalManagerId(), userId};
+        al.add(newManager);
+        try {
+            saveMedicalManagers();
+            return true;
+        } catch (IOException e) {
+            al.remove(newManager);
+            System.out.println(e);
+            return false;
+        }
+    }
+    
+    private void saveMedicalManagers() throws IOException {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
+            bw.write("Medical Manager Id,User Id");
+            bw.newLine();
+            for (String[] manager : al) {
+                bw.write(manager[0].trim() + "," + manager[1].trim());
+                bw.newLine();
+            }
+        }
+    }
+    
+    public boolean deleteByUserId(String userId) {
+        String[] removed = null;
+        for (String[] manager : al) {
+            if (manager[1].trim().equalsIgnoreCase(userId)) {
+                removed = manager;
+                break;
+            }
+        }
+        if (removed == null) return false;
+        al.remove(removed);
+        try {
+            saveMedicalManagers();
+            return true;
+        } catch (IOException e) {
+            al.add(removed);
+            System.out.println(e);
+            return false;
+        }
     }
 }

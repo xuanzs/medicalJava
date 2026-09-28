@@ -973,7 +973,7 @@ public class Admin_Dashboard extends javax.swing.JFrame {
 
         statusCb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Active", "Closed", "Maintenance", "Renovation" }));
 
-        departmentCb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cardiology", "Radiology", "Pathology", "Emergency" }));
+        departmentCb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "D001", "D002", "D003", "D004" }));
 
         updateBtn.setText("Update");
         updateBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -1592,7 +1592,6 @@ public class Admin_Dashboard extends javax.swing.JFrame {
                                 .addComponent(genderTF, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, editProfileLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(saveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(68, 68, 68)))
                 .addContainerGap(242, Short.MAX_VALUE))
