@@ -1506,10 +1506,10 @@
                       <Properties>
                         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                           <StringArray count="4">
-                            <StringItem index="0" value="Cardiology"/>
-                            <StringItem index="1" value="Radiology"/>
-                            <StringItem index="2" value="Pathology"/>
-                            <StringItem index="3" value="Emergency"/>
+                            <StringItem index="0" value="D001"/>
+                            <StringItem index="1" value="D002"/>
+                            <StringItem index="2" value="D003"/>
+                            <StringItem index="3" value="D004"/>
                           </StringArray>
                         </Property>
                       </Properties>
@@ -2224,7 +2224,6 @@
                                           <EmptySpace pref="159" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="102" alignment="1" attributes="0">
-                                          <EmptySpace pref="236" max="-2" attributes="0"/>
                                           <Component id="saveBtn" min="-2" pref="135" max="-2" attributes="0"/>
                                           <EmptySpace min="-2" pref="68" max="-2" attributes="0"/>
                                       </Group>

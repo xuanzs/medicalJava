@@ -6,7 +6,10 @@ package service;
 
 import java.util.Collection;
 import model.User;
+import repo.FileAdminRepo;
 import repo.FileDoctorRepo;
+import repo.FileMedicalManagerRepo;
+import repo.FilePatientRepo;
 import repo.FileUserRepo;
 
 /**
@@ -16,18 +19,47 @@ import repo.FileUserRepo;
 public class AdminService {
     private FileUserRepo userRepo;
     private FileDoctorRepo doctorRepo;
+    private FileAdminRepo adminRepo;
+    private FileMedicalManagerRepo managerRepo;
+    private FilePatientRepo patientRepo;
     private ValidationService validationService;
     
     public AdminService() {
         userRepo = new FileUserRepo();
         doctorRepo = new FileDoctorRepo();
+        adminRepo = new FileAdminRepo();
+        managerRepo = new FileMedicalManagerRepo();
+        patientRepo = new FilePatientRepo();
         validationService = new ValidationService(userRepo);
     }
-    
+
     public boolean createUser(String name, String email, String password, String phone, String gender, String role) {
         validationService.createValidation(name, email, password, phone);
-        
-        return userRepo.createUser(name, email, password, phone, gender, role);
+        boolean userCreated = userRepo.createUser(name, email, password, phone, gender, role);
+        if (!userCreated) return false;
+
+        User newUser = userRepo.findByEmail(email);
+        if (newUser == null) return false;
+
+        boolean profileCreated;
+        if (role.equalsIgnoreCase("Doctor")) {
+            profileCreated = doctorRepo.createDoctor(newUser.getUserId());
+        } else if (role.equalsIgnoreCase("MedicalManager")) {
+            profileCreated = managerRepo.createMedicalManager(newUser.getUserId());
+        } else if (role.equalsIgnoreCase("Patient")) {
+            profileCreated = patientRepo.createPatient(newUser.getUserId());
+        } else if (role.equalsIgnoreCase("Admin")) {
+            profileCreated = adminRepo.createAdmin(newUser.getUserId());
+        } else {
+            userRepo.deleteUser(newUser.getUserId());
+            throw new IllegalArgumentException("Invalid role.");
+        }
+
+        if (!profileCreated) {
+            userRepo.deleteUser(newUser.getUserId());
+            return false;
+        }
+        return true;
     }
     
     public boolean updateUser(String userId, String name, String email, String phone, String gender) {

@@ -79,6 +79,41 @@ public class FileDoctorRepo {
             }
         }
     }
+    
+    public boolean createDoctor(String userId) {
+        if (map.containsKey(userId)) {
+            return false;
+        }
+
+        Doctor doctor = new Doctor(generateDoctorId(), userId, "Not Set", "");
+        map.put(userId, doctor);
+
+        try {
+            saveDoctors();
+            return true;
+        } catch (IOException e) {
+            map.remove(userId);
+            System.out.println(e);
+            return false;
+        }
+    }
+    
+    public String generateDoctorId() {
+        int maxId = 0;
+
+        for (Doctor doctor : map.values()) {
+            try {
+                int number = Integer.parseInt(doctor.getDoctorId().substring(1));
+                if (number > maxId) {
+                    maxId = number;
+                }
+            } catch (Exception e) {
+                System.out.println("Invalid Doctor ID: " + doctor.getDoctorId());
+            }
+        }
+
+        return String.format("D%03d", maxId + 1);
+    }
         
     // FileReader
     public BufferedReader reader() throws IOException {
