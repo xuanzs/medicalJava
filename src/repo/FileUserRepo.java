@@ -5,19 +5,15 @@
 package repo;
 
 import java.io.*;
+import java.util.Collection;
 import java.util.HashMap;
-import javax.swing.JOptionPane;
 import model.User;
-import model.Admin;
-import model.MedicalManager;
-import model.Doctor;
-import model.Patient;
 
 public class FileUserRepo {
     private final HashMap<String, User> map = new HashMap<>();
     
     public FileUserRepo() {
-        try (BufferedReader br = reader("data/User.txt");) {
+        try (BufferedReader br = reader()) {
             br.readLine();
             String line;
             while((line = br.readLine()) != null) {
@@ -34,7 +30,7 @@ public class FileUserRepo {
                     String g = parts[5].trim();
                     String r = parts[6].trim();
                     
-                    User user = createUserObject(id, n, e, p, ph, g, r);
+                    User user = new User(id, n, e, p, ph, g, r);
                     
                     if (user != null) {map.put(e, user);}
                     
@@ -45,6 +41,10 @@ public class FileUserRepo {
         } catch(IOException e) {
             System.out.println(e);
         }
+    }
+    
+    public Collection<User> getAllUsers() {
+        return map.values();
     }
     
     public User findByEmail(String email) {
@@ -60,120 +60,96 @@ public class FileUserRepo {
         return null;
     }
     
-    // Check duplicate email
-    public boolean emailExists(String email) {
-        return map.containsKey(email.trim().toLowerCase());
-    }
-    
     // FileReader
-    public BufferedReader reader(String filePath) throws IOException {
-        FileReader fr = new FileReader(filePath);
+    public BufferedReader reader() throws IOException {
+        FileReader fr = new FileReader("data/User.txt");
         
         return new BufferedReader(fr);
     }
     
     // FileWriter
-    public BufferedWriter writer(String filePath) throws IOException {
-        FileWriter fw = new FileWriter(filePath);
+    public BufferedWriter writer() throws IOException {
+        FileWriter fw = new FileWriter("data/User.txt");
         
         return new BufferedWriter(fw);
     }
     
-    public BufferedWriter writer(String filePath, boolean append) throws IOException {
-        FileWriter fw = new FileWriter(filePath, append);
+    public BufferedWriter writer(boolean append) throws IOException {
+        FileWriter fw = new FileWriter("data/User.txt", append);
 
         return new BufferedWriter(fw);
     }
     
     // Generate userId
-    public String generateUserId() throws IOException {
-        String lastLine = null;
-        String lastUserId;
+    public String generateUserId() {
+        int maxId = 0;
         
-        try (BufferedReader br = reader("data/User.txt");) {
-            br.readLine();
-            String line;
-            while((line = br.readLine()) != null) {
-                if (!line.trim().isEmpty()) {
-                    lastLine = line;
+        for (User user : map.values()) {
+            String id = user.getUserId();
+            
+            try {
+                int number = Integer.parseInt(id.substring(3));
+                
+                if (number > maxId) {
+                    maxId = number;
                 }
+            } catch (Exception e) {
+                System.out.println("Invalid User ID: " + id);
             }
         }
-                
-        if (lastLine != null) {
-            String[] parts = lastLine.split(",");
-            lastUserId = parts[0].trim();
-        } else {
-            return "Uid001";
-        }
         
-        int number = Integer.parseInt(lastUserId.substring(3)) + 1;
-        
-        return String.format("Uid%03d", number);
+        return String.format("Uid%03d", maxId + 1);
     }
     
     // Create user
-    public void createUser(String name, String email, String password, String phone, String gender, String role) {       
+    public boolean createUser(String name, String email, String password, String phone, String gender, String role) {       
+        if (map.containsKey(email)) {
+            return false;
+        }
+        
+        String userId = generateUserId();
+        User user = new User(userId, name, email, password, phone, gender, role);
+
+        map.put(email, user);
+        
         try {
-            String userId = generateUserId();
-            String userData = userId + "," + name + "," + email + "," + password + "," + phone + "," + gender + "," + role + "\n";
-            
-            try (BufferedWriter bw = writer("data/User.txt", true);) {
-                bw.write(userData);
-
-                JOptionPane.showMessageDialog(null, "User created successfully.");
-            }
-            
-            User user = createUserObject(userId, name, email, password, phone, gender, role);
-
-            if (user != null) {map.put(email, user);}
-            
-        } catch(IOException e) {
+            saveUsers();
+            return true;
+        } catch (IOException e) {
+            map.remove(email);
             System.out.println(e);
+            return false;
         }
     }
     
     // Delete user
-    public void deleteUser(String email) {
-        if (map.containsKey(email.trim().toLowerCase())) {
-            map.remove(email.trim().toLowerCase());
+    public boolean deleteUser(String userId) {
+        User user = findByUserId(userId);
         
-            try (BufferedWriter bw = writer("User.txt");) {
-                bw.write("UserId|Name|Email|Password|Phone|Gender|Role\n");
-
-                for (User user : map.values()) {
-                    String userData = user.getUserId() + "," + user.getName() + "," + user.getEmail() + "," + user.getPassword() + "," + user.getPhone() + "," + user.getGender() + "," + user.getRole() + "\n";
-
-                    bw.write(userData);
-                    
-                    JOptionPane.showMessageDialog(null, "User deleted successfully.");
-                    return;
-                }
-            } catch (IOException e) {
-                System.out.println(e);
-            } 
+        if (user == null) {
+            return false;
+        }
+        
+        map.remove(user.getEmail().trim().toLowerCase());
+        
+        try {
+            saveUsers();
+            return true;
+        } catch (IOException e) {
+            System.out.println(e);
+            return false;
         }
     }
     
-    // Create user object
-    public User createUserObject(String userId, String name, String email, String password, String phone, String gender, String role) {
-        User user = null;
-        
-        switch(role.toLowerCase()) {
-            case "admin":
-                user = new Admin(userId, name, email, password, phone, gender, role);
-                break;
-            case "medicalmanager":
-                user = new MedicalManager(userId, name, email, password, phone, gender, role);
-                break;
-            case "doctor":
-                user = new Doctor(userId, name, email, password, phone, gender, role);
-                break;
-            case "patient":
-                user = new Patient(userId, name, email, password, phone, gender, role);
-                break;
+    private void saveUsers() throws IOException {
+        try (BufferedWriter bw = writer()) {
+            bw.write("UserId|Name|Email|Password|Phone|Gender|Role");
+            bw.newLine();
+            
+            for (User user : map.values()) {
+                bw.write(user.getUserId() + "," + user.getName() + "," + user.getEmail() + "," + user.getPassword() + "," + user.getPhone() + "," + user.getGender() + "," + user.getRole());
+                bw.newLine();
+            }
         }
-        
-        return user;
     }
 }

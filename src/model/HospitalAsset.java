@@ -8,7 +8,7 @@ package model;
  *
  * @author wongkingsen
  */
-public abstract class HospitalAsset {
+public class HospitalAsset {
     private String assetId, assetName, assetType, location, status, departmentId, openingTime, closingTime;
     private int capacity;
     

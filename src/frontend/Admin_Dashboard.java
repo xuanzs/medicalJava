@@ -6,8 +6,22 @@ package frontend;
 
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import model.Admin;
+import model.ConsultationRate;
+import model.HospitalAsset;
+import model.InsuranceNetwork;
 import model.User;
+import repo.FileAssetRepo;
+import service.AdminService;
+import service.AssetService;
+import service.ConfigurationService;
 
 /**
  *
@@ -18,15 +32,18 @@ public class Admin_Dashboard extends javax.swing.JFrame {
     private User user;
     CardLayout cardLayout;
     
-    public Admin_Dashboard(User user) {
+    public Admin_Dashboard() {
         initComponents();
         
-        this.user = user;
-        welcomeLbl.setText("Welcome " + user.getName());
+//        this.user = user;
+//        welcomeLbl.setText("Welcome " + user.getName());
         cardLayout = (CardLayout)pages.getLayout();
         
         cardLayout.show(pages, "dashboardPage");
         setActiveButton(dashboardBtn);
+        
+        loadDashboardDetails();
+        setupAssetFilter();
     }
 
     /**
@@ -57,7 +74,34 @@ public class Admin_Dashboard extends javax.swing.JFrame {
         logoutBtn = new javax.swing.JButton();
         pages = new javax.swing.JPanel();
         dashboardPage = new javax.swing.JPanel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        totalUserLbl = new javax.swing.JLabel();
+        totalManagerLbl = new javax.swing.JLabel();
+        totalDoctorLbl = new javax.swing.JLabel();
+        totalPatientLbl = new javax.swing.JLabel();
         usersPage = new javax.swing.JPanel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        userTable = new javax.swing.JTable();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        jLabel27 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
+        createBtn = new javax.swing.JButton();
+        updateUserBtn = new javax.swing.JButton();
+        deleteUserBtn = new javax.swing.JButton();
+        clearBtn = new javax.swing.JButton();
+        genderCb = new javax.swing.JComboBox<>();
+        roleCb = new javax.swing.JComboBox<>();
+        usernameTf = new javax.swing.JTextField();
+        emailTf = new javax.swing.JTextField();
+        phoneTf = new javax.swing.JTextField();
+        userIdLbl = new javax.swing.JLabel();
         assignmentsPage = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         doctorNameTf = new javax.swing.JTextField();
@@ -88,10 +132,27 @@ public class Admin_Dashboard extends javax.swing.JFrame {
         closingTf = new javax.swing.JTextField();
         updateBtn = new javax.swing.JButton();
         ratesPage = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        rateTable = new javax.swing.JTable();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        baseRateTf = new javax.swing.JTextField();
+        updateRateBtn = new javax.swing.JButton();
+        consultationLbl = new javax.swing.JLabel();
         insurancePage = new javax.swing.JPanel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        insuranceTable = new javax.swing.JTable();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        updateInsuranceBtn = new javax.swing.JButton();
+        insuranceLbl = new javax.swing.JLabel();
+        insuranceStatusCb = new javax.swing.JComboBox<>();
         profilePage = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(1000, 700));
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -154,7 +215,7 @@ public class Admin_Dashboard extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 195, Short.MAX_VALUE)
+            .addGap(0, 144, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -276,7 +337,7 @@ public class Admin_Dashboard extends javax.swing.JFrame {
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 195, Short.MAX_VALUE)
+            .addGap(0, 144, Short.MAX_VALUE)
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -327,30 +388,278 @@ public class Admin_Dashboard extends javax.swing.JFrame {
 
         dashboardPage.setBackground(new java.awt.Color(255, 255, 255));
 
+        jLabel12.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel12.setText("Total Users:");
+
+        jLabel19.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabel19.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel19.setText("Admin Dashboard");
+
+        jLabel20.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel20.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel20.setText("Managers:");
+        jLabel20.setToolTipText("");
+
+        jLabel21.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel21.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel21.setText("Doctor:");
+
+        jLabel22.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel22.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel22.setText("Patients:");
+
+        totalUserLbl.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        totalUserLbl.setForeground(new java.awt.Color(0, 0, 0));
+
+        totalManagerLbl.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        totalManagerLbl.setForeground(new java.awt.Color(0, 0, 0));
+
+        totalDoctorLbl.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        totalDoctorLbl.setForeground(new java.awt.Color(0, 0, 0));
+
+        totalPatientLbl.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        totalPatientLbl.setForeground(new java.awt.Color(0, 0, 0));
+
         javax.swing.GroupLayout dashboardPageLayout = new javax.swing.GroupLayout(dashboardPage);
         dashboardPage.setLayout(dashboardPageLayout);
         dashboardPageLayout.setHorizontalGroup(
             dashboardPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 836, Short.MAX_VALUE)
+            .addGroup(dashboardPageLayout.createSequentialGroup()
+                .addGroup(dashboardPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(dashboardPageLayout.createSequentialGroup()
+                        .addGap(93, 93, 93)
+                        .addGroup(dashboardPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel20)
+                            .addComponent(jLabel12))
+                        .addGap(18, 18, 18)
+                        .addGroup(dashboardPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(totalUserLbl)
+                            .addComponent(totalManagerLbl))
+                        .addGap(215, 215, 215)
+                        .addGroup(dashboardPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(dashboardPageLayout.createSequentialGroup()
+                                .addComponent(jLabel21)
+                                .addGap(18, 18, 18)
+                                .addComponent(totalDoctorLbl))
+                            .addGroup(dashboardPageLayout.createSequentialGroup()
+                                .addComponent(jLabel22)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(totalPatientLbl))))
+                    .addGroup(dashboardPageLayout.createSequentialGroup()
+                        .addGap(252, 252, 252)
+                        .addComponent(jLabel19)))
+                .addContainerGap(398, Short.MAX_VALUE))
         );
         dashboardPageLayout.setVerticalGroup(
             dashboardPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1083, Short.MAX_VALUE)
+            .addGroup(dashboardPageLayout.createSequentialGroup()
+                .addGap(54, 54, 54)
+                .addComponent(jLabel19)
+                .addGap(51, 51, 51)
+                .addGroup(dashboardPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(jLabel21)
+                    .addComponent(totalUserLbl)
+                    .addComponent(totalDoctorLbl))
+                .addGap(50, 50, 50)
+                .addGroup(dashboardPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel20)
+                    .addComponent(jLabel22)
+                    .addComponent(totalManagerLbl)
+                    .addComponent(totalPatientLbl))
+                .addContainerGap(857, Short.MAX_VALUE))
         );
 
         pages.add(dashboardPage, "dashboardPage");
 
         usersPage.setBackground(new java.awt.Color(255, 255, 255));
 
+        userTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "User ID", "Name", "Email", "Phone", "Gender", "Role"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        userTable.getTableHeader().setReorderingAllowed(false);
+        userTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                userTableMouseClicked(evt);
+            }
+        });
+        jScrollPane6.setViewportView(userTable);
+        if (userTable.getColumnModel().getColumnCount() > 0) {
+            userTable.getColumnModel().getColumn(0).setResizable(false);
+            userTable.getColumnModel().getColumn(1).setResizable(false);
+            userTable.getColumnModel().getColumn(2).setResizable(false);
+            userTable.getColumnModel().getColumn(3).setResizable(false);
+            userTable.getColumnModel().getColumn(4).setResizable(false);
+            userTable.getColumnModel().getColumn(5).setResizable(false);
+        }
+
+        jLabel23.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel23.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel23.setText("User ID:");
+        jLabel23.setToolTipText("");
+
+        jLabel24.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel24.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel24.setText("Name:");
+
+        jLabel25.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel25.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel25.setText("Email:");
+
+        jLabel27.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel27.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel27.setText("Phone:");
+
+        jLabel28.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel28.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel28.setText("Gender:");
+
+        jLabel29.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel29.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel29.setText("Role:");
+
+        createBtn.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        createBtn.setText("Create");
+        createBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                createBtnActionPerformed(evt);
+            }
+        });
+
+        updateUserBtn.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        updateUserBtn.setText("Update");
+        updateUserBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateUserBtnActionPerformed(evt);
+            }
+        });
+
+        deleteUserBtn.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        deleteUserBtn.setText("Delete");
+        deleteUserBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteUserBtnActionPerformed(evt);
+            }
+        });
+
+        clearBtn.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        clearBtn.setText("Clear");
+        clearBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearBtnActionPerformed(evt);
+            }
+        });
+
+        genderCb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Male", "Female" }));
+
+        roleCb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "MedicalManager", "Doctor", "Patient" }));
+
+        usernameTf.setToolTipText("");
+
+        userIdLbl.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        userIdLbl.setForeground(new java.awt.Color(0, 0, 0));
+        userIdLbl.setToolTipText("");
+
         javax.swing.GroupLayout usersPageLayout = new javax.swing.GroupLayout(usersPage);
         usersPage.setLayout(usersPageLayout);
         usersPageLayout.setHorizontalGroup(
             usersPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 836, Short.MAX_VALUE)
+            .addGroup(usersPageLayout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addGroup(usersPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(usersPageLayout.createSequentialGroup()
+                        .addComponent(createBtn)
+                        .addGap(40, 40, 40)
+                        .addComponent(updateUserBtn)
+                        .addGap(40, 40, 40)
+                        .addComponent(deleteUserBtn)
+                        .addGap(40, 40, 40)
+                        .addComponent(clearBtn))
+                    .addGroup(usersPageLayout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addGroup(usersPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel28)
+                            .addGroup(usersPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(usersPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel23)
+                                    .addComponent(jLabel25)
+                                    .addComponent(jLabel24))
+                                .addGroup(usersPageLayout.createSequentialGroup()
+                                    .addGap(15, 15, 15)
+                                    .addComponent(jLabel27)))
+                            .addComponent(jLabel29))
+                        .addGap(18, 18, 18)
+                        .addGroup(usersPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(usersPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(genderCb, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(roleCb, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(usernameTf)
+                                .addComponent(emailTf)
+                                .addComponent(phoneTf, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(userIdLbl)))
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 610, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(238, Short.MAX_VALUE))
         );
         usersPageLayout.setVerticalGroup(
             usersPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1083, Short.MAX_VALUE)
+            .addGroup(usersPageLayout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(usersPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel23)
+                    .addComponent(userIdLbl))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(usersPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel24)
+                    .addComponent(usernameTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(usersPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel25)
+                    .addComponent(emailTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addGroup(usersPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel27)
+                    .addComponent(phoneTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(usersPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel28)
+                    .addComponent(genderCb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(usersPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel29)
+                    .addComponent(roleCb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(45, 45, 45)
+                .addGroup(usersPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(createBtn)
+                    .addComponent(updateUserBtn)
+                    .addComponent(deleteUserBtn)
+                    .addComponent(clearBtn))
+                .addContainerGap(515, Short.MAX_VALUE))
         );
 
         pages.add(usersPage, "usersPage");
@@ -437,6 +746,11 @@ public class Admin_Dashboard extends javax.swing.JFrame {
 
         assignBtn.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         assignBtn.setText("Assign");
+        assignBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                assignBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout assignmentsPageLayout = new javax.swing.GroupLayout(assignmentsPage);
         assignmentsPage.setLayout(assignmentsPageLayout);
@@ -464,7 +778,7 @@ public class Admin_Dashboard extends javax.swing.JFrame {
                     .addGroup(assignmentsPageLayout.createSequentialGroup()
                         .addGap(285, 285, 285)
                         .addComponent(assignBtn)))
-                .addContainerGap(96, Short.MAX_VALUE))
+                .addContainerGap(147, Short.MAX_VALUE))
         );
         assignmentsPageLayout.setVerticalGroup(
             assignmentsPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -529,6 +843,11 @@ public class Admin_Dashboard extends javax.swing.JFrame {
             }
         });
         assetTable.getTableHeader().setReorderingAllowed(false);
+        assetTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                assetTableMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(assetTable);
         if (assetTable.getColumnModel().getColumnCount() > 0) {
             assetTable.getColumnModel().getColumn(0).setResizable(false);
@@ -538,7 +857,7 @@ public class Admin_Dashboard extends javax.swing.JFrame {
             assetTable.getColumnModel().getColumn(4).setResizable(false);
         }
 
-        jLabel5.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Selected Asset");
 
@@ -570,11 +889,16 @@ public class Admin_Dashboard extends javax.swing.JFrame {
         assetLbl.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         assetLbl.setForeground(new java.awt.Color(0, 0, 0));
 
-        statusCb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        statusCb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Active", "Closed", "Maintenance", "Renovation" }));
 
-        departmentCb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        departmentCb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cardiology", "Radiology", "Pathology", "Emergency" }));
 
         updateBtn.setText("Update");
+        updateBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout assetsPageLayout = new javax.swing.GroupLayout(assetsPage);
         assetsPage.setLayout(assetsPageLayout);
@@ -614,9 +938,9 @@ public class Admin_Dashboard extends javax.swing.JFrame {
                                     .addGroup(assetsPageLayout.createSequentialGroup()
                                         .addComponent(assetLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(3, 3, 3))))
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(updateBtn))))
-                .addContainerGap(348, Short.MAX_VALUE))
+                            .addComponent(updateBtn)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(335, Short.MAX_VALUE))
         );
         assetsPageLayout.setVerticalGroup(
             assetsPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -662,30 +986,220 @@ public class Admin_Dashboard extends javax.swing.JFrame {
 
         ratesPage.setBackground(new java.awt.Color(255, 255, 255));
 
+        rateTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Rate ID", "Consultation Type", "Rate"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        rateTable.getTableHeader().setReorderingAllowed(false);
+        rateTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rateTableMouseClicked(evt);
+            }
+        });
+        jScrollPane4.setViewportView(rateTable);
+        if (rateTable.getColumnModel().getColumnCount() > 0) {
+            rateTable.getColumnModel().getColumn(0).setResizable(false);
+            rateTable.getColumnModel().getColumn(1).setResizable(false);
+            rateTable.getColumnModel().getColumn(2).setResizable(false);
+        }
+
+        jLabel13.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel13.setText("Selected Consultation");
+
+        jLabel14.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel14.setText("Consultation:");
+        jLabel14.setToolTipText("");
+
+        jLabel15.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel15.setText("Base Rate (RM):");
+
+        updateRateBtn.setText("Update");
+        updateRateBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateRateBtnActionPerformed(evt);
+            }
+        });
+
+        consultationLbl.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        consultationLbl.setForeground(new java.awt.Color(0, 0, 0));
+        consultationLbl.setToolTipText("");
+
         javax.swing.GroupLayout ratesPageLayout = new javax.swing.GroupLayout(ratesPage);
         ratesPage.setLayout(ratesPageLayout);
         ratesPageLayout.setHorizontalGroup(
             ratesPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 836, Short.MAX_VALUE)
+            .addGroup(ratesPageLayout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addGroup(ratesPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(ratesPageLayout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(jLabel13))
+                    .addGroup(ratesPageLayout.createSequentialGroup()
+                        .addGroup(ratesPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel14)
+                            .addComponent(jLabel15))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(ratesPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(baseRateTf, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(consultationLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(updateRateBtn)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(328, Short.MAX_VALUE))
         );
         ratesPageLayout.setVerticalGroup(
             ratesPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1083, Short.MAX_VALUE)
+            .addGroup(ratesPageLayout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addComponent(jLabel13)
+                .addGap(18, 18, 18)
+                .addGroup(ratesPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel14)
+                    .addComponent(consultationLbl))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(ratesPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel15)
+                    .addComponent(baseRateTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(updateRateBtn)
+                .addContainerGap(725, Short.MAX_VALUE))
         );
 
         pages.add(ratesPage, "ratesPage");
 
         insurancePage.setBackground(new java.awt.Color(255, 255, 255));
 
+        insuranceTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Insurance ID", "Insurance Name", "Status"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        insuranceTable.getTableHeader().setReorderingAllowed(false);
+        insuranceTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                insuranceTableMouseClicked(evt);
+            }
+        });
+        jScrollPane5.setViewportView(insuranceTable);
+        if (insuranceTable.getColumnModel().getColumnCount() > 0) {
+            insuranceTable.getColumnModel().getColumn(0).setResizable(false);
+            insuranceTable.getColumnModel().getColumn(1).setResizable(false);
+            insuranceTable.getColumnModel().getColumn(2).setResizable(false);
+        }
+
+        jLabel16.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel16.setText("Selected Insurance");
+
+        jLabel17.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel17.setText("Insurance:");
+        jLabel17.setToolTipText("");
+
+        jLabel18.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel18.setText("Status:");
+
+        updateInsuranceBtn.setText("Update");
+        updateInsuranceBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateInsuranceBtnActionPerformed(evt);
+            }
+        });
+
+        insuranceLbl.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        insuranceLbl.setForeground(new java.awt.Color(0, 0, 0));
+        insuranceLbl.setToolTipText("");
+
+        insuranceStatusCb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Accepted", "Not Accepted" }));
+
         javax.swing.GroupLayout insurancePageLayout = new javax.swing.GroupLayout(insurancePage);
         insurancePage.setLayout(insurancePageLayout);
         insurancePageLayout.setHorizontalGroup(
             insurancePageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 836, Short.MAX_VALUE)
+            .addGroup(insurancePageLayout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addGroup(insurancePageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(insurancePageLayout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(jLabel16))
+                    .addGroup(insurancePageLayout.createSequentialGroup()
+                        .addGroup(insurancePageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel17)
+                            .addComponent(jLabel18))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(insurancePageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(insuranceLbl, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
+                            .addComponent(insuranceStatusCb, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(updateInsuranceBtn)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(328, Short.MAX_VALUE))
         );
         insurancePageLayout.setVerticalGroup(
             insurancePageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1083, Short.MAX_VALUE)
+            .addGroup(insurancePageLayout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addComponent(jLabel16)
+                .addGap(18, 18, 18)
+                .addGroup(insurancePageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel17)
+                    .addComponent(insuranceLbl))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(insurancePageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel18)
+                    .addComponent(insuranceStatusCb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(updateInsuranceBtn)
+                .addContainerGap(725, Short.MAX_VALUE))
         );
 
         pages.add(insurancePage, "insurancePage");
@@ -696,7 +1210,7 @@ public class Admin_Dashboard extends javax.swing.JFrame {
         profilePage.setLayout(profilePageLayout);
         profilePageLayout.setHorizontalGroup(
             profilePageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 836, Short.MAX_VALUE)
+            .addGap(0, 887, Short.MAX_VALUE)
         );
         profilePageLayout.setVerticalGroup(
             profilePageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -749,11 +1263,14 @@ public class Admin_Dashboard extends javax.swing.JFrame {
         cardLayout.show(pages, "dashboardPage");
         setActiveButton(dashboardBtn);
         
+        loadDashboardDetails();
     }//GEN-LAST:event_dashboardBtnActionPerformed
 
     private void usersBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usersBtnActionPerformed
         cardLayout.show(pages, "usersPage");
         setActiveButton(usersBtn);
+        
+        loadUserTable();
     }//GEN-LAST:event_usersBtnActionPerformed
 
     private void assignmentsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_assignmentsBtnActionPerformed
@@ -764,11 +1281,15 @@ public class Admin_Dashboard extends javax.swing.JFrame {
     private void assetsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_assetsBtnActionPerformed
         cardLayout.show(pages, "assetsPage");
         setActiveButton(assetsBtn);
+        
+        loadAssetTable();
     }//GEN-LAST:event_assetsBtnActionPerformed
 
     private void ratesBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ratesBtnActionPerformed
         cardLayout.show(pages, "ratesPage");
         setActiveButton(ratesBtn);
+        
+        loadRateTable();
     }//GEN-LAST:event_ratesBtnActionPerformed
 
     private void profileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileBtnActionPerformed
@@ -786,8 +1307,331 @@ public class Admin_Dashboard extends javax.swing.JFrame {
     private void insuranceBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insuranceBtnActionPerformed
         cardLayout.show(pages, "insurancePage");
         setActiveButton(insuranceBtn);
+        
+        loadInsuranceTable();
     }//GEN-LAST:event_insuranceBtnActionPerformed
 
+    private AdminService adminService = new AdminService();
+    
+    private void loadDashboardDetails() {
+        int totalUsers = 0;
+        int doctorCount = 0;
+        int managerCount = 0;
+        int patientCount = 0;
+        
+        for (User user : adminService.getAllUsers()) {
+            totalUsers++;
+            
+            if (user.getRole().equalsIgnoreCase("Doctor")) {
+                doctorCount++;
+            } else if (user.getRole().equalsIgnoreCase("MedicalManager")) {
+                managerCount++;
+            } else if (user.getRole().equalsIgnoreCase("Patient")) {
+                patientCount++;
+            }
+        }
+        
+        totalUserLbl.setText(totalUsers + "");
+        totalDoctorLbl.setText(doctorCount + "");
+        totalManagerLbl.setText(managerCount + "");
+        totalPatientLbl.setText(patientCount + "");
+    }
+    
+    private String selectedUserId = null;
+    
+    private void loadUserTable() {
+        DefaultTableModel model = (DefaultTableModel)userTable.getModel();
+        
+        model.setRowCount(0);
+        
+        for (User user : adminService.getAllUsers()) {
+            model.addRow(new Object[]{user.getUserId(), user.getName(), user.getEmail(), user.getPhone(), user.getGender(), user.getRole()});
+        }
+    }
+    
+    // Manage and allocate assets
+    FileAssetRepo assetRepo = new FileAssetRepo();
+    AssetService assetService = new AssetService();
+    String selectedAssetId;
+    private TableRowSorter<DefaultTableModel> assetSorter;
+    
+    private void loadAssetTable() {
+        DefaultTableModel model = (DefaultTableModel)assetTable.getModel();
+        
+        model.setRowCount(0);
+        
+        for (HospitalAsset asset : assetRepo.getAllAssets()) {
+            model.addRow(new Object[]{asset.getAssetId(), asset.getAssetName(), asset.getAssetType(), asset.getStatus(), asset.getCapacity()});
+        }
+    }
+    
+    private void setupAssetFilter() {
+        DefaultTableModel model = (DefaultTableModel)assetTable.getModel();
+        
+        assetSorter = new TableRowSorter<>(model);
+        assetTable.setRowSorter(assetSorter);
+        
+        assetNameTf.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                filterAssets();
+            }
+            
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                filterAssets();
+            }
+            
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                filterAssets();
+            }
+        });
+    }
+    
+    public void filterAssets() {
+        String text = assetNameTf.getText().trim();
+        
+        if (text.isEmpty()) {
+            assetSorter.setRowFilter(null);
+        } else {
+            assetSorter.setRowFilter(RowFilter.regexFilter("(?i)" + Pattern.quote(text), 1));
+        }
+    }
+    
+    private void updateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtnActionPerformed
+        String status = statusCb.getSelectedItem().toString();
+        String departmentId = departmentCb.getSelectedItem().toString();
+        String openingTime = openingTf.getText().trim();
+        String closingTime = closingTf.getText().trim();
+        int capacity = Integer.parseInt(capacityTf.getText().trim());
+        
+        if (assetService.validation(selectedAssetId, status, departmentId, openingTime, closingTime, capacity)) {
+            try {
+                boolean updated = assetRepo.updateAsset(selectedAssetId, status, departmentId, openingTime, closingTime, capacity);
+            
+                if (updated) {
+                    JOptionPane.showMessageDialog(this, "Asset updated successfully.");
+
+                    loadAssetTable();
+                }
+            } catch (IllegalArgumentException e) {
+                JOptionPane.showMessageDialog(this, e.getMessage());
+            }
+        }
+    }//GEN-LAST:event_updateBtnActionPerformed
+
+    private void assetTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_assetTableMouseClicked
+        int selectedRow = assetTable.getSelectedRow();
+        int modelRow = assetTable.convertRowIndexToModel(selectedRow);
+        selectedAssetId = assetTable.getModel().getValueAt(modelRow, 0).toString();
+        HospitalAsset asset = assetRepo.findByAssetId(selectedAssetId);
+
+        if (asset != null) {
+            assetLbl.setText(asset.getAssetName());
+            statusCb.setSelectedItem(asset.getStatus());
+            departmentCb.setSelectedItem(asset.getDepartmentId());
+            openingTf.setText(asset.getOpeningTime());
+            closingTf.setText(asset.getClosingTime());
+            capacityTf.setText(String.valueOf(asset.getCapacity()));
+        }
+    }//GEN-LAST:event_assetTableMouseClicked
+
+    // Base consultation rates and insurance networks
+    private ConfigurationService configurationService = new ConfigurationService();
+    private String selectedRateId = null;
+    private String selectedInsuranceId = null;
+    
+    private void loadRateTable() {
+        DefaultTableModel model = (DefaultTableModel)rateTable.getModel();
+        
+        model.setRowCount(0);
+        
+        for (ConsultationRate rate : configurationService.getAllRates()) {
+            model.addRow(new Object[]{rate.getRateId(), rate.getConsultationType(), String.format("%.2f", rate.getBaseRate())});
+        }
+    }
+    
+    private void rateTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rateTableMouseClicked
+        int row = rateTable.getSelectedRow();
+        
+        if (row == -1) {
+            return;
+        }
+        
+        int modelRow = rateTable.convertRowIndexToModel(row);
+        selectedRateId = rateTable.getModel().getValueAt(modelRow, 0).toString();
+        ConsultationRate rate = configurationService.findByRateId(selectedRateId);
+        
+        if (rate != null) {
+            consultationLbl.setText(rate.getConsultationType());
+            
+            baseRateTf.setText(String.format("%.2f", rate.getBaseRate()));
+        }
+    }//GEN-LAST:event_rateTableMouseClicked
+    
+    private void updateRateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateRateBtnActionPerformed
+        if (selectedRateId == null) {
+            JOptionPane.showMessageDialog(this, "Please select a consultation type.");
+            return;
+        }
+        
+        try {
+            boolean updated = configurationService.updateRate(selectedRateId, baseRateTf.getText());
+            
+            if (updated) {
+                JOptionPane.showMessageDialog(this, "Consultation rate updated successfully.");
+            }
+            
+            loadRateTable();
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }//GEN-LAST:event_updateRateBtnActionPerformed
+
+    private void loadInsuranceTable() {
+        DefaultTableModel model = (DefaultTableModel)insuranceTable.getModel();
+        
+        model.setRowCount(0);
+        
+        for (InsuranceNetwork insurance : configurationService.getAllInsurance()) {
+            model.addRow(new Object[]{insurance.getInsuranceId(), insurance.getInsuranceName(), insurance.getStatus()});
+        }
+    }
+    
+    private void insuranceTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_insuranceTableMouseClicked
+        int row = insuranceTable.getSelectedRow();
+        
+        if (row == -1) {
+            return;
+        }
+        
+        int modelRow = insuranceTable.convertRowIndexToModel(row);
+        selectedInsuranceId = insuranceTable.getModel().getValueAt(modelRow, 0).toString();
+        InsuranceNetwork insurance = configurationService.findByInsuranceId(selectedInsuranceId);
+        
+        if (insurance != null) {
+            insuranceLbl.setText(insurance.getInsuranceName());
+            
+            insuranceStatusCb.setSelectedItem(insurance.getStatus());
+        }
+    }//GEN-LAST:event_insuranceTableMouseClicked
+
+    private void updateInsuranceBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateInsuranceBtnActionPerformed
+        if (selectedInsuranceId == null) {
+            JOptionPane.showMessageDialog(this, "Please select an insurance network.");
+            return;
+        }
+        
+        String status = insuranceStatusCb.getSelectedItem().toString();
+        
+        try {
+            boolean updated = configurationService.updateInsurance(selectedInsuranceId, status);
+            
+            if (updated) {
+                JOptionPane.showMessageDialog(this, "Insurance network updated successfully.");
+                
+                loadInsuranceTable();
+            }
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }//GEN-LAST:event_updateInsuranceBtnActionPerformed
+
+    private void userTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userTableMouseClicked
+        int selectedRow = userTable.getSelectedRow();
+        
+        if (selectedRow == -1) {
+            return;
+        }
+        
+        int modelRow = userTable.convertRowIndexToModel(selectedRow);
+        selectedUserId = userTable.getModel().getValueAt(modelRow, 0).toString();
+        User user = adminService.findByUserId(selectedUserId);
+        
+        if (user == null) {
+            return;
+        }
+        
+        userIdLbl.setText(user.getUserId());
+        usernameTf.setText(user.getName());
+        emailTf.setText(user.getEmail());
+        phoneTf.setText(user.getPhone());
+        genderCb.setSelectedItem(user.getGender());
+        roleCb.setSelectedItem(user.getRole());
+    }//GEN-LAST:event_userTableMouseClicked
+
+    private void createBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createBtnActionPerformed
+        String name = usernameTf.getText().trim();
+        String email = emailTf.getText().trim();
+        String password = "123";
+        String phone = phoneTf.getText().trim();
+        String gender = genderCb.getSelectedItem().toString();
+        String role = roleCb.getSelectedItem().toString();
+        
+        try {
+            boolean created = adminService.createUser(name, email, password, phone, gender, role);
+            
+            if (created) {
+                JOptionPane.showMessageDialog(this, "User created successfully.\nDefault password: 123");
+                loadUserTable();
+                clearUserForm();
+                loadDashboardDetails(); 
+            }
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }//GEN-LAST:event_createBtnActionPerformed
+
+    private void updateUserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateUserBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_updateUserBtnActionPerformed
+
+    private void deleteUserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteUserBtnActionPerformed
+        if (selectedUserId == null) {
+            JOptionPane.showMessageDialog(this, "Please select a user.");
+            return;
+        }
+
+
+        int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this user?", "Delete User", JOptionPane.YES_NO_OPTION);
+
+
+        if (confirm != JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        boolean deleted = adminService.deleteUser(selectedUserId);
+
+        if (deleted) {
+            JOptionPane.showMessageDialog(this, "User deleted successfully.");
+            loadUserTable();
+            clearUserForm();
+            loadDashboardDetails();
+        }
+    }//GEN-LAST:event_deleteUserBtnActionPerformed
+
+    private void clearBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearBtnActionPerformed
+        clearUserForm();
+    }//GEN-LAST:event_clearBtnActionPerformed
+
+    private void assignBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_assignBtnActionPerformed
+        // TODO add your handling code here
+    }//GEN-LAST:event_assignBtnActionPerformed
+    
+    private void clearUserForm() {
+        selectedUserId = null;
+        
+        userIdLbl.setText("");
+        usernameTf.setText("");
+        emailTf.setText("");
+        phoneTf.setText("");
+        genderCb.setSelectedIndex(0);
+        roleCb.setSelectedIndex(0);
+        
+        userTable.clearSelection();
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -880,13 +1724,8 @@ public class Admin_Dashboard extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                
-                Admin testAdmin = new Admin("Uid001", "Test Admin", "admin@gmail.com", "123", "01234556", "Male", "admin");
-                
-                new Admin_Dashboard(testAdmin).setVisible(true);
-                
-                
+            public void run() {          
+                new Admin_Dashboard().setVisible(true);
             }
         });
     }
@@ -900,20 +1739,47 @@ public class Admin_Dashboard extends javax.swing.JFrame {
     private javax.swing.JButton assignBtn;
     private javax.swing.JButton assignmentsBtn;
     private javax.swing.JPanel assignmentsPage;
+    private javax.swing.JTextField baseRateTf;
     private javax.swing.JTextField capacityTf;
+    private javax.swing.JButton clearBtn;
     private javax.swing.JTextField closingTf;
+    private javax.swing.JLabel consultationLbl;
+    private javax.swing.JButton createBtn;
     private javax.swing.JButton dashboardBtn;
     private javax.swing.JPanel dashboardPage;
+    private javax.swing.JButton deleteUserBtn;
     private javax.swing.JComboBox<String> departmentCb;
     private javax.swing.JTextField doctorNameTf;
     private javax.swing.JTextField doctorNameTf1;
     private javax.swing.JTable doctorTable;
+    private javax.swing.JTextField emailTf;
+    private javax.swing.JComboBox<String> genderCb;
     private javax.swing.JButton insuranceBtn;
+    private javax.swing.JLabel insuranceLbl;
     private javax.swing.JPanel insurancePage;
+    private javax.swing.JComboBox<String> insuranceStatusCb;
+    private javax.swing.JTable insuranceTable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -928,19 +1794,35 @@ public class Admin_Dashboard extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JButton logoutBtn;
     private javax.swing.JTable managerTable;
     private javax.swing.JPanel menuPanel;
     private javax.swing.JTextField openingTf;
     private javax.swing.JPanel pages;
+    private javax.swing.JTextField phoneTf;
     private javax.swing.JButton profileBtn;
     private javax.swing.JPanel profilePage;
+    private javax.swing.JTable rateTable;
     private javax.swing.JButton ratesBtn;
     private javax.swing.JPanel ratesPage;
+    private javax.swing.JComboBox<String> roleCb;
     private javax.swing.JPanel sidebar;
     private javax.swing.JComboBox<String> statusCb;
+    private javax.swing.JLabel totalDoctorLbl;
+    private javax.swing.JLabel totalManagerLbl;
+    private javax.swing.JLabel totalPatientLbl;
+    private javax.swing.JLabel totalUserLbl;
     private javax.swing.JButton updateBtn;
+    private javax.swing.JButton updateInsuranceBtn;
+    private javax.swing.JButton updateRateBtn;
+    private javax.swing.JButton updateUserBtn;
+    private javax.swing.JLabel userIdLbl;
+    private javax.swing.JTable userTable;
+    private javax.swing.JTextField usernameTf;
     private javax.swing.JButton usersBtn;
     private javax.swing.JPanel usersPage;
     private javax.swing.JLabel welcomeLbl;

@@ -5,12 +5,8 @@
 package repo;
 
 import java.io.*;
-import java.util.HashMap;
-import model.ConsultationRoom;
+import java.util.*;
 import model.HospitalAsset;
-import model.ImagingRoom;
-import model.InpatientWard;
-import model.Lab;
 
 /**
  *
@@ -26,15 +22,18 @@ public class FileAssetRepo {
             while((line = br.readLine()) != null) {
                 String[] parts = line.split(",", -1);
                 
-                if (parts.length == 6) {
+                if (parts.length == 9) {
                     String id = parts[0].trim();
                     String n = parts[1].trim();
                     String t = parts[2].trim();
                     String l = parts[3].trim();
                     String s = parts[4].trim();
                     String d = parts[5].trim();
+                    String o = parts[6].trim();
+                    String c = parts[7].trim();
+                    int ca = Integer.parseInt(parts[8].trim());
                     
-                    HospitalAsset asset = createAssetObject(id, n, t, l, s, d);
+                    HospitalAsset asset = new HospitalAsset(id, n, t, l, s, d, o, c, ca);
                     
                     if (asset != null) {map.put(id, asset);}
                 } else {
@@ -46,53 +45,39 @@ public class FileAssetRepo {
         }
     }  
     
-    // Generate assetId
-//    public String generateUserId() throws IOException {
-//        String lastLine = null;
-//        String lastUserId;
-//        
-//        try (BufferedReader br = reader("data/User.txt");) {
-//            br.readLine();
-//            String line;
-//            while((line = br.readLine()) != null) {
-//                if (!line.trim().isEmpty()) {
-//                    lastLine = line;
-//                }
-//            }
-//        }
-//                
-//        if (lastLine != null) {
-//            String[] parts = lastLine.split(",");
-//            lastUserId = parts[0].trim();
-//        } else {
-//            return "Uid001";
-//        }
-//        
-//        int number = Integer.parseInt(lastUserId.substring(3)) + 1;
-//        
-//        return String.format("Uid%03d", number);
-//    }
+    public HospitalAsset findByAssetId(String assetId) {
+        return map.get(assetId);
+    }
     
-    // Create user object
-    public HospitalAsset createAssetObject(String assetId, String assetName, String assetType, String location, String status, String departmentId) {
-        HospitalAsset asset = null;
+    public Collection<HospitalAsset> getAllAssets() {
+        return map.values();
+    }
+    
+    public boolean updateAsset(String assetId, String status, String departmentId, String openingTime, String closingTime, int capacity) {
+        HospitalAsset asset = map.get(assetId);
         
-        switch(assetType.toLowerCase()) {
-            case "consultationroom":
-                asset = new ConsultationRoom(assetId, assetName, assetType, location, status, departmentId);
-                break;
-            case "inpatientward":
-                asset = new InpatientWard(assetId, assetName, assetType, location, status, departmentId);
-                break;
-            case "lab":
-                asset = new Lab(assetId, assetName, assetType, location, status, departmentId);
-                break;
-            case "imagingroom":
-                asset = new ImagingRoom(assetId, assetName, assetType, location, status, departmentId);
-                break;
+        if (asset != null) {
+            asset.setStatus(status);
+            asset.setDepartmentId(departmentId);
+            asset.setOpeningTime(openingTime);
+            asset.setClosingTime(closingTime);
+            asset.setCapacity(capacity);
+            
+            try (BufferedWriter bw = writer();) {
+                bw.write("AssetId|AssetName|AssetType|Location|Status|DepartmentId|OpeningTime|ClosingTime|Capacity");
+                bw.newLine();
+                for (HospitalAsset a : map.values()) {
+                    String assetData = a.getAssetId() + "," + a.getAssetName() + "," + a.getAssetType() + "," + a.getLocation() + "," + a.getStatus() + "," + a.getDepartmentId() + "," + a.getOpeningTime() + "," + a.getClosingTime() + "," + a.getCapacity() + "\n";
+                    bw.write(assetData);
+                }
+                return true;
+            } catch (IOException e) {
+                System.out.println(e);
+                return false;
+            }
         }
         
-        return asset;
+        return false;
     }
     
     // FileReader

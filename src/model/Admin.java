@@ -8,8 +8,19 @@ package model;
  *
  * @author wongkingsen
  */
-public class Admin extends User {
-    public Admin(String userId, String name, String email, String password, String phone, String gender, String role) {
-        super(userId, name, email, password, phone, gender, role);
+public class Admin {
+    String adminId, userId;
+    
+    public Admin(String adminId, String userId) {
+        this.adminId = adminId;
+        this.userId = userId;
+    }
+    
+    public String getAdminId() {
+        return adminId;
+    }
+    
+    public String getUserId() {
+        return userId;
     }
 }

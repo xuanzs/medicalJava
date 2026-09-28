@@ -21,13 +21,10 @@ public class User {
         this.role = role;
     }
     
-<<<<<<< HEAD
-=======
     public User(String userId) {
         this.userId = userId;
     }
-    
->>>>>>> origin/kaixuan
+
     public String getUserId() {
         return userId;
     }

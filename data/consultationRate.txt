@@ -1,0 +1,5 @@
+RateId|ConsultationType|BaseRate
+R004,Emergency Consultation,150.00
+R002,Specialist Consultation,100.00
+R003,Follow-up Consultation,40.00
+R001,General Consultation,50.00

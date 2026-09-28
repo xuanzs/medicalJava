@@ -1,0 +1,5 @@
+InsuranceId|InsuranceName|Status
+I002,Prudential,Accepted
+I001,AIA,Accepted
+I004,Allianz,Accepted
+I003,Great Eastern,Not Accepted
