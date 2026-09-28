@@ -1,0 +1,3 @@
+Request ID|Consultation ID|Patient ID|Doctor ID|Request Type|Request Date|Reason|Status
+R001|C001|P001|D001|Lab Test|2026-09-27|Check blood glucose level|Pending
+R002|C002|P001|D001|X-Ray|2026-09-28|Further examination required|Pending

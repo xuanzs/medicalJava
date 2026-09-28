@@ -1,5 +1,8 @@
-UserId|Name|Email|Password|Phone|Gender|Role
+User ID|Name|Email|Password|Phone|Gender|Role
 Uid001,Dr. Jake,jake@gmail.com,123,0123456789,Male,DOCTOR
-Uid002,John,john@gmail.com,999,0123456789,Male,PATIENT
-Uid003,Clark,clark@gmail.com,999,0123456789,Male,PATIENT
-Uid004,Dr. Chen,chen@gmail.com,123,0123456789,Female,DOCTOR
+Uid002,John,john@gmail.com,999,0112345678,Male,PATIENT
+Uid003,Clark,clark@gmail.com,999,0129876543,Male,PATIENT
+Uid004,Dr. Chen,chen@gmail.com,123,0134567890,Female,DOCTOR
+Uid005,Alice,alice@gmail.com,999,0145678901,Female,PATIENT
+Uid006,Daniel,daniel@gmail.com,999,0166789012,Male,PATIENT
+Uid007,Sarah,sarah@gmail.com,999,0177890123,Female,PATIENT

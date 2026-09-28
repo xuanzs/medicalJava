@@ -13,4 +13,20 @@ public class Doctor {
         this.specialization = specialization;
         this.medicalManagerId = medicalManagerId;
     }
+    
+    public String getDoctorId() {
+        return doctorId;
+    }
+    
+    public String getUserId() {
+        return userId;
+    }
+    
+    public String getSpecialization() {
+        return specialization;
+    }
+    
+    public String getMedicalManagerId() {
+        return medicalManagerId;
+    }
 }

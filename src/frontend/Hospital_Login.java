@@ -23,8 +23,6 @@ public class Hospital_Login extends javax.swing.JFrame {
     public Hospital_Login() {
         initComponents();
         
-        
-        
         as = new AuthService(userRepo);
         
         passwordPF.addActionListener(e -> {
@@ -176,12 +174,11 @@ public class Hospital_Login extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Welcome back " + user.getName(), "Successful", JOptionPane.INFORMATION_MESSAGE);
                     Doctor_Dashboard dd = new Doctor_Dashboard(user, doctor);
                     dd.setVisible(true);
+                    this.dispose();
                 } else {
                     JOptionPane.showMessageDialog(null, "Doctor Profile not found", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
-            
-            this.dispose();
         }
         else {
             JOptionPane.showMessageDialog(null, "Email or Password Invalid, Try again.", "Error", JOptionPane.ERROR_MESSAGE);
