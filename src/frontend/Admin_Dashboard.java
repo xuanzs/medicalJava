@@ -1815,9 +1815,8 @@ public class Admin_Dashboard extends javax.swing.JFrame {
     private void profileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileBtnActionPerformed
         cardLayout.show(pages, "profilePage");
         setActiveButton(profileBtn);
-//        ChangePasswordDialog cpd = new ChangePasswordDialog(this,true);
-//        cpd.setLocationRelativeTo(this);
-//        cpd.setVisible(true);
+
+        setProfile();
     }//GEN-LAST:event_profileBtnActionPerformed
 
     private void logoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBtnActionPerformed
@@ -1940,12 +1939,19 @@ public class Admin_Dashboard extends javax.swing.JFrame {
         String departmentId = departmentCb.getSelectedItem().toString();
         String openingTime = openingTf.getText().trim();
         String closingTime = closingTf.getText().trim();
+        
         int capacity;
         
         try {
             capacity = Integer.parseInt(capacityTf.getText().trim());
+            
+            if (capacity <= 0) {
+                JOptionPane.showMessageDialog(this, "Capacity must be greater than 0.");
+                return;
+            }
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Capacity must be a number.");
+            JOptionPane.showMessageDialog(this, "Capacity must be a valid number.");
+            return;
         }
         
         if (assetService.validation(selectedAssetId, status, departmentId, openingTime, closingTime, capacity)) {
@@ -2101,6 +2107,8 @@ public class Admin_Dashboard extends javax.swing.JFrame {
         phoneTf.setText(user.getPhone());
         genderCb.setSelectedItem(user.getGender());
         roleCb.setSelectedItem(user.getRole());
+        
+        roleCb.setEnabled(false);
     }//GEN-LAST:event_userTableMouseClicked
 
     private void createBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createBtnActionPerformed
@@ -2126,7 +2134,31 @@ public class Admin_Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_createBtnActionPerformed
 
     private void updateUserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateUserBtnActionPerformed
-        // TODO add your handling code here:
+        if (selectedUserId == null) {
+            JOptionPane.showMessageDialog(this, "Please select a user.");
+            return;
+        }
+
+        String name = usernameTf.getText().trim();
+        String email = emailTf.getText().trim();
+        String phone = phoneTf.getText().trim();
+        String gender = genderCb.getSelectedItem().toString();
+
+        try {
+            boolean updated =adminService.updateUser(selectedUserId, name, email, phone, gender);
+
+            if (updated) {
+                JOptionPane.showMessageDialog(this, "User updated successfully.");
+
+                loadUserTable();
+                clearUserForm();
+                loadDashboardDetails();
+            } else {
+                JOptionPane.showMessageDialog(this, "Failed to update user.");
+            }
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
     }//GEN-LAST:event_updateUserBtnActionPerformed
 
     private void deleteUserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteUserBtnActionPerformed
@@ -2166,6 +2198,8 @@ public class Admin_Dashboard extends javax.swing.JFrame {
         phoneTf.setText("");
         genderCb.setSelectedIndex(0);
         roleCb.setSelectedIndex(0);
+        
+        roleCb.setEnabled(true);
         
         userTable.clearSelection();
     }

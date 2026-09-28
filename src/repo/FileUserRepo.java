@@ -180,7 +180,9 @@ public class FileUserRepo {
     
     // Create user
     public boolean createUser(String name, String email, String password, String phone, String gender, String role) {       
-        if (map.containsKey(email)) {
+        String emailKey = email.trim().toLowerCase();
+        
+        if (loginMap.containsKey(emailKey)) {
             return false;
         }
         
@@ -188,14 +190,14 @@ public class FileUserRepo {
         User user = new User(userId, name, email, password, phone, gender, role);
 
         map.put(userId, user);
-        loginMap.put(email, user);
+        loginMap.put(emailKey, user);
         
         try {
             saveUsers();
             return true;
         } catch (IOException e) {
-            map.remove(email);
-            loginMap.remove(email);
+            map.remove(userId);
+            loginMap.remove(emailKey);
             System.out.println(e);
             return false;
         }
