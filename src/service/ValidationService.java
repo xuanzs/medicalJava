@@ -11,8 +11,8 @@ import model.User;
 public class ValidationService {
     private FileUserRepo userRepo;
     
-    public ValidationService() {
-        userRepo = new FileUserRepo();
+    public ValidationService(FileUserRepo userRepo) {
+        this.userRepo = userRepo;
     }
     
     public void createValidation(String name, String email, String password, String phone) {        
