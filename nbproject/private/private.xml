@@ -3,41 +3,49 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
             <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/src/frontend/Hospital_Login.java</file>
             <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/src/repo/FileUserRepo.java</file>
             <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/data/User.txt</file>
-            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/data/consultation.txt</file>
             <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/.gitignore</file>
             <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/src/frontend/Doctor_Dashboard.java</file>
-            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/src/frontend/ChangePasswordDialog.java</file>
             <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/src/service/ValidationService.java</file>
-            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/src/auth/Login.java</file>
-            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/data/assignment.txt</file>
-            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/src/repo/FileAssignmentRepo.java</file>
             <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/src/service/AuthService.java</file>
-            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/src/frontend/Doctor_Dashboard1.java</file>
             <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/data/hospitalAsset.txt</file>
             <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/src/model/HospitalAsset.java</file>
             <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/src/model/User.java</file>
-            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/src/model/ConsultationRoom.java</file>
-            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/src/model/InpatientWard.java</file>
-            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/src/model/Lab.java</file>
-            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/src/model/ImagingRoom.java</file>
             <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/src/repo/FileAssetRepo.java</file>
-=======
-            <file>file:/Users/xuanchen/Desktop/Hospital/src/repo/FileUserRepo.java</file>
-            <file>file:/Users/xuanchen/Desktop/Hospital/src/auth/Login.java</file>
-            <file>file:/Users/xuanchen/Desktop/Hospital/src/frontend/Hospital_Login.java</file>
-            <file>file:/Users/xuanchen/Desktop/Hospital/src/model/User.java</file>
-            <file>file:/Users/xuanchen/Desktop/Hospital/data/request.txt</file>
-            <file>file:/Users/xuanchen/Desktop/Hospital/src/service/AuthService.java</file>
-            <file>file:/Users/xuanchen/Desktop/Hospital/src/frontend/Doctor_Dashboard.java</file>
-            <file>file:/Users/xuanchen/Desktop/Hospital/src/model/Doctor.java</file>
-            <file>file:/Users/xuanchen/Desktop/Hospital/data/User.txt</file>
-            <file>file:/Users/xuanchen/Desktop/Hospital/data/consultation.txt</file>
-            <file>file:/Users/xuanchen/Desktop/Hospital/src/frontend/ChangePasswordDialog.java</file>
->>>>>>> origin/kaixuan
+            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/src/repo/FileDoctorRepo.java</file>
+            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/src/model/Doctor.java</file>
+            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/src/service/AssetService.java</file>
+            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/data/consultationRate.txt</file>
+            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/data/insuranceNetwork.txt</file>
+            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/src/model/ConsultationRate.java</file>
+            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/src/repo/FileConsultationRateRepo.java</file>
+            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/src/model/InsuranceNetwork.java</file>
+            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/src/repo/FileInsuranceRepo.java</file>
+            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/src/service/ConfigurationService.java</file>
+            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/src/model/Admin.java</file>
+            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/data/Admin.txt</file>
+            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/src/service/AdminService.java</file>
+            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/data/Doctor.txt</file>
+            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/src/model/Patient.java</file>
+            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/src/model/MedicalManager.java</file>
+            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/data/assessmentType.txt</file>
+            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/src/repo/FileAdminRepo.java</file>
+            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/data/Appointments.txt</file>
+            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/src/frontend/Admin_Dashboard.java</file>
+            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/src/repo/FileMedicalRequestRepo.java</file>
+            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/src/model/MedicalRequest.java</file>
+            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/src/model/MedicalRequestInfo.java</file>
+            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/data/Requests.txt</file>
+            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/src/repo/FileMedicalManagerRepo.java</file>
+            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/data/hospitalMetrics.txt</file>
+            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/data/departments.txt</file>
+            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/src/service/MedicalManagerService.java</file>
+            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/src/service/MedicalRequestService.java</file>
+            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/data/Prescriptions.txt</file>
+            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/data/MedicalManager.txt</file>
+            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/data/Consultations.txt</file>
         </group>
     </open-files>
 </project-private>

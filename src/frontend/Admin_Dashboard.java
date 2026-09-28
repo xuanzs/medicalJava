@@ -17,11 +17,14 @@ import model.Admin;
 import model.ConsultationRate;
 import model.HospitalAsset;
 import model.InsuranceNetwork;
+import model.MedicalRequestInfo;
 import model.User;
 import repo.FileAssetRepo;
 import service.AdminService;
 import service.AssetService;
 import service.ConfigurationService;
+import service.MedicalRequestService;
+import service.UserService;
 
 /**
  *
@@ -30,20 +33,27 @@ import service.ConfigurationService;
 public class Admin_Dashboard extends javax.swing.JFrame {
 
     private User user;
+    private Admin admin;
     CardLayout cardLayout;
+    CardLayout profileCardLayout;
     
-    public Admin_Dashboard() {
+    private UserService userService = new UserService();
+    
+    public Admin_Dashboard(User user, Admin admin) {
         initComponents();
         
-//        this.user = user;
-//        welcomeLbl.setText("Welcome " + user.getName());
+        this.user = user;
+        this.admin = admin;
+        welcomeLbl.setText("Welcome " + user.getName());
         cardLayout = (CardLayout)pages.getLayout();
+        profileCardLayout = (CardLayout)profilePage.getLayout();
         
         cardLayout.show(pages, "dashboardPage");
         setActiveButton(dashboardBtn);
         
         loadDashboardDetails();
         setupAssetFilter();
+        setupAssignmentFilter();
     }
 
     /**
@@ -69,7 +79,9 @@ public class Admin_Dashboard extends javax.swing.JFrame {
         assetsBtn = new javax.swing.JButton();
         ratesBtn = new javax.swing.JButton();
         insuranceBtn = new javax.swing.JButton();
+        requestBtn = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
+        jPanel8 = new javax.swing.JPanel();
         profileBtn = new javax.swing.JButton();
         logoutBtn = new javax.swing.JButton();
         pages = new javax.swing.JPanel();
@@ -108,7 +120,7 @@ public class Admin_Dashboard extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         doctorTable = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
-        doctorNameTf1 = new javax.swing.JTextField();
+        managerNameTf = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         managerTable = new javax.swing.JTable();
         assignBtn = new javax.swing.JButton();
@@ -149,7 +161,45 @@ public class Admin_Dashboard extends javax.swing.JFrame {
         updateInsuranceBtn = new javax.swing.JButton();
         insuranceLbl = new javax.swing.JLabel();
         insuranceStatusCb = new javax.swing.JComboBox<>();
+        requestPage = new javax.swing.JPanel();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        requestTable = new javax.swing.JTable();
+        jLabel26 = new javax.swing.JLabel();
+        jLabel30 = new javax.swing.JLabel();
+        jLabel31 = new javax.swing.JLabel();
+        jLabel32 = new javax.swing.JLabel();
+        jLabel33 = new javax.swing.JLabel();
+        jLabel34 = new javax.swing.JLabel();
+        assetCb = new javax.swing.JComboBox<>();
+        RequestIdLbl = new javax.swing.JLabel();
+        requestDoctorLbl = new javax.swing.JLabel();
+        requestTypeLbl = new javax.swing.JLabel();
+        requestDetailsLbl = new javax.swing.JLabel();
+        approveBtn = new javax.swing.JButton();
         profilePage = new javax.swing.JPanel();
+        editProfile = new javax.swing.JPanel();
+        jLabel35 = new javax.swing.JLabel();
+        jLabel36 = new javax.swing.JLabel();
+        jLabel37 = new javax.swing.JLabel();
+        jLabel38 = new javax.swing.JLabel();
+        jLabel39 = new javax.swing.JLabel();
+        userIdTF = new javax.swing.JTextField();
+        editBtn = new javax.swing.JButton();
+        changePassBtn = new javax.swing.JButton();
+        nameTF = new javax.swing.JTextField();
+        emailTF = new javax.swing.JTextField();
+        phoneTF = new javax.swing.JTextField();
+        genderTF = new javax.swing.JTextField();
+        saveBtn = new javax.swing.JButton();
+        cancelBtn = new javax.swing.JButton();
+        editPass = new javax.swing.JPanel();
+        passCancelBtn = new javax.swing.JButton();
+        passSaveBtn = new javax.swing.JButton();
+        jLabel106 = new javax.swing.JLabel();
+        jLabel108 = new javax.swing.JLabel();
+        prevPassPF = new javax.swing.JPasswordField();
+        newPassPF = new javax.swing.JPasswordField();
+        showPassCB = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1000, 700));
@@ -178,9 +228,9 @@ public class Admin_Dashboard extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 530, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 491, Short.MAX_VALUE)
                 .addComponent(welcomeLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16))
+                .addGap(58, 58, 58))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -188,7 +238,7 @@ public class Admin_Dashboard extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addComponent(welcomeLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -206,7 +256,7 @@ public class Admin_Dashboard extends javax.swing.JFrame {
 
         menuPanel.setBackground(new java.awt.Color(102, 204, 255));
         menuPanel.setPreferredSize(new java.awt.Dimension(185, 500));
-        menuPanel.setLayout(new java.awt.GridLayout(10, 1, 0, 5));
+        menuPanel.setLayout(new java.awt.GridLayout(12, 1, 0, 5));
 
         jPanel2.setBackground(new java.awt.Color(102, 204, 255));
         jPanel2.setPreferredSize(new java.awt.Dimension(50, 80));
@@ -215,11 +265,11 @@ public class Admin_Dashboard extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 144, Short.MAX_VALUE)
+            .addGap(0, 195, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 45, Short.MAX_VALUE)
+            .addGap(0, 37, Short.MAX_VALUE)
         );
 
         menuPanel.add(jPanel2);
@@ -331,20 +381,52 @@ public class Admin_Dashboard extends javax.swing.JFrame {
         });
         menuPanel.add(insuranceBtn);
 
+        requestBtn.setFont(new java.awt.Font("Menlo", 0, 14)); // NOI18N
+        requestBtn.setForeground(new java.awt.Color(0, 0, 0));
+        requestBtn.setText("Requests");
+        requestBtn.setAutoscrolls(true);
+        requestBtn.setBorder(null);
+        requestBtn.setBorderPainted(false);
+        requestBtn.setContentAreaFilled(false);
+        requestBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        requestBtn.setFocusPainted(false);
+        requestBtn.setPreferredSize(new java.awt.Dimension(170, 40));
+        requestBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                requestBtnActionPerformed(evt);
+            }
+        });
+        menuPanel.add(requestBtn);
+
         jPanel7.setBackground(new java.awt.Color(102, 204, 255));
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 144, Short.MAX_VALUE)
+            .addGap(0, 195, Short.MAX_VALUE)
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 45, Short.MAX_VALUE)
+            .addGap(0, 37, Short.MAX_VALUE)
         );
 
         menuPanel.add(jPanel7);
+
+        jPanel8.setBackground(new java.awt.Color(102, 204, 255));
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 195, Short.MAX_VALUE)
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 37, Short.MAX_VALUE)
+        );
+
+        menuPanel.add(jPanel8);
 
         profileBtn.setFont(new java.awt.Font("Menlo", 0, 14)); // NOI18N
         profileBtn.setForeground(new java.awt.Color(0, 0, 0));
@@ -447,16 +529,16 @@ public class Admin_Dashboard extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(totalPatientLbl))))
                     .addGroup(dashboardPageLayout.createSequentialGroup()
-                        .addGap(252, 252, 252)
+                        .addGap(233, 233, 233)
                         .addComponent(jLabel19)))
-                .addContainerGap(398, Short.MAX_VALUE))
+                .addContainerGap(350, Short.MAX_VALUE))
         );
         dashboardPageLayout.setVerticalGroup(
             dashboardPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(dashboardPageLayout.createSequentialGroup()
-                .addGap(54, 54, 54)
+                .addGap(44, 44, 44)
                 .addComponent(jLabel19)
-                .addGap(51, 51, 51)
+                .addGap(61, 61, 61)
                 .addGroup(dashboardPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
                     .addComponent(jLabel21)
@@ -622,7 +704,7 @@ public class Admin_Dashboard extends javax.swing.JFrame {
                                 .addComponent(phoneTf, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(userIdLbl)))
                     .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 610, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(238, Short.MAX_VALUE))
+                .addContainerGap(97, Short.MAX_VALUE))
         );
         usersPageLayout.setVerticalGroup(
             usersPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -709,11 +791,11 @@ public class Admin_Dashboard extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Search:");
 
-        doctorNameTf1.setBackground(new java.awt.Color(204, 204, 204));
-        doctorNameTf1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        doctorNameTf1.setForeground(new java.awt.Color(0, 0, 0));
-        doctorNameTf1.setText("Name");
-        doctorNameTf1.setToolTipText("");
+        managerNameTf.setBackground(new java.awt.Color(204, 204, 204));
+        managerNameTf.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        managerNameTf.setForeground(new java.awt.Color(0, 0, 0));
+        managerNameTf.setText("Name");
+        managerNameTf.setToolTipText("");
 
         managerTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -773,12 +855,12 @@ public class Admin_Dashboard extends javax.swing.JFrame {
                                 .addGap(8, 8, 8)
                                 .addComponent(jLabel3)
                                 .addGap(18, 18, 18)
-                                .addComponent(doctorNameTf1, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(managerNameTf, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(assignmentsPageLayout.createSequentialGroup()
                         .addGap(285, 285, 285)
                         .addComponent(assignBtn)))
-                .addContainerGap(147, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         assignmentsPageLayout.setVerticalGroup(
             assignmentsPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -787,7 +869,7 @@ public class Admin_Dashboard extends javax.swing.JFrame {
                 .addGroup(assignmentsPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(assignmentsPageLayout.createSequentialGroup()
                         .addGroup(assignmentsPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(doctorNameTf1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(managerNameTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -940,7 +1022,7 @@ public class Admin_Dashboard extends javax.swing.JFrame {
                                         .addGap(3, 3, 3))))
                             .addComponent(updateBtn)
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(335, Short.MAX_VALUE))
+                .addContainerGap(194, Short.MAX_VALUE))
         );
         assetsPageLayout.setVerticalGroup(
             assetsPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1069,7 +1151,7 @@ public class Admin_Dashboard extends javax.swing.JFrame {
                             .addComponent(consultationLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(updateRateBtn)
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(328, Short.MAX_VALUE))
+                .addContainerGap(187, Short.MAX_VALUE))
         );
         ratesPageLayout.setVerticalGroup(
             ratesPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1180,7 +1262,7 @@ public class Admin_Dashboard extends javax.swing.JFrame {
                             .addComponent(insuranceStatusCb, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(updateInsuranceBtn)
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(328, Short.MAX_VALUE))
+                .addContainerGap(187, Short.MAX_VALUE))
         );
         insurancePageLayout.setVerticalGroup(
             insurancePageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1204,18 +1286,454 @@ public class Admin_Dashboard extends javax.swing.JFrame {
 
         pages.add(insurancePage, "insurancePage");
 
-        profilePage.setBackground(new java.awt.Color(255, 255, 255));
+        requestPage.setBackground(new java.awt.Color(255, 255, 255));
 
-        javax.swing.GroupLayout profilePageLayout = new javax.swing.GroupLayout(profilePage);
-        profilePage.setLayout(profilePageLayout);
-        profilePageLayout.setHorizontalGroup(
-            profilePageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 887, Short.MAX_VALUE)
+        requestTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Request ID", "Doctor", "Type", "Patient", "Status"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        requestTable.getTableHeader().setReorderingAllowed(false);
+        requestTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                requestTableMouseClicked(evt);
+            }
+        });
+        jScrollPane7.setViewportView(requestTable);
+        if (requestTable.getColumnModel().getColumnCount() > 0) {
+            requestTable.getColumnModel().getColumn(0).setResizable(false);
+            requestTable.getColumnModel().getColumn(1).setResizable(false);
+            requestTable.getColumnModel().getColumn(2).setResizable(false);
+            requestTable.getColumnModel().getColumn(3).setResizable(false);
+            requestTable.getColumnModel().getColumn(4).setResizable(false);
+        }
+
+        jLabel26.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel26.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel26.setText("Selected Request");
+
+        jLabel30.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel30.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel30.setText("Request ID:");
+        jLabel30.setToolTipText("");
+
+        jLabel31.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel31.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel31.setText("Doctor:");
+
+        jLabel32.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel32.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel32.setText("Type:");
+        jLabel32.setToolTipText("");
+
+        jLabel33.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel33.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel33.setText("Details:");
+
+        jLabel34.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel34.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel34.setText("Asset / Room:");
+
+        RequestIdLbl.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        RequestIdLbl.setForeground(new java.awt.Color(0, 0, 0));
+        RequestIdLbl.setToolTipText("");
+
+        requestDoctorLbl.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        requestDoctorLbl.setForeground(new java.awt.Color(0, 0, 0));
+
+        requestTypeLbl.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        requestTypeLbl.setForeground(new java.awt.Color(0, 0, 0));
+        requestTypeLbl.setToolTipText("");
+
+        requestDetailsLbl.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        requestDetailsLbl.setForeground(new java.awt.Color(0, 0, 0));
+
+        approveBtn.setText("Approve");
+        approveBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                approveBtnActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout requestPageLayout = new javax.swing.GroupLayout(requestPage);
+        requestPage.setLayout(requestPageLayout);
+        requestPageLayout.setHorizontalGroup(
+            requestPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(requestPageLayout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addGroup(requestPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(approveBtn)
+                    .addGroup(requestPageLayout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(jLabel26))
+                    .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(requestPageLayout.createSequentialGroup()
+                        .addGroup(requestPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel30)
+                            .addComponent(jLabel31)
+                            .addComponent(jLabel32)
+                            .addComponent(jLabel33))
+                        .addGap(18, 18, 18)
+                        .addGroup(requestPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(RequestIdLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(requestDoctorLbl)
+                            .addComponent(requestTypeLbl)
+                            .addComponent(requestDetailsLbl)))
+                    .addGroup(requestPageLayout.createSequentialGroup()
+                        .addComponent(jLabel34)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(assetCb, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(280, Short.MAX_VALUE))
         );
-        profilePageLayout.setVerticalGroup(
-            profilePageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1083, Short.MAX_VALUE)
+        requestPageLayout.setVerticalGroup(
+            requestPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(requestPageLayout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addComponent(jLabel26)
+                .addGap(18, 27, Short.MAX_VALUE)
+                .addGroup(requestPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel30)
+                    .addComponent(RequestIdLbl))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(requestPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel31)
+                    .addComponent(requestDoctorLbl))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(requestPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel32)
+                    .addComponent(requestTypeLbl))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(requestPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel33)
+                    .addComponent(requestDetailsLbl))
+                .addGap(28, 28, 28)
+                .addGroup(requestPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel34)
+                    .addComponent(assetCb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(approveBtn)
+                .addGap(601, 601, 601))
         );
+
+        pages.add(requestPage, "requestPage");
+
+        profilePage.setBackground(new java.awt.Color(255, 255, 255));
+        profilePage.setLayout(new java.awt.CardLayout());
+
+        editProfile.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel35.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel35.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel35.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel35.setText("Name:");
+
+        jLabel36.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel36.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel36.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel36.setText("User ID:");
+
+        jLabel37.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel37.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel37.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel37.setText("Email:");
+
+        jLabel38.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel38.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel38.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel38.setText("Phone:");
+
+        jLabel39.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel39.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel39.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel39.setText("Gender:");
+
+        userIdTF.setBackground(new java.awt.Color(255, 255, 255));
+        userIdTF.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        userIdTF.setForeground(new java.awt.Color(0, 0, 0));
+        userIdTF.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 3, 0, new java.awt.Color(51, 153, 255)));
+        userIdTF.setEnabled(false);
+
+        editBtn.setBackground(new java.awt.Color(0, 153, 255));
+        editBtn.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        editBtn.setForeground(new java.awt.Color(255, 255, 255));
+        editBtn.setText("Edit Profile");
+        editBtn.setBorderPainted(false);
+        editBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        editBtn.setFocusPainted(false);
+        editBtn.setPreferredSize(new java.awt.Dimension(140, 40));
+        editBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editBtnActionPerformed(evt);
+            }
+        });
+
+        changePassBtn.setBackground(new java.awt.Color(0, 153, 255));
+        changePassBtn.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        changePassBtn.setForeground(new java.awt.Color(255, 255, 255));
+        changePassBtn.setText("Change Password");
+        changePassBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        changePassBtn.setPreferredSize(new java.awt.Dimension(160, 40));
+        changePassBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                changePassBtnActionPerformed(evt);
+            }
+        });
+
+        nameTF.setBackground(new java.awt.Color(255, 255, 255));
+        nameTF.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        nameTF.setForeground(new java.awt.Color(0, 0, 0));
+        nameTF.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 3, 0, new java.awt.Color(51, 153, 255)));
+        nameTF.setEnabled(false);
+
+        emailTF.setBackground(new java.awt.Color(255, 255, 255));
+        emailTF.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        emailTF.setForeground(new java.awt.Color(0, 0, 0));
+        emailTF.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 3, 0, new java.awt.Color(51, 153, 255)));
+        emailTF.setEnabled(false);
+
+        phoneTF.setBackground(new java.awt.Color(255, 255, 255));
+        phoneTF.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        phoneTF.setForeground(new java.awt.Color(0, 0, 0));
+        phoneTF.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 3, 0, new java.awt.Color(51, 153, 255)));
+        phoneTF.setEnabled(false);
+
+        genderTF.setBackground(new java.awt.Color(255, 255, 255));
+        genderTF.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        genderTF.setForeground(new java.awt.Color(0, 0, 0));
+        genderTF.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 3, 0, new java.awt.Color(51, 153, 255)));
+        genderTF.setEnabled(false);
+
+        saveBtn.setBackground(new java.awt.Color(0, 204, 0));
+        saveBtn.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        saveBtn.setForeground(new java.awt.Color(255, 255, 255));
+        saveBtn.setText("SAVE");
+        saveBtn.setBorderPainted(false);
+        saveBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        saveBtn.setFocusPainted(false);
+        saveBtn.setPreferredSize(new java.awt.Dimension(140, 40));
+        saveBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveBtnActionPerformed(evt);
+            }
+        });
+
+        cancelBtn.setBackground(new java.awt.Color(204, 0, 51));
+        cancelBtn.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        cancelBtn.setForeground(new java.awt.Color(255, 255, 255));
+        cancelBtn.setText("CANCEL");
+        cancelBtn.setBorderPainted(false);
+        cancelBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cancelBtn.setFocusPainted(false);
+        cancelBtn.setPreferredSize(new java.awt.Dimension(80, 40));
+        cancelBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelBtnActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout editProfileLayout = new javax.swing.GroupLayout(editProfile);
+        editProfile.setLayout(editProfileLayout);
+        editProfileLayout.setHorizontalGroup(
+            editProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editProfileLayout.createSequentialGroup()
+                .addGap(158, 158, 158)
+                .addGroup(editProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, editProfileLayout.createSequentialGroup()
+                        .addComponent(editBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(144, 144, 144)
+                        .addComponent(changePassBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(editProfileLayout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addGroup(editProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(editProfileLayout.createSequentialGroup()
+                                .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(phoneTF, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(editProfileLayout.createSequentialGroup()
+                                .addComponent(jLabel37, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(emailTF, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(editProfileLayout.createSequentialGroup()
+                                .addComponent(jLabel36, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(userIdTF, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(editProfileLayout.createSequentialGroup()
+                                .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(nameTF, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(editProfileLayout.createSequentialGroup()
+                                .addGroup(editProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel39, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addComponent(genderTF, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, editProfileLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(saveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(68, 68, 68)))
+                .addContainerGap(242, Short.MAX_VALUE))
+        );
+        editProfileLayout.setVerticalGroup(
+            editProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editProfileLayout.createSequentialGroup()
+                .addGap(99, 99, 99)
+                .addGroup(editProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel36)
+                    .addComponent(userIdTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(editProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel35)
+                    .addComponent(nameTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(editProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel37)
+                    .addComponent(emailTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(editProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel38)
+                    .addComponent(phoneTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(editProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel39)
+                    .addComponent(genderTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(41, 41, 41)
+                .addGroup(editProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(saveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(32, 32, 32)
+                .addGroup(editProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(editBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(changePassBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(644, Short.MAX_VALUE))
+        );
+
+        profilePage.add(editProfile, "editProfile");
+
+        editPass.setBackground(new java.awt.Color(255, 255, 255));
+
+        passCancelBtn.setBackground(new java.awt.Color(204, 0, 51));
+        passCancelBtn.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        passCancelBtn.setForeground(new java.awt.Color(255, 255, 255));
+        passCancelBtn.setText("CANCEL");
+        passCancelBtn.setBorderPainted(false);
+        passCancelBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        passCancelBtn.setFocusPainted(false);
+        passCancelBtn.setPreferredSize(new java.awt.Dimension(80, 40));
+        passCancelBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passCancelBtnActionPerformed(evt);
+            }
+        });
+
+        passSaveBtn.setBackground(new java.awt.Color(0, 204, 0));
+        passSaveBtn.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        passSaveBtn.setForeground(new java.awt.Color(255, 255, 255));
+        passSaveBtn.setText("SAVE");
+        passSaveBtn.setBorderPainted(false);
+        passSaveBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        passSaveBtn.setFocusPainted(false);
+        passSaveBtn.setPreferredSize(new java.awt.Dimension(140, 40));
+        passSaveBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passSaveBtnActionPerformed(evt);
+            }
+        });
+
+        jLabel106.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel106.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel106.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel106.setText("Previous Password:");
+
+        jLabel108.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel108.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel108.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel108.setText("New Password:");
+
+        prevPassPF.setBackground(new java.awt.Color(255, 255, 255));
+        prevPassPF.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        prevPassPF.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 3, 0, new java.awt.Color(51, 153, 255)));
+
+        newPassPF.setBackground(new java.awt.Color(255, 255, 255));
+        newPassPF.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        newPassPF.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 3, 0, new java.awt.Color(51, 153, 255)));
+
+        showPassCB.setFont(new java.awt.Font("Times New Roman", 0, 13)); // NOI18N
+        showPassCB.setForeground(new java.awt.Color(0, 0, 0));
+        showPassCB.setText("show password");
+        showPassCB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showPassCBActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout editPassLayout = new javax.swing.GroupLayout(editPass);
+        editPass.setLayout(editPassLayout);
+        editPassLayout.setHorizontalGroup(
+            editPassLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editPassLayout.createSequentialGroup()
+                .addGap(203, 203, 203)
+                .addGroup(editPassLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, editPassLayout.createSequentialGroup()
+                        .addComponent(passCancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(passSaveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(editPassLayout.createSequentialGroup()
+                        .addComponent(jLabel108, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(editPassLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(showPassCB)
+                            .addComponent(newPassPF, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(editPassLayout.createSequentialGroup()
+                        .addComponent(jLabel106)
+                        .addGap(18, 18, 18)
+                        .addComponent(prevPassPF, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(345, Short.MAX_VALUE))
+        );
+        editPassLayout.setVerticalGroup(
+            editPassLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editPassLayout.createSequentialGroup()
+                .addGap(147, 147, 147)
+                .addGroup(editPassLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel106)
+                    .addComponent(prevPassPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29)
+                .addGroup(editPassLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel108)
+                    .addComponent(newPassPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(5, 5, 5)
+                .addComponent(showPassCB)
+                .addGap(92, 92, 92)
+                .addGroup(editPassLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(passCancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(passSaveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(704, Short.MAX_VALUE))
+        );
+
+        profilePage.add(editPass, "editPass");
 
         pages.add(profilePage, "profilePage");
 
@@ -1227,7 +1745,7 @@ public class Admin_Dashboard extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1031, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1034, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1239,7 +1757,7 @@ public class Admin_Dashboard extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void setActiveButton(javax.swing.JButton activeButton) {
-        javax.swing.JButton[] buttons = {dashboardBtn, usersBtn, assignmentsBtn, assetsBtn, ratesBtn, profileBtn, logoutBtn, insuranceBtn};
+        javax.swing.JButton[] buttons = {dashboardBtn, usersBtn, assignmentsBtn, assetsBtn, ratesBtn, profileBtn, logoutBtn, insuranceBtn, requestBtn};
         
         for (javax.swing.JButton btn : buttons) {
             btn.setContentAreaFilled(false);
@@ -1276,6 +1794,8 @@ public class Admin_Dashboard extends javax.swing.JFrame {
     private void assignmentsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_assignmentsBtnActionPerformed
         cardLayout.show(pages, "assignmentsPage");
         setActiveButton(assignmentsBtn);
+        
+        loadAssignmentTables();
     }//GEN-LAST:event_assignmentsBtnActionPerformed
 
     private void assetsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_assetsBtnActionPerformed
@@ -1349,6 +1869,22 @@ public class Admin_Dashboard extends javax.swing.JFrame {
         }
     }
     
+    private void loadAssignmentTables() {
+        DefaultTableModel doctorModel = (DefaultTableModel)doctorTable.getModel();
+        DefaultTableModel managerModel = (DefaultTableModel)managerTable.getModel();
+        
+        doctorModel.setRowCount(0);
+        managerModel.setRowCount(0);
+        
+        for (User user : adminService.getAllUsers()) {
+            if (user.getRole().equalsIgnoreCase("Doctor")) {
+                doctorModel.addRow(new Object[]{user.getUserId(), user.getName()});
+            } else if (user.getRole().equalsIgnoreCase("MedicalManager")) {
+                managerModel.addRow(new Object[]{user.getUserId(), user.getName()});
+            }
+        }
+    }
+    
     // Manage and allocate assets
     FileAssetRepo assetRepo = new FileAssetRepo();
     AssetService assetService = new AssetService();
@@ -1404,7 +1940,13 @@ public class Admin_Dashboard extends javax.swing.JFrame {
         String departmentId = departmentCb.getSelectedItem().toString();
         String openingTime = openingTf.getText().trim();
         String closingTime = closingTf.getText().trim();
-        int capacity = Integer.parseInt(capacityTf.getText().trim());
+        int capacity;
+        
+        try {
+            capacity = Integer.parseInt(capacityTf.getText().trim());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Capacity must be a number.");
+        }
         
         if (assetService.validation(selectedAssetId, status, departmentId, openingTime, closingTime, capacity)) {
             try {
@@ -1615,10 +2157,6 @@ public class Admin_Dashboard extends javax.swing.JFrame {
         clearUserForm();
     }//GEN-LAST:event_clearBtnActionPerformed
 
-    private void assignBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_assignBtnActionPerformed
-        // TODO add your handling code here
-    }//GEN-LAST:event_assignBtnActionPerformed
-    
     private void clearUserForm() {
         selectedUserId = null;
         
@@ -1631,6 +2169,316 @@ public class Admin_Dashboard extends javax.swing.JFrame {
         
         userTable.clearSelection();
     }
+    
+    private void assignBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_assignBtnActionPerformed
+        int doctorRow = doctorTable.getSelectedRow();
+        int managerRow = managerTable.getSelectedRow();
+
+        if (doctorRow == -1 || managerRow == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a doctor and a Medical Manager.");
+            return;
+        }
+
+        int doctorModelRow = doctorTable.convertRowIndexToModel(doctorRow);
+        int managerModelRow = managerTable.convertRowIndexToModel(managerRow);
+
+        String doctorUserId = doctorTable.getModel().getValueAt(doctorModelRow, 0).toString();
+        String managerUserId = managerTable.getModel().getValueAt(managerModelRow, 0).toString();
+
+        try {
+            boolean assigned = adminService.assignDoctor(doctorUserId, managerUserId);
+            
+            if (assigned) {
+                JOptionPane.showMessageDialog(this, "Doctor assigned successfully.");
+            }
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }//GEN-LAST:event_assignBtnActionPerformed
+
+    private void requestBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_requestBtnActionPerformed
+        cardLayout.show(pages, "requestPage");
+        setActiveButton(requestBtn);
+        
+        loadRequestTable();
+        clearRequestDetails();
+    }//GEN-LAST:event_requestBtnActionPerformed
+
+    private void requestTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_requestTableMouseClicked
+        int row = requestTable.getSelectedRow();
+
+        if (row == -1) {
+            return;
+        }
+
+        int modelRow = requestTable.convertRowIndexToModel(row);
+        selectedRequestId = requestTable.getModel().getValueAt(modelRow, 0).toString();
+        MedicalRequestInfo request =requestService.findMedicalRequestById(selectedRequestId);
+
+        if (request == null) {
+            return;
+        }
+
+        String doctorId = requestService.getDoctorIdByRequestId(selectedRequestId);
+
+        RequestIdLbl.setText(request.getRequestId());
+        requestDoctorLbl.setText(doctorId);
+        requestTypeLbl.setText(request.getRequestType());
+        requestDetailsLbl.setText(request.getReason());
+
+        loadRequestAssets(request.getRequestType());
+
+        approveBtn.setEnabled(request.getStatus().equalsIgnoreCase("Pending"));
+    }//GEN-LAST:event_requestTableMouseClicked
+
+    private void approveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_approveBtnActionPerformed
+        if (selectedRequestId == null) {
+            JOptionPane.showMessageDialog(this, "Please select a request.");
+            return;
+        }
+        
+        int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to approve this request?", "Approve Request", JOptionPane.YES_NO_OPTION);
+        
+        if (confirm != JOptionPane.YES_OPTION) {
+            return;
+        }
+        
+        String result = requestService.approveMedicalRequest(selectedRequestId);
+        
+        if (result != null) {
+            JOptionPane.showMessageDialog(this, result);
+            return;
+        }
+        
+        JOptionPane.showMessageDialog(this, "Request approved successfully.");
+        
+        loadRequestTable();
+        clearRequestDetails();
+    }//GEN-LAST:event_approveBtnActionPerformed
+
+    private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
+        enableProfileTextField(true);
+        cancelBtn.setVisible(true);
+        saveBtn.setVisible(true);
+        editBtn.setVisible(false);
+        changePassBtn.setVisible(false);
+    }//GEN-LAST:event_editBtnActionPerformed
+
+    private void changePassBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changePassBtnActionPerformed
+        profileCardLayout.show(profilePage, "editPass");
+    }//GEN-LAST:event_changePassBtnActionPerformed
+
+    private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
+        String userId = userIdTF.getText();
+        String name = nameTF.getText();
+        String email = emailTF.getText();
+        String phone = phoneTF.getText();
+        String gender = genderTF.getText();
+
+        String result = userService.updateUser(userId, name, email, phone, gender);
+
+        if (result != null) {
+            JOptionPane.showMessageDialog(this, result, "Invalid", JOptionPane.WARNING_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Profile updated successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+
+            user = userService.findByUserId(userId);
+
+            welcomeLbl.setText("Welcome back, " + user.getName());
+
+            setProfile();
+            enableProfileTextField(false);
+            cancelBtn.setVisible(false);
+            saveBtn.setVisible(false);
+            editBtn.setVisible(true);
+            changePassBtn.setVisible(true);
+        }
+    }//GEN-LAST:event_saveBtnActionPerformed
+
+    private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
+        setProfile();
+        enableProfileTextField(false);
+        cancelBtn.setVisible(false);
+        saveBtn.setVisible(false);
+        editBtn.setVisible(true);
+        changePassBtn.setVisible(true);
+    }//GEN-LAST:event_cancelBtnActionPerformed
+
+    private void passCancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passCancelBtnActionPerformed
+        profileCardLayout.show(profilePage, "editProfile");
+    }//GEN-LAST:event_passCancelBtnActionPerformed
+
+    private void passSaveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passSaveBtnActionPerformed
+        String prevPass = String.valueOf(prevPassPF.getPassword());
+        String newPass = String.valueOf(newPassPF.getPassword());
+
+        String result = userService.changePassword(user.getUserId(), prevPass, newPass);
+
+        if (result != null) {
+            JOptionPane.showMessageDialog(null, result, "Invalid", JOptionPane.WARNING_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "Password changed sucessfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+
+            prevPassPF.setText("");
+            newPassPF.setText("");
+
+            profileCardLayout.show(profilePage, "editProfile");
+        }
+    }//GEN-LAST:event_passSaveBtnActionPerformed
+
+    private void showPassCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showPassCBActionPerformed
+        if (showPassCB.isSelected()) {
+            newPassPF.setEchoChar((char)0);
+        } else {
+            newPassPF.setEchoChar('*');
+        }
+    }//GEN-LAST:event_showPassCBActionPerformed
+    
+    private TableRowSorter<DefaultTableModel>doctorSorter;
+    private TableRowSorter<DefaultTableModel>managerSorter;
+    
+    private void setupAssignmentFilter() {
+
+        DefaultTableModel doctorModel = (DefaultTableModel) doctorTable.getModel();
+        DefaultTableModel managerModel = (DefaultTableModel)managerTable.getModel();
+        
+        doctorSorter = new TableRowSorter<>(doctorModel);
+        managerSorter = new TableRowSorter<>(managerModel);
+
+        doctorTable.setRowSorter(doctorSorter);
+        managerTable.setRowSorter(managerSorter);
+
+        doctorNameTf.setText("");
+        managerNameTf.setText("");
+
+        doctorNameTf.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                filterDoctors();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                filterDoctors();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                filterDoctors();
+            }
+        });
+
+
+        managerNameTf.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                filterManagers();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                filterManagers();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                filterManagers();
+            }
+        });
+    }
+    
+    private void filterDoctors() {
+        String text = doctorNameTf.getText().trim();
+        
+        if (text.isEmpty()) {
+            doctorSorter.setRowFilter(null);
+        } else {
+            doctorSorter.setRowFilter(RowFilter.regexFilter("(?i)" + Pattern.quote(text), 1));
+        }
+    }
+    
+    private void filterManagers() {
+        String text = managerNameTf.getText().trim();
+
+        if (text.isEmpty()) {
+            managerSorter.setRowFilter(null);
+        } else {
+            managerSorter.setRowFilter(RowFilter.regexFilter("(?i)" + Pattern.quote(text), 1));
+        }
+    }
+    
+    private MedicalRequestService requestService = new MedicalRequestService();
+    private String selectedRequestId = null;
+    
+    private void loadRequestTable() {
+        requestService.reloadMedicalRequest();
+        
+        DefaultTableModel model = (DefaultTableModel)requestTable.getModel();
+        
+        model.setRowCount(0);
+        
+        for (MedicalRequestInfo request : requestService.getMedicalRequestInfo()) {
+            String doctorId = requestService.getDoctorIdByRequestId(request.getRequestId());
+            
+            model.addRow(new Object[]{request.getRequestId(), doctorId, request.getRequestType(), request.getPatientId(), request.getStatus()});
+        }
+    }
+    
+    private void loadRequestAssets(String requestType) {
+        assetCb.removeAllItems();
+        
+        for (HospitalAsset asset : assetRepo.getAllAssets()) {
+            if (!asset.getStatus().equalsIgnoreCase("Active")) {
+                continue;
+            }
+            
+            if (requestType.equalsIgnoreCase("Lab Test") && asset.getAssetType().equalsIgnoreCase("Lab")) {
+                assetCb.addItem(asset.getAssetName());
+            }
+            
+            if ((requestType.equalsIgnoreCase("X-Ray") || requestType.equalsIgnoreCase("Specialized Imaging")) && asset.getAssetType().equalsIgnoreCase("ImagingRoom")) {
+                assetCb.addItem(asset.getAssetName());
+            }
+        }
+    }
+    
+    private void clearRequestDetails() {
+        selectedRequestId = null;
+
+        RequestIdLbl.setText("");
+        requestDoctorLbl.setText("");
+        requestTypeLbl.setText("");
+        requestDetailsLbl.setText("");
+        assetCb.removeAllItems();
+        
+        requestTable.clearSelection();
+
+        approveBtn.setEnabled(false);
+    }
+    
+    private void enableProfileTextField(boolean b) {
+        if (b) {
+            nameTF.setEnabled(true);
+            emailTF.setEnabled(true);
+            phoneTF.setEnabled(true);
+//            genderTF.setEnabled(true);
+        } else {
+            nameTF.setEnabled(false);
+            emailTF.setEnabled(false);
+            phoneTF.setEnabled(false);
+            genderTF.setEnabled(false);
+        }
+    }
+    
+    private void setProfile() {
+        userIdTF.setText(user.getUserId());
+        nameTF.setText(user.getName());
+        emailTF.setText(user.getEmail());
+        phoneTF.setText(user.getPhone());
+        genderTF.setText(user.getGender());
+    }
+    
+    
     
     /**
      * @param args the command line arguments
@@ -1725,12 +2573,15 @@ public class Admin_Dashboard extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {          
-                new Admin_Dashboard().setVisible(true);
+//                new Admin_Dashboard(user, admin).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel RequestIdLbl;
+    private javax.swing.JButton approveBtn;
+    private javax.swing.JComboBox<String> assetCb;
     private javax.swing.JLabel assetLbl;
     private javax.swing.JTextField assetNameTf;
     private javax.swing.JTable assetTable;
@@ -1740,7 +2591,9 @@ public class Admin_Dashboard extends javax.swing.JFrame {
     private javax.swing.JButton assignmentsBtn;
     private javax.swing.JPanel assignmentsPage;
     private javax.swing.JTextField baseRateTf;
+    private javax.swing.JButton cancelBtn;
     private javax.swing.JTextField capacityTf;
+    private javax.swing.JButton changePassBtn;
     private javax.swing.JButton clearBtn;
     private javax.swing.JTextField closingTf;
     private javax.swing.JLabel consultationLbl;
@@ -1750,10 +2603,14 @@ public class Admin_Dashboard extends javax.swing.JFrame {
     private javax.swing.JButton deleteUserBtn;
     private javax.swing.JComboBox<String> departmentCb;
     private javax.swing.JTextField doctorNameTf;
-    private javax.swing.JTextField doctorNameTf1;
     private javax.swing.JTable doctorTable;
+    private javax.swing.JButton editBtn;
+    private javax.swing.JPanel editPass;
+    private javax.swing.JPanel editProfile;
+    private javax.swing.JTextField emailTF;
     private javax.swing.JTextField emailTf;
     private javax.swing.JComboBox<String> genderCb;
+    private javax.swing.JTextField genderTF;
     private javax.swing.JButton insuranceBtn;
     private javax.swing.JLabel insuranceLbl;
     private javax.swing.JPanel insurancePage;
@@ -1761,6 +2618,8 @@ public class Admin_Dashboard extends javax.swing.JFrame {
     private javax.swing.JTable insuranceTable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel106;
+    private javax.swing.JLabel jLabel108;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
@@ -1777,10 +2636,21 @@ public class Admin_Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel37;
+    private javax.swing.JLabel jLabel38;
+    private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1791,25 +2661,42 @@ public class Admin_Dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JButton logoutBtn;
+    private javax.swing.JTextField managerNameTf;
     private javax.swing.JTable managerTable;
     private javax.swing.JPanel menuPanel;
+    private javax.swing.JTextField nameTF;
+    private javax.swing.JPasswordField newPassPF;
     private javax.swing.JTextField openingTf;
     private javax.swing.JPanel pages;
+    private javax.swing.JButton passCancelBtn;
+    private javax.swing.JButton passSaveBtn;
+    private javax.swing.JTextField phoneTF;
     private javax.swing.JTextField phoneTf;
+    private javax.swing.JPasswordField prevPassPF;
     private javax.swing.JButton profileBtn;
     private javax.swing.JPanel profilePage;
     private javax.swing.JTable rateTable;
     private javax.swing.JButton ratesBtn;
     private javax.swing.JPanel ratesPage;
+    private javax.swing.JButton requestBtn;
+    private javax.swing.JLabel requestDetailsLbl;
+    private javax.swing.JLabel requestDoctorLbl;
+    private javax.swing.JPanel requestPage;
+    private javax.swing.JTable requestTable;
+    private javax.swing.JLabel requestTypeLbl;
     private javax.swing.JComboBox<String> roleCb;
+    private javax.swing.JButton saveBtn;
+    private javax.swing.JCheckBox showPassCB;
     private javax.swing.JPanel sidebar;
     private javax.swing.JComboBox<String> statusCb;
     private javax.swing.JLabel totalDoctorLbl;
@@ -1821,6 +2708,7 @@ public class Admin_Dashboard extends javax.swing.JFrame {
     private javax.swing.JButton updateRateBtn;
     private javax.swing.JButton updateUserBtn;
     private javax.swing.JLabel userIdLbl;
+    private javax.swing.JTextField userIdTF;
     private javax.swing.JTable userTable;
     private javax.swing.JTextField usernameTf;
     private javax.swing.JButton usersBtn;

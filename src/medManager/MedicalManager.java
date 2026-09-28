@@ -145,7 +145,7 @@ public class MedicalManager {
     // Change to List<RevenueSummaries> and List<HospitalMetrics>
     public List<HospitalMetrics> viewHospitalMetrics(){
         try{
-            FileReader fr = new FileReader("data/HospitalMetrics.txt");
+            FileReader fr = new FileReader("data/hospitalMetrics.txt");
             BufferedReader br = new BufferedReader(fr);
             
             String line = null;

@@ -21,7 +21,7 @@ public class AdminService {
     public AdminService() {
         userRepo = new FileUserRepo();
         doctorRepo = new FileDoctorRepo();
-        validationService = new ValidationService();
+        validationService = new ValidationService(userRepo);
     }
     
     public boolean createUser(String name, String email, String password, String phone, String gender, String role) {
@@ -38,6 +38,37 @@ public class AdminService {
         }
         
         return userRepo.deleteUser(userId);
+    }
+    
+    public boolean assignDoctor(String doctorUserId, String managerUserId) {
+        if (doctorUserId == null || managerUserId == null || doctorUserId.isEmpty() || managerUserId.isEmpty()) {
+            throw new IllegalArgumentException("Please select a doctor and a medical manager.");
+        }
+        
+        User doctorUser = userRepo.findByUserId(doctorUserId);
+        User managerUser = userRepo.findByUserId(managerUserId);
+        
+        if (doctorUser == null) {
+            throw new IllegalArgumentException("Doctor not found.");
+        }
+        
+        if (!doctorUser.getRole().equalsIgnoreCase("Doctor")) {
+            throw new IllegalArgumentException("Selected user is not a doctor.");
+        }
+        
+        if (managerUser == null) {
+            throw new IllegalArgumentException("Medical manager not found.");
+        }
+        
+        if (!managerUser.getRole().equalsIgnoreCase("MedicalManager")) {
+            throw new IllegalArgumentException("Selected user is not a medical manager.");
+        }
+        
+        if (doctorRepo.findByUserId(doctorUserId) == null) {
+            throw new IllegalArgumentException("Doctor profile not found.");
+        }
+
+        return doctorRepo.assignMedicalManager(doctorUserId,managerUserId);
     }
     
     public Collection<User> getAllUsers() {

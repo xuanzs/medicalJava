@@ -87,6 +87,41 @@ public class MedicalRequestService {
         return null;
     }
     
+    public String approveMedicalRequest(String requestId) {
+        if (requestId == null || requestId.trim().isEmpty()) {
+            return "Please select a request.";
+        }
+        
+        MedicalRequestInfo request = findMedicalRequestById(requestId);
+        
+        if (request == null) {
+            return "Request not found.";
+        }
+        
+        if (!request.getStatus().equalsIgnoreCase("Pending")) {
+            return "This request has already been processed";
+        }
+        
+        boolean approved = requestRepo.approveMedicalRequest(requestId);
+        
+        if (!approved) {
+            return "Failed to approve request.";
+        }
+        
+        reloadMedicalRequest();
+        return null;
+    }
+    
+    public String getDoctorIdByRequestId(String requestId) {
+        for (String[] request : requestList) {
+            if (request[0].trim().equalsIgnoreCase(requestId)) {
+                return request[3].trim();
+            }
+        }
+
+        return "";
+    }
+    
     public int getPendingRequestCount(String doctorId) {
         int count = 0;
         

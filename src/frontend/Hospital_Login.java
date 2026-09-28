@@ -4,12 +4,14 @@ package frontend;
 import javax.swing.JOptionPane;
 import medManager.GUIManagerMenu;
 import medManager.MedicalManager;
+import model.Admin;
 import model.Doctor;
 import model.MedicalManagerInfo;
 import model.PatientInfo;
 import repo.FileUserRepo;
 import service.AuthService;
 import model.User;
+import repo.FileAdminRepo;
 import repo.FileDoctorRepo;
 import service.MedicalManagerService;
 import service.PatientService;
@@ -25,6 +27,7 @@ public class Hospital_Login extends javax.swing.JFrame {
     private final AuthService as;
     private FileUserRepo userRepo = new FileUserRepo();
     private FileDoctorRepo doctorRepo = new FileDoctorRepo();
+    private FileAdminRepo adminRepo = new FileAdminRepo();
     private PatientService patientService = new PatientService();
     private MedicalManagerService managerService = new MedicalManagerService();
     
@@ -214,8 +217,19 @@ public class Hospital_Login extends javax.swing.JFrame {
                    menu.setVisible(true);
                    this.dispose();
                } else {
-                   JOptionPane.showMessageDialog(null, "Medical Manager Profil not found", "Error", JOptionPane.ERROR_MESSAGE);
+                   JOptionPane.showMessageDialog(null, "Medical Manager Profile not found", "Error", JOptionPane.ERROR_MESSAGE);
                }
+            } else if (user.getRole().toLowerCase().equals("admin")) {
+                Admin admin = adminRepo.findByUserId(user.getUserId());
+                
+                if (admin != null) {
+                    JOptionPane.showMessageDialog(null, "Welcome back " + user.getName(), "Successful", JOptionPane.INFORMATION_MESSAGE);
+                    Admin_Dashboard ad = new Admin_Dashboard(user, admin);
+                    ad.setVisible(true);
+                    this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Admin Profile not found", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         }
         else {

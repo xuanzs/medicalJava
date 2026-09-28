@@ -136,15 +136,6 @@ public class FileUserRepo {
             return false;
         }
     }
-            
-//    public User findByUserId(String userId) {
-//        for (User user : map.values()) {
-//            if (user.getUserId().equalsIgnoreCase(userId)) {
-//                return user;
-//            }
-//        }
-//        return null;
-//    }
     
     // FileReader
     public BufferedReader reader() throws IOException {
@@ -196,13 +187,15 @@ public class FileUserRepo {
         String userId = generateUserId();
         User user = new User(userId, name, email, password, phone, gender, role);
 
-        map.put(email, user);
+        map.put(userId, user);
+        loginMap.put(email, user);
         
         try {
             saveUsers();
             return true;
         } catch (IOException e) {
             map.remove(email);
+            loginMap.remove(email);
             System.out.println(e);
             return false;
         }
@@ -216,7 +209,8 @@ public class FileUserRepo {
             return false;
         }
         
-        map.remove(user.getEmail().trim().toLowerCase());
+        map.remove(userId);
+        loginMap.remove(user.getEmail().trim().toLowerCase());
         
         try {
             saveUsers();
