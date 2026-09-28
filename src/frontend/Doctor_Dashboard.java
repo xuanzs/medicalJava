@@ -67,7 +67,7 @@ public class Doctor_Dashboard extends javax.swing.JFrame {
         
         this.user = user;
         this.doctor = doctor;
-        welcomeLbl.setText("Welcome back, " + user.getName());
+        welcomeLbl.setText("Hello, " + user.getName());
         
         cardLayout = (CardLayout)pages.getLayout();
         consultCardLayout = (CardLayout)consultationsPage.getLayout();
@@ -706,7 +706,7 @@ public class Doctor_Dashboard extends javax.swing.JFrame {
 
         welcomeLbl.setFont(new java.awt.Font("Heiti TC", 1, 12)); // NOI18N
         welcomeLbl.setForeground(new java.awt.Color(0, 0, 0));
-        welcomeLbl.setText("Welcome");
+        welcomeLbl.setText("Hi");
         welcomeLbl.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         welcomeLbl.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
 
@@ -2938,7 +2938,6 @@ public class Doctor_Dashboard extends javax.swing.JFrame {
         activeButton.setOpaque(true);
         activeButton.setBorderPainted(false);
         activeButton.setFocusPainted(false);
-//        activeButton.setBackground(new java.awt.Color(70, 100, 220));
         activeButton.setBackground(Color.white);
         activeButton.setForeground(Color.black);
     }
@@ -3196,10 +3195,6 @@ public class Doctor_Dashboard extends javax.swing.JFrame {
         setProfile();
         cancelBtn.setVisible(false);
         saveBtn.setVisible(false);
-        
-//        ChangePasswordDialog cpd = new ChangePasswordDialog(this,true);
-//        cpd.setLocationRelativeTo(this);
-//        cpd.setVisible(true);
     }//GEN-LAST:event_profileBtnActionPerformed
 
     private void logoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBtnActionPerformed

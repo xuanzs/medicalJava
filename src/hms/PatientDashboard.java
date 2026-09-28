@@ -1,5 +1,6 @@
 package hms;
 
+import frontend.Hospital_Login;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -18,7 +19,7 @@ public class PatientDashboard extends JFrame {
         this.setLocationRelativeTo(null);
 
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(5, 1, 10, 10));
+        panel.setLayout(new GridLayout(6, 1, 10, 10));
         panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         JButton btnBook = new JButton("Book Appointment");
@@ -26,12 +27,14 @@ public class PatientDashboard extends JFrame {
         JButton btnHistory = new JButton("View Medical History");
         JButton btnFeedback = new JButton("Submit Feedback");
         JButton btnProfile = new JButton("Edit Profile");
+        JButton btnLogout = new JButton("Logout");
 
         panel.add(btnBook);
         panel.add(btnView);
         panel.add(btnHistory);
         panel.add(btnFeedback);
         panel.add(btnProfile);
+        panel.add(btnLogout);
 
         btnBook.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -54,8 +57,6 @@ public class PatientDashboard extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 ArrayList<Appointment> allAppts = AppointmentFileHandler.loadAllAppointments();
                 ArrayList<Appointment> myAppts = new ArrayList<>();
-                System.out.println("allAppts: " + allAppts);
-                System.out.println("myAppts: " + myAppts);
                 for (Appointment a : allAppts) {
                     if (a.getPatientId().equals(patient.getPatientId())) {
                         myAppts.add(a);
@@ -134,6 +135,18 @@ public class PatientDashboard extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 JOptionPane.showMessageDialog(null,
                     "No medical records found.\nRecords are added by your doctor after consultation.");
+            }
+        });
+                
+        btnLogout.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int choice = JOptionPane.showConfirmDialog(null, "Confirm to logout?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                
+                if (choice == JOptionPane.YES_OPTION) {
+                    Hospital_Login login = new Hospital_Login();
+                    login.setVisible(true);
+                    panel.setVisible(false);
+                }
             }
         });
 

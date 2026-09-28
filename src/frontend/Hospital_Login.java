@@ -2,12 +2,16 @@ package frontend;
 
 
 import javax.swing.JOptionPane;
+import medManager.GUIManagerMenu;
+import medManager.MedicalManager;
 import model.Doctor;
+import model.MedicalManagerInfo;
 import model.PatientInfo;
 import repo.FileUserRepo;
 import service.AuthService;
 import model.User;
 import repo.FileDoctorRepo;
+import service.MedicalManagerService;
 import service.PatientService;
 
 /*
@@ -22,6 +26,7 @@ public class Hospital_Login extends javax.swing.JFrame {
     private FileUserRepo userRepo = new FileUserRepo();
     private FileDoctorRepo doctorRepo = new FileDoctorRepo();
     private PatientService patientService = new PatientService();
+    private MedicalManagerService managerService = new MedicalManagerService();
     
     public Hospital_Login() {
         initComponents();
@@ -196,6 +201,21 @@ public class Hospital_Login extends javax.swing.JFrame {
                 } else {
                     JOptionPane.showMessageDialog(null, "Patient Profile not found", "Error", JOptionPane.ERROR_MESSAGE);
                 }
+            } else if (user.getRole().toLowerCase().equals("medicalmanager")) {
+               MedicalManagerInfo managerInfo = managerService.findByUserid(user.getUserId());
+               
+               if (managerInfo != null) {
+                   MedicalManager medManager = new MedicalManager(managerInfo.getMedicalManagerId(), user.getUserId());
+                   
+                   JOptionPane.showMessageDialog(null, "Welcome back " + user.getName(), "Successful", JOptionPane.INFORMATION_MESSAGE);
+                   
+                   GUIManagerMenu menu = new GUIManagerMenu(medManager);
+                   
+                   menu.setVisible(true);
+                   this.dispose();
+               } else {
+                   JOptionPane.showMessageDialog(null, "Medical Manager Profil not found", "Error", JOptionPane.ERROR_MESSAGE);
+               }
             }
         }
         else {
