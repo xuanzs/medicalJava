@@ -5,6 +5,7 @@
 package repo;
 
 import java.io.*;
+import java.util.Collection;
 import java.util.HashMap;
 import model.Doctor;
 
@@ -19,7 +20,7 @@ public class FileDoctorRepo {
             String line;
             br.readLine();
             while((line = br.readLine()) != null) {
-                String[] parts = line.split(",");
+                String[] parts = line.split(",", -1);
                 
                 if (parts.length == 4) {
                     String d = parts[0].trim();
@@ -41,5 +42,61 @@ public class FileDoctorRepo {
     
     public Doctor findByUserId(String userId) {
         return map.get(userId);
+    }
+    
+    public Collection<Doctor> getAllDoctors() {
+        return map.values();
+    }
+    
+    public boolean assignMedicalManager(String doctorUserId, String managerUserId) {
+        Doctor doctor = map.get(doctorUserId);
+        
+        if (doctor == null) {
+            return false;
+        }
+        
+        doctor.setMedicalManagerId(managerUserId);
+        
+        try {
+            saveDoctors();
+            
+            return true;
+        } catch (IOException e) {
+            System.out.println(e);
+            
+            return false;
+        }
+    }
+    
+    public void saveDoctors() throws IOException {
+        try (BufferedWriter bw = writer()) {
+            bw.write("DoctorId|UserId|Specialization|MedicalManagerId");
+            bw.newLine();
+            
+            for (Doctor doctor : map.values()) {
+                bw.write(doctor.getDoctorId() + "," + doctor.getUserId() + "," + doctor.getSpecialization() + "," + doctor.getMedicalManagerId());
+                bw.newLine();
+            }
+        }
+    }
+        
+    // FileReader
+    public BufferedReader reader() throws IOException {
+        FileReader fr = new FileReader("data/Doctor.txt");
+        
+        return new BufferedReader(fr);
+    }
+    
+    // FileWriter
+    public BufferedWriter writer() throws IOException {
+        FileWriter fw = new FileWriter("data/Doctor.txt");
+        
+        return new BufferedWriter(fw);
+    }
+    
+    public BufferedWriter writer(boolean append) throws IOException {
+        FileWriter fw = new FileWriter("data/Doctor.txt", append);
+
+        return new BufferedWriter(fw);
     }
 }

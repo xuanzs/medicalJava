@@ -8,3 +8,4 @@ Uid006,Daniel,daniel@gmail.com,999,0166789012,Male,PATIENT
 Uid007,Sarah,sarah@gmail.com,999,0177890123,Female,PATIENT
 Uid008,Manager Adam,manager1@gmail.com,123,0181234567,Male,MEDICALMANAGER
 Uid009,Manager Emily,manager2@gmail.com,123,0191234567,Female,MEDICALMANAGER
+

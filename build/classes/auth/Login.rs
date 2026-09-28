@@ -1,2 +1,0 @@
-auth.User
-auth.Login

@@ -1,0 +1,5 @@
+AssetId|AssetName|AssetType|Location|Status|DepartmentId|OpeningTime|ClosingTime|Capacity
+A001,Consultation Room 1,ConsultationRoom,Level 1,Active,D001,08:00,17:00,1
+A002,Ward A,InpatientWard,Level 2,Active,D002,00:00,23:59,30
+A003,X-Ray Room 1,ImagingRoom,Level 1,Active,D003,08:00,18:00,8
+A004,Pathology Lab,Lab,Level 3,Active,D004,08:00,20:00,20

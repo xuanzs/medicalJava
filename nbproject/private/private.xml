@@ -3,6 +3,29 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
+            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/src/frontend/Hospital_Login.java</file>
+            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/src/repo/FileUserRepo.java</file>
+            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/data/User.txt</file>
+            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/data/consultation.txt</file>
+            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/.gitignore</file>
+            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/src/frontend/Doctor_Dashboard.java</file>
+            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/src/frontend/ChangePasswordDialog.java</file>
+            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/src/service/ValidationService.java</file>
+            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/src/auth/Login.java</file>
+            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/data/assignment.txt</file>
+            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/src/repo/FileAssignmentRepo.java</file>
+            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/src/service/AuthService.java</file>
+            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/src/frontend/Doctor_Dashboard1.java</file>
+            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/data/hospitalAsset.txt</file>
+            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/src/model/HospitalAsset.java</file>
+            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/src/model/User.java</file>
+            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/src/model/ConsultationRoom.java</file>
+            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/src/model/InpatientWard.java</file>
+            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/src/model/Lab.java</file>
+            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/src/model/ImagingRoom.java</file>
+            <file>file:/Users/wongkingsen/Documents/OODJ/Code/Hospital/src/repo/FileAssetRepo.java</file>
+=======
             <file>file:/Users/xuanchen/Desktop/Hospital/src/repo/FileUserRepo.java</file>
             <file>file:/Users/xuanchen/Desktop/Hospital/src/auth/Login.java</file>
             <file>file:/Users/xuanchen/Desktop/Hospital/src/frontend/Hospital_Login.java</file>
@@ -14,6 +37,7 @@
             <file>file:/Users/xuanchen/Desktop/Hospital/data/User.txt</file>
             <file>file:/Users/xuanchen/Desktop/Hospital/data/consultation.txt</file>
             <file>file:/Users/xuanchen/Desktop/Hospital/src/frontend/ChangePasswordDialog.java</file>
+>>>>>>> origin/kaixuan
         </group>
     </open-files>
 </project-private>

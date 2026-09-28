@@ -4,6 +4,11 @@
  */
 package model;
 
+
+/**
+ *
+ * @author xuanchen
+ */
 public class Doctor {
     private String doctorId, userId, specialization, medicalManagerId;
     
@@ -17,16 +22,20 @@ public class Doctor {
     public String getDoctorId() {
         return doctorId;
     }
-    
+
     public String getUserId() {
         return userId;
     }
-    
+
     public String getSpecialization() {
         return specialization;
     }
-    
+
     public String getMedicalManagerId() {
         return medicalManagerId;
+    }
+
+    public void setMedicalManagerId(String medicalManagerId) {
+        this.medicalManagerId = medicalManagerId;
     }
 }

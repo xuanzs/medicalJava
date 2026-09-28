@@ -46,7 +46,6 @@ public class FileUserRepo {
 
                     loginMap.put(e, user);
                     map.put(id, user);
-
                 } else {
                     System.out.println("Row invalid");
                 }
@@ -59,6 +58,10 @@ public class FileUserRepo {
         }
     }
 
+    
+    public Collection<User> getAllUsers() {
+        return map.values();
+    }
     public User findByEmail(String email) {
         return loginMap.get(email.trim().toLowerCase());
     }
@@ -127,11 +130,112 @@ public class FileUserRepo {
             
             Files.write(path, lines);
             loadFile();
+              return true;
+        } catch (IOException e) {
+            System.out.println(e);
+            return false;
+        }
+    }
             
+//    public User findByUserId(String userId) {
+//        for (User user : map.values()) {
+//            if (user.getUserId().equalsIgnoreCase(userId)) {
+//                return user;
+//            }
+//        }
+//        return null;
+//    }
+    
+    // FileReader
+    public BufferedReader reader() throws IOException {
+        FileReader fr = new FileReader("data/User.txt");
+        
+        return new BufferedReader(fr);
+    }
+    
+    // FileWriter
+    public BufferedWriter writer() throws IOException {
+        FileWriter fw = new FileWriter("data/User.txt");
+        
+        return new BufferedWriter(fw);
+    }
+    
+    public BufferedWriter writer(boolean append) throws IOException {
+        FileWriter fw = new FileWriter("data/User.txt", append);
+
+        return new BufferedWriter(fw);
+    }
+    
+    // Generate userId
+    public String generateUserId() {
+        int maxId = 0;
+        
+        for (User user : map.values()) {
+            String id = user.getUserId();
+            
+            try {
+                int number = Integer.parseInt(id.substring(3));
+                
+                if (number > maxId) {
+                    maxId = number;
+                }
+            } catch (Exception e) {
+                System.out.println("Invalid User ID: " + id);
+            }
+        }
+        
+        return String.format("Uid%03d", maxId + 1);
+    }
+    
+    // Create user
+    public boolean createUser(String name, String email, String password, String phone, String gender, String role) {       
+        if (map.containsKey(email)) {
+            return false;
+        }
+        
+        String userId = generateUserId();
+        User user = new User(userId, name, email, password, phone, gender, role);
+
+        map.put(email, user);
+        
+        try {
+            saveUsers();
+            return true;
+        } catch (IOException e) {
+            map.remove(email);
+            System.out.println(e);
+            return false;
+        }
+    }
+    
+    // Delete user
+    public boolean deleteUser(String userId) {
+        User user = findByUserId(userId);
+        
+        if (user == null) {
+            return false;
+        }
+        
+        map.remove(user.getEmail().trim().toLowerCase());
+        
+        try {
+            saveUsers();
             return true;
         } catch (IOException e) {
             System.out.println(e);
             return false;
+        }
+    }
+    
+    private void saveUsers() throws IOException {
+        try (BufferedWriter bw = writer()) {
+            bw.write("UserId|Name|Email|Password|Phone|Gender|Role");
+            bw.newLine();
+            
+            for (User user : map.values()) {
+                bw.write(user.getUserId() + "," + user.getName() + "," + user.getEmail() + "," + user.getPassword() + "," + user.getPhone() + "," + user.getGender() + "," + user.getRole());
+                bw.newLine();
+            }
         }
     }
 }

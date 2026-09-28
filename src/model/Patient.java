@@ -4,7 +4,6 @@
  */
 package model;
 
-
 public class Patient {
     private String patientId, userId, dob, bloodType, address;
     
