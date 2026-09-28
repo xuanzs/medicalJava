@@ -9,12 +9,13 @@ package model;
  * @author xuanchen
  */
 public class MedicalRequestInfo {
-    private String requestId, consultId, patientId, patientName, requestDate, requestType, status, reason;
+    private String requestId, consultId, patientId, doctorId, patientName, requestDate, requestType, status, reason;
 
-    public MedicalRequestInfo(String requestId, String consultId, String patientId, String patientName, String requestDate, String requestType, String status, String reason) {
+    public MedicalRequestInfo(String requestId, String consultId, String patientId, String doctorId, String patientName, String requestDate, String requestType, String status, String reason) {
         this.requestId = requestId;
         this.consultId = consultId;
         this.patientId = patientId;
+        this.doctorId = doctorId;
         this.patientName = patientName;
         this.requestDate = requestDate;
         this.requestType = requestType;
@@ -32,6 +33,10 @@ public class MedicalRequestInfo {
 
     public String getPatientId() {
         return patientId;
+    }
+    
+    public String getDoctorId() {
+        return doctorId;
     }
 
     public String getPatientName() {

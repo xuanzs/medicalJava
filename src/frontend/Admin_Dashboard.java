@@ -150,9 +150,31 @@ public class Admin_Dashboard extends javax.swing.JFrame {
         insuranceLbl = new javax.swing.JLabel();
         insuranceStatusCb = new javax.swing.JComboBox<>();
         profilePage = new javax.swing.JPanel();
+        editProfile = new javax.swing.JPanel();
+        jLabel26 = new javax.swing.JLabel();
+        jLabel30 = new javax.swing.JLabel();
+        jLabel31 = new javax.swing.JLabel();
+        jLabel32 = new javax.swing.JLabel();
+        jLabel33 = new javax.swing.JLabel();
+        userIdTF = new javax.swing.JTextField();
+        editBtn = new javax.swing.JButton();
+        changePassBtn = new javax.swing.JButton();
+        nameTF = new javax.swing.JTextField();
+        emailTF = new javax.swing.JTextField();
+        phoneTF = new javax.swing.JTextField();
+        genderTF = new javax.swing.JTextField();
+        saveBtn = new javax.swing.JButton();
+        cancelBtn = new javax.swing.JButton();
+        editPass = new javax.swing.JPanel();
+        passCancelBtn = new javax.swing.JButton();
+        passSaveBtn = new javax.swing.JButton();
+        jLabel106 = new javax.swing.JLabel();
+        jLabel108 = new javax.swing.JLabel();
+        prevPassPF = new javax.swing.JPasswordField();
+        newPassPF = new javax.swing.JPasswordField();
+        showPassCB = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1000, 700));
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -1205,17 +1227,302 @@ public class Admin_Dashboard extends javax.swing.JFrame {
         pages.add(insurancePage, "insurancePage");
 
         profilePage.setBackground(new java.awt.Color(255, 255, 255));
+        profilePage.setLayout(new java.awt.CardLayout());
 
-        javax.swing.GroupLayout profilePageLayout = new javax.swing.GroupLayout(profilePage);
-        profilePage.setLayout(profilePageLayout);
-        profilePageLayout.setHorizontalGroup(
-            profilePageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 887, Short.MAX_VALUE)
+        editProfile.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel26.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel26.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel26.setText("Name:");
+
+        jLabel30.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel30.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel30.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel30.setText("User ID:");
+
+        jLabel31.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel31.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel31.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel31.setText("Email:");
+
+        jLabel32.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel32.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel32.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel32.setText("Phone:");
+
+        jLabel33.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel33.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel33.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel33.setText("Gender:");
+
+        userIdTF.setBackground(new java.awt.Color(255, 255, 255));
+        userIdTF.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        userIdTF.setForeground(new java.awt.Color(0, 0, 0));
+        userIdTF.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 3, 0, new java.awt.Color(51, 153, 255)));
+        userIdTF.setEnabled(false);
+
+        editBtn.setBackground(new java.awt.Color(0, 153, 255));
+        editBtn.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        editBtn.setForeground(new java.awt.Color(255, 255, 255));
+        editBtn.setText("Edit Profile");
+        editBtn.setBorderPainted(false);
+        editBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        editBtn.setFocusPainted(false);
+        editBtn.setPreferredSize(new java.awt.Dimension(140, 40));
+        editBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editBtnActionPerformed(evt);
+            }
+        });
+
+        changePassBtn.setBackground(new java.awt.Color(0, 153, 255));
+        changePassBtn.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        changePassBtn.setForeground(new java.awt.Color(255, 255, 255));
+        changePassBtn.setText("Change Password");
+        changePassBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        changePassBtn.setPreferredSize(new java.awt.Dimension(160, 40));
+        changePassBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                changePassBtnActionPerformed(evt);
+            }
+        });
+
+        nameTF.setBackground(new java.awt.Color(255, 255, 255));
+        nameTF.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        nameTF.setForeground(new java.awt.Color(0, 0, 0));
+        nameTF.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 3, 0, new java.awt.Color(51, 153, 255)));
+        nameTF.setEnabled(false);
+
+        emailTF.setBackground(new java.awt.Color(255, 255, 255));
+        emailTF.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        emailTF.setForeground(new java.awt.Color(0, 0, 0));
+        emailTF.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 3, 0, new java.awt.Color(51, 153, 255)));
+        emailTF.setEnabled(false);
+
+        phoneTF.setBackground(new java.awt.Color(255, 255, 255));
+        phoneTF.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        phoneTF.setForeground(new java.awt.Color(0, 0, 0));
+        phoneTF.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 3, 0, new java.awt.Color(51, 153, 255)));
+        phoneTF.setEnabled(false);
+
+        genderTF.setBackground(new java.awt.Color(255, 255, 255));
+        genderTF.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        genderTF.setForeground(new java.awt.Color(0, 0, 0));
+        genderTF.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 3, 0, new java.awt.Color(51, 153, 255)));
+        genderTF.setEnabled(false);
+
+        saveBtn.setBackground(new java.awt.Color(0, 204, 0));
+        saveBtn.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        saveBtn.setForeground(new java.awt.Color(255, 255, 255));
+        saveBtn.setText("SAVE");
+        saveBtn.setBorderPainted(false);
+        saveBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        saveBtn.setFocusPainted(false);
+        saveBtn.setPreferredSize(new java.awt.Dimension(140, 40));
+        saveBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveBtnActionPerformed(evt);
+            }
+        });
+
+        cancelBtn.setBackground(new java.awt.Color(204, 0, 51));
+        cancelBtn.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        cancelBtn.setForeground(new java.awt.Color(255, 255, 255));
+        cancelBtn.setText("CANCEL");
+        cancelBtn.setBorderPainted(false);
+        cancelBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cancelBtn.setFocusPainted(false);
+        cancelBtn.setPreferredSize(new java.awt.Dimension(80, 40));
+        cancelBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelBtnActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout editProfileLayout = new javax.swing.GroupLayout(editProfile);
+        editProfile.setLayout(editProfileLayout);
+        editProfileLayout.setHorizontalGroup(
+            editProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, editProfileLayout.createSequentialGroup()
+                .addGap(0, 226, Short.MAX_VALUE)
+                .addComponent(editBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(144, 144, 144)
+                .addComponent(changePassBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(171, 171, 171))
+            .addGroup(editProfileLayout.createSequentialGroup()
+                .addGap(263, 263, 263)
+                .addGroup(editProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(editProfileLayout.createSequentialGroup()
+                        .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(phoneTF, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(editProfileLayout.createSequentialGroup()
+                        .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(emailTF, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(editProfileLayout.createSequentialGroup()
+                        .addComponent(jLabel30, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(userIdTF, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(editProfileLayout.createSequentialGroup()
+                        .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(nameTF, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(editProfileLayout.createSequentialGroup()
+                        .addGroup(editProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(genderTF, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, editProfileLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(saveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(239, 239, 239))
         );
-        profilePageLayout.setVerticalGroup(
-            profilePageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1083, Short.MAX_VALUE)
+        editProfileLayout.setVerticalGroup(
+            editProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editProfileLayout.createSequentialGroup()
+                .addGap(159, 159, 159)
+                .addGroup(editProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel30)
+                    .addComponent(userIdTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(editProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel26)
+                    .addComponent(nameTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(editProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel31)
+                    .addComponent(emailTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(editProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel32)
+                    .addComponent(phoneTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(editProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel33)
+                    .addComponent(genderTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(41, 41, 41)
+                .addGroup(editProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(saveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(32, 32, 32)
+                .addGroup(editProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(editBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(changePassBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(584, Short.MAX_VALUE))
         );
+
+        profilePage.add(editProfile, "editProfile");
+
+        editPass.setBackground(new java.awt.Color(255, 255, 255));
+
+        passCancelBtn.setBackground(new java.awt.Color(204, 0, 51));
+        passCancelBtn.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        passCancelBtn.setForeground(new java.awt.Color(255, 255, 255));
+        passCancelBtn.setText("CANCEL");
+        passCancelBtn.setBorderPainted(false);
+        passCancelBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        passCancelBtn.setFocusPainted(false);
+        passCancelBtn.setPreferredSize(new java.awt.Dimension(80, 40));
+        passCancelBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passCancelBtnActionPerformed(evt);
+            }
+        });
+
+        passSaveBtn.setBackground(new java.awt.Color(0, 204, 0));
+        passSaveBtn.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        passSaveBtn.setForeground(new java.awt.Color(255, 255, 255));
+        passSaveBtn.setText("SAVE");
+        passSaveBtn.setBorderPainted(false);
+        passSaveBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        passSaveBtn.setFocusPainted(false);
+        passSaveBtn.setPreferredSize(new java.awt.Dimension(140, 40));
+        passSaveBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passSaveBtnActionPerformed(evt);
+            }
+        });
+
+        jLabel106.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel106.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel106.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel106.setText("Previous Password:");
+
+        jLabel108.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel108.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel108.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel108.setText("New Password:");
+
+        prevPassPF.setBackground(new java.awt.Color(255, 255, 255));
+        prevPassPF.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        prevPassPF.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 3, 0, new java.awt.Color(51, 153, 255)));
+
+        newPassPF.setBackground(new java.awt.Color(255, 255, 255));
+        newPassPF.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        newPassPF.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 3, 0, new java.awt.Color(51, 153, 255)));
+
+        showPassCB.setFont(new java.awt.Font("Times New Roman", 0, 13)); // NOI18N
+        showPassCB.setForeground(new java.awt.Color(0, 0, 0));
+        showPassCB.setText("show Password");
+        showPassCB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showPassCBActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout editPassLayout = new javax.swing.GroupLayout(editPass);
+        editPass.setLayout(editPassLayout);
+        editPassLayout.setHorizontalGroup(
+            editPassLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editPassLayout.createSequentialGroup()
+                .addGap(227, 227, 227)
+                .addGroup(editPassLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(editPassLayout.createSequentialGroup()
+                        .addGap(56, 56, 56)
+                        .addGroup(editPassLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(editPassLayout.createSequentialGroup()
+                                .addComponent(passCancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(195, 195, 195))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, editPassLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(passSaveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(editPassLayout.createSequentialGroup()
+                        .addComponent(jLabel108, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(editPassLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(showPassCB)
+                            .addComponent(newPassPF, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(editPassLayout.createSequentialGroup()
+                        .addComponent(jLabel106)
+                        .addGap(18, 18, 18)
+                        .addComponent(prevPassPF, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(260, Short.MAX_VALUE))
+        );
+        editPassLayout.setVerticalGroup(
+            editPassLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editPassLayout.createSequentialGroup()
+                .addGap(184, 184, 184)
+                .addGroup(editPassLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel106)
+                    .addComponent(prevPassPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29)
+                .addGroup(editPassLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel108)
+                    .addComponent(newPassPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(5, 5, 5)
+                .addComponent(showPassCB)
+                .addGap(92, 92, 92)
+                .addGroup(editPassLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(passCancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(passSaveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(667, Short.MAX_VALUE))
+        );
+
+        profilePage.add(editPass, "editPass");
 
         pages.add(profilePage, "profilePage");
 
@@ -1618,6 +1925,86 @@ public class Admin_Dashboard extends javax.swing.JFrame {
     private void assignBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_assignBtnActionPerformed
         // TODO add your handling code here
     }//GEN-LAST:event_assignBtnActionPerformed
+
+    private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
+        enableProfileTextField(true);
+        cancelBtn.setVisible(true);
+        saveBtn.setVisible(true);
+        editBtn.setVisible(false);
+        changePassBtn.setVisible(false);
+    }//GEN-LAST:event_editBtnActionPerformed
+
+    private void changePassBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changePassBtnActionPerformed
+        profileCardLayout.show(profilePage, "editPass");
+    }//GEN-LAST:event_changePassBtnActionPerformed
+
+    private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
+        String userId = userIdTF.getText();
+        String name = nameTF.getText();
+        String email = emailTF.getText();
+        String phone = phoneTF.getText();
+        String gender = genderTF.getText();
+
+        String result = userService.updateUser(userId, name, email, phone, gender);
+
+        if (result != null) {
+            JOptionPane.showMessageDialog(this, result, "Invalid", JOptionPane.WARNING_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Profile updated successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+
+            user = userService.findByUserId(userId);
+
+            welcomeLbl.setText("Welcome back, " + user.getName());
+
+            setProfile();
+            enableProfileTextField(false);
+            cancelBtn.setVisible(false);
+            saveBtn.setVisible(false);
+            editBtn.setVisible(true);
+            changePassBtn.setVisible(true);
+        }
+    }//GEN-LAST:event_saveBtnActionPerformed
+
+    private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
+        setProfile();
+        enableProfileTextField(false);
+        cancelBtn.setVisible(false);
+        saveBtn.setVisible(false);
+        editBtn.setVisible(true);
+        changePassBtn.setVisible(true);
+    }//GEN-LAST:event_cancelBtnActionPerformed
+
+    private void passCancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passCancelBtnActionPerformed
+        profileCardLayout.show(profilePage, "editProfile");
+        prevPassPF.setText("");
+        newPassPF.setText("");
+    }//GEN-LAST:event_passCancelBtnActionPerformed
+
+    private void passSaveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passSaveBtnActionPerformed
+        String prevPass = String.valueOf(prevPassPF.getPassword());
+        String newPass = String.valueOf(newPassPF.getPassword());
+
+        String result = userService.changePassword(user.getUserId(), prevPass, newPass);
+
+        if (result != null) {
+            JOptionPane.showMessageDialog(null, result, "Invalid", JOptionPane.WARNING_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "Password changed sucessfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+
+            prevPassPF.setText("");
+            newPassPF.setText("");
+
+            profileCardLayout.show(profilePage, "editProfile");
+        }
+    }//GEN-LAST:event_passSaveBtnActionPerformed
+
+    private void showPassCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showPassCBActionPerformed
+        if (showPassCB.isSelected()) {
+            newPassPF.setEchoChar((char)0);
+        } else {
+            newPassPF.setEchoChar('*');
+        }
+    }//GEN-LAST:event_showPassCBActionPerformed
     
     private void clearUserForm() {
         selectedUserId = null;
@@ -1740,7 +2127,9 @@ public class Admin_Dashboard extends javax.swing.JFrame {
     private javax.swing.JButton assignmentsBtn;
     private javax.swing.JPanel assignmentsPage;
     private javax.swing.JTextField baseRateTf;
+    private javax.swing.JButton cancelBtn;
     private javax.swing.JTextField capacityTf;
+    private javax.swing.JButton changePassBtn;
     private javax.swing.JButton clearBtn;
     private javax.swing.JTextField closingTf;
     private javax.swing.JLabel consultationLbl;
@@ -1752,8 +2141,13 @@ public class Admin_Dashboard extends javax.swing.JFrame {
     private javax.swing.JTextField doctorNameTf;
     private javax.swing.JTextField doctorNameTf1;
     private javax.swing.JTable doctorTable;
+    private javax.swing.JButton editBtn;
+    private javax.swing.JPanel editPass;
+    private javax.swing.JPanel editProfile;
+    private javax.swing.JTextField emailTF;
     private javax.swing.JTextField emailTf;
     private javax.swing.JComboBox<String> genderCb;
+    private javax.swing.JTextField genderTF;
     private javax.swing.JButton insuranceBtn;
     private javax.swing.JLabel insuranceLbl;
     private javax.swing.JPanel insurancePage;
@@ -1761,6 +2155,8 @@ public class Admin_Dashboard extends javax.swing.JFrame {
     private javax.swing.JTable insuranceTable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel106;
+    private javax.swing.JLabel jLabel108;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
@@ -1777,10 +2173,15 @@ public class Admin_Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1801,15 +2202,23 @@ public class Admin_Dashboard extends javax.swing.JFrame {
     private javax.swing.JButton logoutBtn;
     private javax.swing.JTable managerTable;
     private javax.swing.JPanel menuPanel;
+    private javax.swing.JTextField nameTF;
+    private javax.swing.JPasswordField newPassPF;
     private javax.swing.JTextField openingTf;
     private javax.swing.JPanel pages;
+    private javax.swing.JButton passCancelBtn;
+    private javax.swing.JButton passSaveBtn;
+    private javax.swing.JTextField phoneTF;
     private javax.swing.JTextField phoneTf;
+    private javax.swing.JPasswordField prevPassPF;
     private javax.swing.JButton profileBtn;
     private javax.swing.JPanel profilePage;
     private javax.swing.JTable rateTable;
     private javax.swing.JButton ratesBtn;
     private javax.swing.JPanel ratesPage;
     private javax.swing.JComboBox<String> roleCb;
+    private javax.swing.JButton saveBtn;
+    private javax.swing.JCheckBox showPassCB;
     private javax.swing.JPanel sidebar;
     private javax.swing.JComboBox<String> statusCb;
     private javax.swing.JLabel totalDoctorLbl;
@@ -1821,6 +2230,7 @@ public class Admin_Dashboard extends javax.swing.JFrame {
     private javax.swing.JButton updateRateBtn;
     private javax.swing.JButton updateUserBtn;
     private javax.swing.JLabel userIdLbl;
+    private javax.swing.JTextField userIdTF;
     private javax.swing.JTable userTable;
     private javax.swing.JTextField usernameTf;
     private javax.swing.JButton usersBtn;

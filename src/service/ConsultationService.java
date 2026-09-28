@@ -72,31 +72,47 @@ public class ConsultationService {
         double temperature, patientWeight;
         int topBloodPressure, bottomBloodPressure, heartRate;
         
-        if (notes == null || notes.trim().isEmpty()) {
-            return "Notes are required.";
-        }
+        if (notes == null || notes.trim().isEmpty()) {return "Notes are required.";}
         
-        try {
-            temperature = Double.parseDouble(temp.trim());
-        } catch (NumberFormatException e) {
-            throw new InvalidVitalSignsException("Temperature must be a decimal number.");
-        }
+        if (notes.contains("|")) {return "Notes cannot contain the | symbol.";}
         
-        if (temperature <= 0) {
-            throw new InvalidVitalSignsException("Temperature must be greater than 0.");
-        }
+        notes = notes.replace("\r", " ").replace("\n", " ").trim();
         
-        try {topBloodPressure = Integer.parseInt(topBP.trim()); bottomBloodPressure = Integer.parseInt(botBP.trim());}
+        temp = temp.trim();
+        
+        if (temp.startsWith("0")) {throw new InvalidVitalSignsException("Temperature cannot start with 0.");}
+        
+        try {temperature = Double.parseDouble(temp);}
+        catch (NumberFormatException e) {throw new InvalidVitalSignsException("Temperature must be a decimal number.");}
+        
+        if (temperature <= 0) {throw new InvalidVitalSignsException("Temperature must be greater than 0.");}
+        
+        topBP = topBP.trim();
+        botBP = botBP.trim();
+        
+        if (topBP.startsWith("0")) {throw new InvalidVitalSignsException("Systolic cannot start with 0.");}
+        else if (botBP.startsWith("0")) {throw new InvalidVitalSignsException("Diastolic cannot start with 0.");}
+        
+        try {topBloodPressure = Integer.parseInt(topBP); bottomBloodPressure = Integer.parseInt(botBP);}
         catch (NumberFormatException e) {throw new InvalidVitalSignsException("Blood Pressure must be an integer");}
         
-        if (topBloodPressure <= 0 || bottomBloodPressure <= 0) {throw new InvalidVitalSignsException("Blood Pressure must be greater than 0.");}
+        if (topBloodPressure <= 0) {throw new InvalidVitalSignsException("Systolic must be greater than 0.");}
+        else if (bottomBloodPressure <= 0) {throw new InvalidVitalSignsException("Diastolic must be greater than 0.");}
         
-        try {heartRate = Integer.parseInt(hr.trim());}
+        hr = hr.trim();
+        
+        if (hr.startsWith("0")) {throw new InvalidVitalSignsException("Heart Rate cannot start with 0.");}
+        
+        try {heartRate = Integer.parseInt(hr);}
         catch (NumberFormatException e) {throw new InvalidVitalSignsException("Heart Rate must be an integer.");}
         
         if (heartRate <= 0) {throw new InvalidVitalSignsException("Heart Rate must be greater than 0.");}
         
-        try {patientWeight = Double.parseDouble(weight.trim());}
+        weight = weight.trim();
+        
+        if (weight.startsWith("0")) {throw new InvalidVitalSignsException("Weight cannot start with 0.");}
+        
+        try {patientWeight = Double.parseDouble(weight);}
         catch (NumberFormatException e) {throw new InvalidVitalSignsException("Weight must be a decimal number.");}
         
         if (patientWeight <= 0) {throw new InvalidVitalSignsException("Weight must be greater than 0.");}
@@ -111,7 +127,7 @@ public class ConsultationService {
         
         boolean updated = appointRepo.updateStatus(appointId, "Completed");
         
-        if (!updated) {return "Consultation saved, but appointment status could not be udpated.";}
+        if (!updated) {return "Consultation saved, but appointment status could not be updated.";}
         
         reloadConsultations();
         

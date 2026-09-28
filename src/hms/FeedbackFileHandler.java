@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class FeedbackFileHandler {
 
-    private static final String FILE_NAME = "feedback.txt";
+    private static final String FILE_NAME = "data/feedback.txt";
 
     public static void saveFeedback(Feedback fb) {
         try {

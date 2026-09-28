@@ -9,12 +9,13 @@ package model;
  * @author xuanchen
  */
 public class PrescriptionInfo {
-    private String prescriptId, consultId, patientId, patientName, issueDate, medName, dosage, freq, duration, instructions;
+    private String prescriptId, consultId, patientId, doctorId, patientName, issueDate, medName, dosage, freq, duration, instructions;
 
-    public PrescriptionInfo(String prescriptId, String consultId, String patientId, String patientName, String issueDate, String medName, String dosage, String freq, String duration, String instructions) {
+    public PrescriptionInfo(String prescriptId, String consultId, String patientId, String doctorId, String patientName, String issueDate, String medName, String dosage, String freq, String duration, String instructions) {
         this.prescriptId = prescriptId;
         this.consultId = consultId;
         this.patientId = patientId;
+        this.doctorId = doctorId;
         this.patientName = patientName;
         this.issueDate = issueDate;
         this.medName = medName;
@@ -34,6 +35,10 @@ public class PrescriptionInfo {
 
     public String getPatientId() {
         return patientId;
+    }
+    
+    public String getDoctorId() {
+        return doctorId;
     }
 
     public String getPatientName() {

@@ -263,21 +263,22 @@ public class GUIManageDoctors extends javax.swing.JFrame {
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
-        String id = String.format(txtId.getText()).trim();
-        String newName = String.format(txtName.getText()).trim();
-        String newDept = cmbDept.getSelectedItem().toString();
-        String newStatus = cmbStatus.getSelectedItem().toString();
-        
         row = docTable.getSelectedRow();
+        String newName = null;
         
         if(row == -1){
             JOptionPane.showMessageDialog(null, "Please select a row to edit", "Empty Values", JOptionPane.WARNING_MESSAGE);
             return;
-        }else if(newName.isEmpty()){
+        }else if(txtName.getText().isEmpty() || cmbDept.getSelectedIndex() == -1 || cmbStatus.getSelectedIndex() == -1){
             JOptionPane.showMessageDialog(null, "Please fill in all field", "Empty Values", JOptionPane.WARNING_MESSAGE);
             return;
         }else{
             try{
+                String id = String.format(txtId.getText()).trim();
+                newName = String.format(txtName.getText()).trim();
+                String newDept = cmbDept.getSelectedItem().toString();
+                String newStatus = cmbStatus.getSelectedItem().toString();
+
                 FileReader fr = new FileReader(docFile);
                 BufferedReader br = new BufferedReader(fr);
 
@@ -308,8 +309,10 @@ public class GUIManageDoctors extends javax.swing.JFrame {
                 fw.close();
             }catch(IOException e){
                 JOptionPane.showMessageDialog(null, e, "Error", JOptionPane.ERROR_MESSAGE);
+                return;
             }catch(Exception e){
                 JOptionPane.showMessageDialog(null, e, "Error", JOptionPane.ERROR_MESSAGE);
+                return;
             }
             JOptionPane.showMessageDialog(null, String.format("%s has been updated successfully", newName), "Success", JOptionPane.INFORMATION_MESSAGE);
             loadTable();
@@ -322,6 +325,7 @@ public class GUIManageDoctors extends javax.swing.JFrame {
             txtId.requestFocusInWindow();
             
             docTable.clearSelection();
+            row = -1;
         }
     }//GEN-LAST:event_btnUpdateActionPerformed
 

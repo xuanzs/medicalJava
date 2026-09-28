@@ -545,6 +545,12 @@ public class GUIManageShifts extends javax.swing.JFrame {
                 return;
             }
             
+            Duration duration = Duration.between(newStartTime, newEndTime);
+            if(duration.toMinutes() < 480 || duration.toMinutes() > 1440) {
+                JOptionPane.showMessageDialog(null, "Shift duration should in between 8 to 24 hours", "Shift Duration Out of Range", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            
             // modify the selected shift in shiftRoster.txt
             manager.modifyShift(shiftId, newDate, newStartTime, newEndTime, newDocId);
             JOptionPane.showMessageDialog(null, "The shift has been updated successfully", "Success", JOptionPane.INFORMATION_MESSAGE);

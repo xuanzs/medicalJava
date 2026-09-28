@@ -45,7 +45,7 @@ public class MedicalRequestService {
             PatientInfo patient = patientService.findPatientInfoById(p);
             
             if (patient != null) {
-                MedicalRequestInfo info = new MedicalRequestInfo(r, c, p, patient.getName(), rd, rt, s, rea);
+                MedicalRequestInfo info = new MedicalRequestInfo(r, c, p, d, patient.getName(), rd, rt, s, rea);
                 
                 requestInfo.add(info);
             }
@@ -61,10 +61,14 @@ public class MedicalRequestService {
             return "Reason is required.";
         }
         
+        if (reason.contains("|")) {return "Reason cannot contain | symbol.";}
+        
+        reason = reason.replace("\r", " ").replace("\n", " ").trim();
+        
         String medicalRequestId = requestRepo.createMedicalRequestId();
         
         boolean saved = requestRepo.saveMedicalRequest(medicalRequestId, consultId, patientId, doctorId, requestType, requestDate, reason, status);
-        if (!saved) {return "Failed to save prescription.";}
+        if (!saved) {return "Failed to save medical request.";}
         
         reloadMedicalRequest();
         return null;

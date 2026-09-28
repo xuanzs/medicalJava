@@ -38,6 +38,7 @@ public class PrescriptionService {
             String pr = pl[0].trim();
             String c = pl[1].trim();
             String p = pl[2].trim();
+            String doc = pl[3].trim();
             String mn = pl[4].trim();
             String d = pl[5].trim();
             String f = pl[6].trim();
@@ -48,7 +49,7 @@ public class PrescriptionService {
             PatientInfo patient = patientService.findPatientInfoById(p);
             
             if (patient != null) {
-                PrescriptionInfo info = new PrescriptionInfo(pr,c,p,patient.getName(),id,mn,d,f,dur,i);
+                PrescriptionInfo info = new PrescriptionInfo(pr,c,p,doc,patient.getName(),id,mn,d,f,dur,i);
                 
                 prescriptInfo.add(info);
             }
@@ -73,8 +74,14 @@ public class PrescriptionService {
         }
         
         if (instructions == null || instructions.trim().isEmpty()) {
-            return "Instructions is required.";
+            return "Instructions are required.";
         }
+        
+        if (medName.contains("|") || dosage.contains("|") || freq.contains("|") || duration.contains("|") || instructions.contains("|")) {
+            return "Prescription details cannot contain the | symbol.";
+        }
+        
+        instructions = instructions.replace("\r", " ").replace("\n", " ").trim();
         
         String prescriptionId = prescriptRepo.createPrescriptionId();
         

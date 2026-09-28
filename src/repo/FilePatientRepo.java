@@ -16,7 +16,7 @@ public class FilePatientRepo {
     
     public FilePatientRepo() {
         try {
-            FileReader fr = new FileReader("data/Patients.txt");
+            FileReader fr = new FileReader("data/patients.txt");
             BufferedReader br = new BufferedReader(fr);
             
             br.readLine();

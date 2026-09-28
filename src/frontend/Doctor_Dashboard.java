@@ -8,6 +8,7 @@ import exception.InvalidVitalSignsException;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.util.Arrays;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.RowSorter;
@@ -333,7 +334,6 @@ public class Doctor_Dashboard extends javax.swing.JFrame {
         showPassCB = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1000, 700));
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -344,7 +344,7 @@ public class Doctor_Dashboard extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel1.setText("Hospital Management Sytem");
+        jLabel1.setText("Hospital Management System");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -686,7 +686,7 @@ public class Doctor_Dashboard extends javax.swing.JFrame {
 
         myRequestBtn.setBackground(new java.awt.Color(0, 102, 153));
         myRequestBtn.setForeground(new java.awt.Color(255, 255, 255));
-        myRequestBtn.setText("My Request");
+        myRequestBtn.setText("My Requests");
         myRequestBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         myRequestBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -2842,7 +2842,7 @@ public class Doctor_Dashboard extends javax.swing.JFrame {
 
         showPassCB.setFont(new java.awt.Font("Times New Roman", 0, 13)); // NOI18N
         showPassCB.setForeground(new java.awt.Color(0, 0, 0));
-        showPassCB.setText("show Password");
+        showPassCB.setText("Show Password");
         showPassCB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 showPassCBActionPerformed(evt);
@@ -3029,13 +3029,15 @@ public class Doctor_Dashboard extends javax.swing.JFrame {
         
         ConsultationService consultService = new ConsultationService();
         for (ConsultationInfo c : consultService.getConsultationInfo()) {
-            consultationModel.addRow(new Object[] {
-                c.getConsultationId(),
-                c.getAppointmentId(),
-                c.getPatientId(),
-                c.getName(),
-                c.getDate()
-            });
+            if (c.getDoctorId().equals(doctor.getDoctorId())) {
+                consultationModel.addRow(new Object[] {
+                    c.getConsultationId(),
+                    c.getAppointmentId(),
+                    c.getPatientId(),
+                    c.getName(),
+                    c.getDate()
+                });
+            }
         }
         
         consultationSorter = new TableRowSorter<>(consultationModel);
@@ -3058,7 +3060,8 @@ public class Doctor_Dashboard extends javax.swing.JFrame {
         prescriptionModel.setColumnIdentifiers(columns);
         prescriptionsT.setModel(prescriptionModel);
         
-        PrescriptionService prescriptService = new PrescriptionService();
+        prescriptService.reloadPrescription();
+        
         for (PrescriptionInfo p : prescriptService.getPrescriptionInfo()) {
             prescriptionModel.addRow(new Object[] {
                 p.getPrescriptId(),
@@ -3089,16 +3092,19 @@ public class Doctor_Dashboard extends javax.swing.JFrame {
         requestModel.setColumnIdentifiers(columns);
         requestsT.setModel(requestModel);
         
-        MedicalRequestService requestService = new MedicalRequestService();
+        requestService.reloadMedicalRequest();
+        
         for (MedicalRequestInfo r : requestService.getMedicalRequestInfo()) {
-            requestModel.addRow(new Object[] {
-                r.getRequestId(),
-                r.getConsultId(),
-                r.getPatientId(),
-                r.getPatientName(),
-                r.getRequestType(),
-                r.getStatus()
-            });
+            if (r.getDoctorId().equals(doctor.getDoctorId())) {
+                requestModel.addRow(new Object[] {
+                    r.getRequestId(),
+                    r.getConsultId(),
+                    r.getPatientId(),
+                    r.getPatientName(),
+                    r.getRequestType(),
+                    r.getStatus()
+                });
+            }
         }
         
         requestSorter = new TableRowSorter<>(requestModel);
@@ -3263,7 +3269,7 @@ public class Doctor_Dashboard extends javax.swing.JFrame {
         if (text.trim().isEmpty()) {
             appointmentSorter.setRowFilter(null);
         } else {
-            appointmentSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+            appointmentSorter.setRowFilter(RowFilter.regexFilter("(?i)" + Pattern.quote(text)));
         }
     }//GEN-LAST:event_searchATFKeyReleased
 
@@ -3324,11 +3330,8 @@ public class Doctor_Dashboard extends javax.swing.JFrame {
         
         selectedConsultId = consultationId;
         
-        boolean hasPrescription = prescriptService.hasPrescription(consultationId);
-        boolean hasMedicalRecord = requestService.hasMedicalRequest(consultationId);
-        
-        myIssuePreBtn.setEnabled(!hasPrescription);
-        myCreateMRBtn.setEnabled(!hasMedicalRecord);
+        myIssuePreBtn.setEnabled(true);
+        myCreateMRBtn.setEnabled(true);
     }//GEN-LAST:event_consultationsTMouseClicked
 
     private void newCancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newCancelBtnActionPerformed
@@ -3406,6 +3409,16 @@ public class Doctor_Dashboard extends javax.swing.JFrame {
         newWeightTF.setText("");
         newConsultNTA.setText("");
         
+        newTempTF.setEnabled(true);
+        newBPTTF.setEnabled(true);
+        newBPBTF.setEnabled(true);
+        newHRTF.setEnabled(true);
+        newWeightTF.setEnabled(true);
+        newConsultNTA.setEnabled(true);
+
+        newCancelBtn.setEnabled(true);
+        newSaveBtn.setEnabled(true);
+        
         newIssuePreBtn.setVisible(false);
         newCreateMRBtn.setVisible(false);
         newFinishBtn.setVisible(false);
@@ -3418,7 +3431,7 @@ public class Doctor_Dashboard extends javax.swing.JFrame {
         if (text.trim().isEmpty()) {
             consultationSorter.setRowFilter(null);
         } else {
-            consultationSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+            consultationSorter.setRowFilter(RowFilter.regexFilter("(?i)" + Pattern.quote(text)));
         }
     }//GEN-LAST:event_mySearchCTFKeyReleased
 
@@ -3460,7 +3473,7 @@ public class Doctor_Dashboard extends javax.swing.JFrame {
         if (text.trim().isEmpty()) {
             prescriptionSorter.setRowFilter(null);
         } else {
-            prescriptionSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+            prescriptionSorter.setRowFilter(RowFilter.regexFilter("(?i)" + Pattern.quote(text)));
         }
     }//GEN-LAST:event_mySearchPTFKeyReleased
 
@@ -3533,7 +3546,7 @@ public class Doctor_Dashboard extends javax.swing.JFrame {
         if (text.trim().isEmpty()) {
             requestSorter.setRowFilter(null);
         } else {
-            requestSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+            requestSorter.setRowFilter(RowFilter.regexFilter("(?i)" + Pattern.quote(text)));
         }
     }//GEN-LAST:event_mySearchRTFKeyReleased
 
@@ -3627,6 +3640,8 @@ public class Doctor_Dashboard extends javax.swing.JFrame {
 
     private void passCancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passCancelBtnActionPerformed
         profileCardLayout.show(profilePage, "editProfile");
+        prevPassPF.setText("");
+        newPassPF.setText("");
     }//GEN-LAST:event_passCancelBtnActionPerformed
 
     private void passSaveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passSaveBtnActionPerformed
@@ -3638,7 +3653,7 @@ public class Doctor_Dashboard extends javax.swing.JFrame {
         if (result != null) {
             JOptionPane.showMessageDialog(null, result, "Invalid", JOptionPane.WARNING_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(null, "Password changed sucessfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Password changed successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
             
             prevPassPF.setText("");
             newPassPF.setText("");

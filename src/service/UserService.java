@@ -11,22 +11,24 @@ public class UserService {
     private FileUserRepo userRepo = new FileUserRepo();
 
     public String updateUser(String userId, String name, String email, String phone, String gender) {
+        User existingEmail = userRepo.findByEmail(email);
+        
         if (name == null || name.trim().isEmpty()) {
             return "Name is required.";
         }
 
         if (email == null || email.trim().isEmpty()) {
             return "Email is required.";
+        } else if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
+            return "Please enter valid email address.";
+        } else if (existingEmail != null && !existingEmail.getUserId().equals(userId)) {
+            return "Email is already used by another user.";
         }
 
         if (phone == null || phone.trim().isEmpty()) {
             return "Phone is required.";
-        }
-
-        User existingEmail = userRepo.findByEmail(email);
-
-        if (existingEmail != null && !existingEmail.getUserId().equals(userId)) {
-            return "Email is already used by another user.";
+        } else if (!phone.matches("^01\\d{8,9}$")) {
+            return "Please enter valid phone number.";
         }
 
         boolean updated = userRepo.updateUser(userId, name, email, phone, gender);
@@ -56,7 +58,7 @@ public class UserService {
         }
         
         if (!user.getPassword().equals(prevPass)) {
-            return "Previous password is required.";
+            return "Previous password is incorrect.";
         }
         
         if (user.getPassword().equals(newPass)) {
