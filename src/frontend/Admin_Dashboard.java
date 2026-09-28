@@ -1815,6 +1815,9 @@ public class Admin_Dashboard extends javax.swing.JFrame {
     private void profileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileBtnActionPerformed
         cardLayout.show(pages, "profilePage");
         setActiveButton(profileBtn);
+        
+        cancelBtn.setVisible(false);
+        saveBtn.setVisible(false);
 
         setProfile();
     }//GEN-LAST:event_profileBtnActionPerformed
