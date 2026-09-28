@@ -15,7 +15,7 @@ public class FilePrescriptionRepo extends FileRepo {
     private ArrayList<String[]> al = new ArrayList<>();
     
     public FilePrescriptionRepo() {
-        super("data/Prescription.txt");
+        super("data/Prescriptions.txt");
         loadFile();
     }
     
