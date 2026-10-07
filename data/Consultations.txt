@@ -2,4 +2,3 @@ Consultation ID|Appointment ID|Patient ID|Doctor ID|Consultation Date|Temperatur
 C001|A001|P001|D001|2026-09-27|37.5|120/80|78|70|Patient reports mild cough and fever
 C002|A002|P001|D001|2026-09-28|36.8|118/76|72|65|Routine check-up, patient condition stable
 C003|A003|P002|D001|2026-09-27|38.1|125/82|85|70|Patient experienced headache and sore throat
-C004|A005|P004|D001|2026-09-28|80|80/80|80|80|hi

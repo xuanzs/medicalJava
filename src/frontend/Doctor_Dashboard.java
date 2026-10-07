@@ -79,6 +79,10 @@ public class Doctor_Dashboard extends javax.swing.JFrame {
         cardLayout.show(pages, "dashboardPage");
         setActiveButton(dashboardBtn);
         loadDashboardStats();
+        
+        newPassPF.addActionListener(e -> {
+            passSaveBtn.doClick();
+        });
     }
 
     /**
@@ -3063,13 +3067,15 @@ public class Doctor_Dashboard extends javax.swing.JFrame {
         prescriptService.reloadPrescription();
         
         for (PrescriptionInfo p : prescriptService.getPrescriptionInfo()) {
-            prescriptionModel.addRow(new Object[] {
-                p.getPrescriptId(),
-                p.getConsultId(),
-                p.getPatientId(),
-                p.getPatientName(),
-                p.getIssueDate()
-            });
+            if (p.getDoctorId().equals(doctor.getDoctorId())) {
+                    prescriptionModel.addRow(new Object[] {
+                    p.getPrescriptId(),
+                    p.getConsultId(),
+                    p.getPatientId(),
+                    p.getPatientName(),
+                    p.getIssueDate()
+                });
+            }
         }
         
         prescriptionSorter = new TableRowSorter<>(prescriptionModel);
@@ -3465,6 +3471,8 @@ public class Doctor_Dashboard extends javax.swing.JFrame {
     private void newFinishBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newFinishBtnActionPerformed
         loadConsultationsTable();
         consultCardLayout.show(consultationsPage, "myConsultation");
+        myIssuePreBtn.setEnabled(false);
+        myCreateMRBtn.setEnabled(false);
     }//GEN-LAST:event_newFinishBtnActionPerformed
 
     private void mySearchPTFKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_mySearchPTFKeyReleased
@@ -3651,9 +3659,9 @@ public class Doctor_Dashboard extends javax.swing.JFrame {
         String result = userService.changePassword(user.getUserId(), prevPass, newPass);
         
         if (result != null) {
-            JOptionPane.showMessageDialog(null, result, "Invalid", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, result, "Invalid", JOptionPane.WARNING_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(null, "Password changed successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Password changed successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
             
             prevPassPF.setText("");
             newPassPF.setText("");

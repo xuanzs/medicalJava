@@ -1,2 +1,2 @@
 adminId|userId
-A001,Uid006
+A001,Uid010
