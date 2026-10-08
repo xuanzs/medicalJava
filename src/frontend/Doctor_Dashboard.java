@@ -3604,6 +3604,7 @@ public class Doctor_Dashboard extends javax.swing.JFrame {
         requestCardLayout.show(requestsPage, "myRequest");
         consultCardLayout.show(consultationsPage, "myConsultation");
         cardLayout.show(pages, "consultationsPage");
+        setActiveButton(consultationsBtn);
     }//GEN-LAST:event_newCancelRBtnActionPerformed
 
     private void newSubmitRBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newSubmitRBtnActionPerformed
