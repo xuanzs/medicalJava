@@ -28,8 +28,6 @@ public class GUIManageShifts extends javax.swing.JFrame {
     String docFile = "data/Doctor.txt";
     // replace with the index of doctorId in the above file
     int idIndex = 0;
-    // replace with the index of doctorName in the above file
-    int nameIndex = 1;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUIManageShifts.class.getName());
 
@@ -84,14 +82,16 @@ public class GUIManageShifts extends javax.swing.JFrame {
         
         // insert doctorName into cmbDocName
         try{
-            FileReader fr = new FileReader(docFile);
+            FileReader fr = new FileReader("data/User.txt");
             BufferedReader br = new BufferedReader(fr);
 
-            String line = null;
+            String line = br.readLine();
 
             while((line = br.readLine()) != null){
-                String[] items = line.split(", ");
-                cmbDocName.addItem(items[nameIndex].trim());
+                String[] items = line.split(",");
+                if(items[6].equals("DOCTOR")){
+                    cmbDocName.addItem(items[1]);
+                }
             }
 
             fr.close();
@@ -332,15 +332,18 @@ public class GUIManageShifts extends javax.swing.JFrame {
         }
         
         // store all doctor information to a list
-        List<String> tempDoc = new ArrayList<>();
+        List<String[]> tempDoc = new ArrayList<>();
         try{
-            FileReader fr = new FileReader(docFile);
+            FileReader fr = new FileReader("data/User.txt");
             BufferedReader br = new BufferedReader(fr);
 
-            String line = null;
+            String line = br.readLine();
 
             while((line = br.readLine()) != null){
-                tempDoc.add(line);
+                String[] items = line.split(",");
+                if(items[6].trim().equals("DOCTOR")){
+                    tempDoc.add(new String[]{items[0], items[1]});
+                }
             }
 
             fr.close();
@@ -348,17 +351,40 @@ public class GUIManageShifts extends javax.swing.JFrame {
         }catch(IOException e){
             JOptionPane.showMessageDialog(null, e, "Error", JOptionPane.ERROR_MESSAGE);
         }
+        
+        // replace userId with doctorId
+        for(int i = 0; i < tempDoc.size(); i++){
+            String[] idName = tempDoc.get(i);
+            String userId = idName[0];
+            String docName = idName[1];
+            try{
+                FileReader fr = new FileReader("data/Doctor.txt");
+                BufferedReader br = new BufferedReader(fr);
 
+                String line = br.readLine();
+
+                while((line = br.readLine()) != null){
+                    String[] items = line.split(",");
+                    if(items[1].trim().equals(userId)){
+                        tempDoc.set(i, new String[]{items[0], docName});
+                    }
+                }
+
+                fr.close();
+                br.close();
+            }catch(IOException e){
+                JOptionPane.showMessageDialog(null, e, "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        
         // insert information for the last column: Doctor Name
         for(int row = 0; row < shiftTable.getRowCount(); row++){
             String checkDocId = shiftTable.getValueAt(row, 4).toString().trim();
             String docName = null;
             
-            for(String line : tempDoc){
-                String[] items = line.split(", ");
-                String docId = items[idIndex];
-                if(docId.equals(checkDocId)){
-                    docName = items[nameIndex];
+            for(String[] idName : tempDoc){
+                if(idName[0].equals(checkDocId)){
+                    docName = idName[1];
                     break;
                 }
             }
@@ -477,16 +503,17 @@ public class GUIManageShifts extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(cmbDocName.getSelectedIndex() != -1){
             String docName = cmbDocName.getSelectedItem().toString();
+            String userId = null;
             try{
-                FileReader fr = new FileReader(docFile);
+                FileReader fr = new FileReader("data/User.txt");
                 BufferedReader br = new BufferedReader(fr);
 
-                String line;
+                String line = br.readLine();
 
                 while((line = br.readLine()) != null){
-                    String[] items = line.split(", ");
-                    if(items[nameIndex].equals(docName)){
-                        txtDocId.setText(items[idIndex]);
+                    String[] items = line.split(",");
+                    if(items[1].equals(docName)){
+                        userId = items[0];
                         break;
                     }
                 }
@@ -495,6 +522,28 @@ public class GUIManageShifts extends javax.swing.JFrame {
                 br.close();
             }catch(IOException e){
                 JOptionPane.showMessageDialog(null, e, "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            try{
+                FileReader fr = new FileReader("data/Doctor.txt");
+                BufferedReader br = new BufferedReader(fr);
+
+                String line = br.readLine();
+
+                while((line = br.readLine()) != null){
+                    String[] items = line.split(",");
+                    if(items[1].equals(userId)){
+                        txtDocId.setText(items[0]);
+                        break;
+                    }
+                }
+
+                fr.close();
+                br.close();
+            }catch(IOException e){
+                JOptionPane.showMessageDialog(null, e, "Error", JOptionPane.ERROR_MESSAGE);
+                return;
             }
         }else{
             txtDocId.setText("");

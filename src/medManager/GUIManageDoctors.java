@@ -24,10 +24,10 @@ public class GUIManageDoctors extends javax.swing.JFrame {
     private MedicalManager manager;
     private int row = -1;
     private DefaultTableModel model = new DefaultTableModel();
-    private String[] column = {"Doctor ID", "Doctor Name", "Department", "Employment Status"};
+    private String[] column = {"Doctor ID", "Doctor Name", "Department"};
     
     // replace with the txt file name storing doctor name
-    String docFile = "doctors.txt";
+    String docFile = "data/Doctor.txt";
     // replace with the index of doctorId in the above file
     int idIndex = 0;
     // replace with the index of doctorName in the above file
@@ -47,8 +47,8 @@ public class GUIManageDoctors extends javax.swing.JFrame {
         this.manager = manager;
         model.setColumnIdentifiers(column);
         txtId.setEditable(false);
+        txtName.setEditable(false);
         cmbDept.setSelectedIndex(-1);
-        cmbStatus.setSelectedIndex(-1);
         
         // fix input for txtId
         try {
@@ -92,13 +92,11 @@ public class GUIManageDoctors extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         btnUpdate = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         docTable = new javax.swing.JTable();
         btnback = new javax.swing.JButton();
         btnClear = new javax.swing.JButton();
-        cmbStatus = new javax.swing.JComboBox<>();
         cmbDept = new javax.swing.JComboBox<>();
         txtName = new javax.swing.JTextField();
         txtId = new javax.swing.JFormattedTextField();
@@ -113,8 +111,6 @@ public class GUIManageDoctors extends javax.swing.JFrame {
         jLabel3.setText("Doctor Name: ");
 
         jLabel4.setText("Department: ");
-
-        jLabel5.setText("Employment Status: ");
 
         btnUpdate.setText("Update");
         btnUpdate.addActionListener(this::btnUpdateActionPerformed);
@@ -133,12 +129,23 @@ public class GUIManageDoctors extends javax.swing.JFrame {
         btnClear.setText("Clear Selection");
         btnClear.addActionListener(this::btnClearActionPerformed);
 
-        cmbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Active", "Inactive" }));
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel2))
+                .addGap(50, 50, 50)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(txtName)
+                        .addComponent(cmbDept, javax.swing.GroupLayout.Alignment.TRAILING, 0, 189, Short.MAX_VALUE)))
+                .addGap(53, 53, 53))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -146,33 +153,18 @@ public class GUIManageDoctors extends javax.swing.JFrame {
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(19, 19, 19)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnback)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnClear))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(19, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtName)
-                                .addComponent(cmbDept, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(cmbStatus, javax.swing.GroupLayout.Alignment.TRAILING, 0, 189, Short.MAX_VALUE)))
-                        .addGap(53, 53, 53))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnUpdate)
-                        .addGap(40, 40, 40))))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(btnback)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnClear))
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(25, 25, 25)
+                                .addComponent(btnUpdate)
+                                .addGap(21, 21, 21)))))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -191,11 +183,7 @@ public class GUIManageDoctors extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmbDept, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addGap(18, 18, 18)
+                .addGap(26, 26, 26)
                 .addComponent(btnUpdate)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -203,7 +191,7 @@ public class GUIManageDoctors extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnback)
                     .addComponent(btnClear))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
 
         pack();
@@ -211,23 +199,67 @@ public class GUIManageDoctors extends javax.swing.JFrame {
 
     public void loadTable(){
         model.setRowCount(0);
+        String docId = null;
+        String userId = null;
+        String dept = null;
+        List<String> userIdList = new ArrayList<>();
+        List<String[]> tempName = new ArrayList<>();
         
         try{
             FileReader fr = new FileReader(docFile);
             BufferedReader br = new BufferedReader(fr);
             
-            String line = null;
+            String line = br.readLine();
             String[] items;
             
             while((line = br.readLine()) != null){
-                items = line.split(", ");
-                model.addRow(items);
+                items = line.split(",");
+                docId = items[0];
+                userId = items[1];
+                dept = items[2];
+                model.addRow(new Object[]{docId, null, dept});
+                userIdList.add(userId);
             }
             
             fr.close();
             br.close();
         }catch(IOException e){
             JOptionPane.showMessageDialog(null, e, "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        try{
+            FileReader fr = new FileReader("data/User.txt");
+            BufferedReader br = new BufferedReader(fr);
+            
+            String line = br.readLine();
+            String[] items;
+            String[] name;
+            
+            while((line = br.readLine()) != null){
+                items = line.split(",");
+                name = new String[]{items[0], items[1]};
+                tempName.add(name);
+            }
+            
+            fr.close();
+            br.close();
+        }catch(IOException e){
+            JOptionPane.showMessageDialog(null, e, "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        int count = 0;
+        for(String id: userIdList){
+            String currentName = null;
+            for(String[] item: tempName){
+                if (item[0].equals(id)){
+                    currentName = item[1];
+                    break;
+                }
+            }
+            model.setValueAt(currentName, count, 1);
+            count ++;
         }
     }
     
@@ -244,7 +276,6 @@ public class GUIManageDoctors extends javax.swing.JFrame {
         txtId.setText(null);
         txtName.setText("");
         cmbDept.setSelectedIndex(-1);
-        cmbStatus.setSelectedIndex(-1);
         txtId.requestFocusInWindow();
     }//GEN-LAST:event_btnClearActionPerformed
 
@@ -255,7 +286,6 @@ public class GUIManageDoctors extends javax.swing.JFrame {
         txtId.setText(String.valueOf(docTable.getValueAt(row, 0)));
         txtName.setText(String.valueOf(docTable.getValueAt(row, 1)));
         cmbDept.setSelectedItem(docTable.getValueAt(row, 2));
-        cmbStatus.setSelectedItem(docTable.getValueAt(row, 3));
                 
         txtId.setEditable(false);
         txtName.requestFocusInWindow();
@@ -264,20 +294,20 @@ public class GUIManageDoctors extends javax.swing.JFrame {
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
         row = docTable.getSelectedRow();
-        String newName = null;
+        String docName = null;
         
         if(row == -1){
             JOptionPane.showMessageDialog(null, "Please select a row to edit", "Empty Values", JOptionPane.WARNING_MESSAGE);
             return;
-        }else if(txtName.getText().isEmpty() || cmbDept.getSelectedIndex() == -1 || cmbStatus.getSelectedIndex() == -1){
+        }else if(txtName.getText().isEmpty() || cmbDept.getSelectedIndex() == -1){
             JOptionPane.showMessageDialog(null, "Please fill in all field", "Empty Values", JOptionPane.WARNING_MESSAGE);
             return;
         }else{
             try{
-                String id = String.format(txtId.getText()).trim();
-                newName = String.format(txtName.getText()).trim();
+                String docId = String.format(txtId.getText()).trim();
+                docName = String.format(txtName.getText()).trim();
                 String newDept = cmbDept.getSelectedItem().toString();
-                String newStatus = cmbStatus.getSelectedItem().toString();
+                String userId = null;
 
                 FileReader fr = new FileReader(docFile);
                 BufferedReader br = new BufferedReader(fr);
@@ -286,9 +316,10 @@ public class GUIManageDoctors extends javax.swing.JFrame {
                 List<String> lines = new ArrayList<>();
 
                 while((line = br.readLine()) != null){
-                    String[] items = line.split(", ");
-                    if (items[0].equals(id)){
-                        line = String.format("%s, %s, %s, %s", id, newName, newDept, newStatus);
+                    String[] items = line.split(",");
+                    if (items[0].equals(docId)){
+                        userId = items[1];
+                        line = String.format("%s,%s,%s", docId, userId, newDept);
                     }
                     lines.add(line);
                 }
@@ -314,12 +345,11 @@ public class GUIManageDoctors extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, e, "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            JOptionPane.showMessageDialog(null, String.format("%s has been updated successfully", newName), "Success", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, String.format("%s has been updated successfully", docName), "Success", JOptionPane.INFORMATION_MESSAGE);
             loadTable();
             txtId.setText("");
             txtName.setText("");
             cmbDept.setSelectedIndex(-1);
-            cmbStatus.setSelectedIndex(-1);
             
             txtId.setEditable(true);
             txtId.requestFocusInWindow();
@@ -359,13 +389,11 @@ public class GUIManageDoctors extends javax.swing.JFrame {
     private javax.swing.JButton btnUpdate;
     private javax.swing.JButton btnback;
     private javax.swing.JComboBox<String> cmbDept;
-    private javax.swing.JComboBox<String> cmbStatus;
     private javax.swing.JTable docTable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JFormattedTextField txtId;
     private javax.swing.JTextField txtName;
