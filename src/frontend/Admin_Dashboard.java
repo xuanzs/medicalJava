@@ -1822,7 +1822,13 @@ public class Admin_Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_profileBtnActionPerformed
 
     private void logoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBtnActionPerformed
-        setActiveButton(logoutBtn);
+        int choice = JOptionPane.showConfirmDialog(this, "Confirm to logout?", "Confirm Logout", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        
+        if (choice == JOptionPane.YES_OPTION) {
+            Hospital_Login login = new Hospital_Login();
+            login.setVisible(true);
+            this.dispose();
+        }
     }//GEN-LAST:event_logoutBtnActionPerformed
 
     private void insuranceBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insuranceBtnActionPerformed
