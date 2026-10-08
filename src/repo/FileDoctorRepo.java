@@ -114,6 +114,25 @@ public class FileDoctorRepo {
 
         return String.format("D%03d", maxId + 1);
     }
+    
+    public boolean deleteByUserId(String userId) {
+
+        Doctor removed = map.remove(userId);
+
+        if (removed == null) {
+            return false;
+        }
+
+        try {
+            saveDoctors();
+            return true;
+
+        } catch (IOException e) {
+            map.put(userId, removed);
+            System.out.println(e);
+            return false;
+        }
+    }
         
     // FileReader
     public BufferedReader reader() throws IOException {

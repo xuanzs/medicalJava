@@ -79,6 +79,24 @@ public class AdminService {
             throw new IllegalArgumentException("Please select a user.");
         }
         
+        User user = userRepo.findByUserId(userId);
+
+        if (user == null) {
+            return false;
+        }
+
+        String role = user.getRole();
+
+        if (role.equalsIgnoreCase("Doctor")) {
+            doctorRepo.deleteByUserId(userId);
+        } else if (role.equalsIgnoreCase("MedicalManager")) {
+            managerRepo.deleteByUserId(userId);
+        } else if (role.equalsIgnoreCase("Patient")) {
+            patientRepo.deleteByUserId(userId);
+        } else if (role.equalsIgnoreCase("Admin")) {
+            adminRepo.deleteByUserId(userId);
+        }
+        
         return userRepo.deleteUser(userId);
     }
     
